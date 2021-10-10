@@ -3,10 +3,12 @@ import React from 'react';
 import Snippet from './Snippet';
 // import Snippet3 from './Snippet3';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Main from './Main';
 
 function App() {
   return (
     <React.Fragment>
+      <Main/>
       <div className="accordion" id="accordionExample">
       <Snippet filePath={'snippet1.json'} snippetInitialStatus={true} />
       <Snippet filePath={'snippet2.json'} snippetInitialStatus={false}/>
