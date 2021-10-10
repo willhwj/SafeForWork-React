@@ -23,6 +23,11 @@
     border-color: rgb(206, 13, 55) !important;
 }
 
+.eachOccasion {
+    background-color: rgb(223, 132, 151) !important;
+    border-color: rgb(223, 132, 151) !important;
+}
+
 .creator {
     background-color: rgba(110, 109, 107, 0.959) !important;
     border-color: rgba(110, 109, 107, 0.959) !important;
@@ -31,3 +36,7 @@
 .accordion-button {
     display: block !important;
 }
+
+/* .btn:hover{
+ cursor: default !important;
+} */
