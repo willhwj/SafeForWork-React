@@ -1,0 +1,29 @@
+{
+    "_id": "100001",
+    "username": "bossWannabe",
+    "preferredThemes": [
+        "life",
+        "hardwork"
+    ],
+    "preferredOccasions": [
+        "work",
+        "presentation",
+        "speech"
+    ],
+    "preferredLength": [
+        1,
+        2
+    ],
+    "creations": [],
+    "collections": [
+        {
+            "_id": "00001",
+            "name": "smart-ass stinks"
+        },
+        {
+            "_id": "00003",
+            "name": "Marathon"
+        }
+    ],
+    "comments": []
+}

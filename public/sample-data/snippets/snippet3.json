@@ -1,0 +1,50 @@
+{
+    "_id": "00003",
+    "name": "Marathon",
+    "content": "Life is a marathon, not a sprint. Those who get ahead early in the race may not finish first. You do not have to finish fast to enjoy the race. In fact, it does not have to be a race, if it does not spark joy in you. Make it your game.",
+    "occasions": [
+        "school",
+        "speech",
+        "chat",
+        "work"
+    ],
+    "type": "quote",
+    "creator": {
+        "_id": "100004",
+        "username": "abcUser"
+    },
+    "collectedBy": [
+        {
+            "_id": "100002",
+            "username": "inspiringSpeaker"
+        },
+        {
+            "_id": "100004",
+            "username": "abcUser"
+        },
+        {
+            "_id": "100005",
+            "username": "lol111"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200007",
+            "comment": "hmmm, a bit lame leh. cliche"
+        },
+        {
+            "_id": "200008",
+            "comment": "very well said. i'll make it my motto!"
+        },
+        {
+            "_id": "200009",
+            "comment": "good food for thought. Thanks for sharing!"
+        },
+        {
+            "_id": "200010",
+            "comment": "..... disagree. life is a battle, must fight to the end!"
+        }
+    ],
+    "theme": "life",
+    "length": 2
+}

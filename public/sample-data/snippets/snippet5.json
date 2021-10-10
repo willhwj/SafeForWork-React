@@ -1,0 +1,33 @@
+{
+    "_id": "00005",
+    "name": "don't mistake kindness for weakness",
+    "content": "One thing people need to understand about extremely kind, nice, and loving people, is that their other side is just as extreme. It's the hell they survive that makes them gentle. Don't mistake their self-control for weakness. The best in them is sleeping, not dead.",
+    "occasions": [
+        "speech",
+        "work",
+        "chat"
+    ],
+    "type": "quote",
+    "creator": {
+        "_id": "100004",
+        "username": "abcUser"
+    },
+    "collectedBy": [
+        {
+            "_id": "100002",
+            "username": "inspiringSpeaker"
+        },
+        {
+            "_id": "100005",
+            "username": "lol111"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200013",
+            "comment": "this is very true. don't abuse people's kindness. just be kind to everyone."
+        }
+    ],
+    "theme": "kindness",
+    "length": 2
+}

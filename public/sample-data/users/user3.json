@@ -1,0 +1,43 @@
+{
+    "_id": "100003",
+    "username": "lann8899",
+    "preferredThemes": [
+        "life",
+        "kindness"
+    ],
+    "preferredOccasions": [
+        "work",
+        "presentation",
+        "speech"
+    ],
+    "preferredLength": [
+        1,
+        2,
+        3
+    ],
+    "creations": [],
+    "collections": [
+        {
+            "_id": "00001",
+            "name": "smart-ass stinks"
+        },
+        {
+            "_id": "00002",
+            "name": "Mr Sweet"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200001",
+            "comment": "I used it at workplace, everyone was laughing. loved it!"
+        },
+        {
+            "_id": "200004",
+            "comment": "great story! will share at my seminar for kindness"
+        },
+        {
+            "_id": "200010",
+            "comment": "..... disagree. life is a battle, must fight to the end!"
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "_id": "100005",
+    "username": "lol111",
+    "preferredThemes": [
+        "life",
+        "kindness"
+    ],
+    "preferredOccasions": [
+        "work",
+        "presentation"
+    ],
+    "preferredLength": [
+        1,
+        2
+    ],
+    "creations": [],
+    "collections": [
+        {
+            "_id": "00001",
+            "name": "smart-ass stinks"
+        },
+        {
+            "_id": "00003",
+            "name": "Marathon"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200007",
+            "comment": "hmmm, a bit lame leh. cliche"
+        },
+        {
+            "_id": "200005",
+            "comment": "indeed very sweet"
+        },
+        {
+            "_id": "200002",
+            "comment": "lame... not my thing"
+        }
+    ]
+}

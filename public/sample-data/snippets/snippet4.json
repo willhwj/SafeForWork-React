@@ -1,0 +1,37 @@
+{
+    "_id": "00004",
+    "name": "Patience in Waiting",
+    "content": "Patience is not the ability to wait, but the ability to keep a good attitude while waiting. ---- by Joyce Meyer",
+    "occasions": [
+        "school",
+        "speech",
+        "work"
+    ],
+    "type": "quote",
+    "creator": {
+        "_id": "100005",
+        "username": "lol111"
+    },
+    "collectedBy": [
+        {
+            "_id": "100003",
+            "username": "lann8899"
+        },
+        {
+            "_id": "100005",
+            "username": "lol111"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200011",
+            "comment": "wow, this is mind blowing."
+        },
+        {
+            "_id": "200012",
+            "comment": "i love it. i shared it in my staff meeting earlier this week and everyone resonated very strongly with it. it's very thought-provoking - that's what good quotes do. Thank you sharing it! looking forward to more of such quotes in this website. keep it up!"
+        }
+    ],
+    "theme": "perseverance",
+    "length": 1
+}

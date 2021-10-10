@@ -1,0 +1,44 @@
+{
+    "_id": "100004",
+    "username": "abcUser",
+    "preferredThemes": [
+        "life",
+        "hardwork",
+        "kindness"
+    ],
+    "preferredOccasions": [
+        "work",
+        "presentation",
+        "speech",
+        "school"
+    ],
+    "preferredLength": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "creations": [
+        {
+            "_id": "00002",
+            "name": "Mr Sweet"
+        },
+        {
+            "_id": "00003",
+            "name": "Marathon"
+        }
+    ],
+    "collections": [
+        {
+            "_id": "00001",
+            "name": "smart-ass stinks"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200009",
+            "comment": "good food for thought. Thanks for sharing!"
+        }
+    ]
+}

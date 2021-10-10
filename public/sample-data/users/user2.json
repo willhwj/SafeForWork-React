@@ -1,0 +1,51 @@
+{
+    "_id": "100002",
+    "username": "inspiringSpeaker",
+    "preferredThemes": [
+        "life",
+        "hardwork",
+        "kindness"
+    ],
+    "preferredOccasions": [
+        "work",
+        "presentation",
+        "speech",
+        "school"
+    ],
+    "preferredLength": [
+        1,
+        2,
+        3,
+        4,
+        5
+    ],
+    "creations": [],
+    "collections": [
+        {
+            "_id": "00001",
+            "name": "smart-ass stinks"
+        },
+        {
+            "_id": "00003",
+            "name": "Marathon"
+        },
+        {
+            "_id": "00002",
+            "name": "Mr Sweet"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200003",
+            "comment": "not bad. will try it at my class presentation next time."
+        },
+        {
+            "_id": "200006",
+            "comment": "lovely story! love it"
+        },
+        {
+            "_id": "200008",
+            "comment": "very well said. i'll make it my motto!"
+        }
+    ]
+}

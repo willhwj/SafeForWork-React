@@ -1,0 +1,33 @@
+.type {
+    background-color: darkblue !important;
+    border-color: darkblue !important;
+}
+
+.theme {
+    background-color: orange !important;
+    border-color: orange !important;
+}
+
+.length {
+    background-color: rgb(51, 112, 10) !important;
+    border-color: rgb(51, 112, 10) !important;
+}
+
+.collectedBy {
+    background-color: rgb(177, 10, 149) !important;
+    border-color: rgb(177, 10, 149) !important;
+}
+
+.occasions {
+    background-color: rgb(206, 13, 55) !important;
+    border-color: rgb(206, 13, 55) !important;
+}
+
+.creator {
+    background-color: rgba(110, 109, 107, 0.959) !important;
+    border-color: rgba(110, 109, 107, 0.959) !important;
+}
+
+.accordion-button {
+    display: block !important;
+}

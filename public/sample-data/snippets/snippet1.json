@@ -1,0 +1,45 @@
+{
+    "_id": "00001",
+    "name": "smart-ass stinks",
+    "content": "People say genius is 99% perspiration and 1% inspiration. Maybe that's why sometimes a smart-ass really stinks.",
+    "occasions": [
+        "work",
+        "speech",
+        "presentation"
+    ],
+    "type": "joke",
+    "creator": {
+        "_id": "100003",
+        "username": "timeKiller"
+    },
+    "collectedBy": [
+        {
+            "_id": "100001",
+            "username": "bossWannabe"
+        },
+        {
+            "_id": "100002",
+            "username": "inspiringSpeaker"
+        },
+        {
+            "_id": "100003",
+            "username": "timeKiller"
+        }
+    ],
+    "comments": [
+        {
+            "_id": "200001",
+            "comment": "I used it at workplace, everyone was laughing. loved it!"
+        },
+        {
+            "_id": "200002",
+            "comment": "lame... not my thing"
+        },
+        {
+            "_id": "200003",
+            "comment": "not bad. I tried it at my class presentation by changing smart ass to engineer (nothing against engineer, just that the class topic is on engineering creaticity, so i wanted to crack some jokes), and everyone was enjoying it. most say it's witty. but some find it a bit rude, but acceptable. so i guess it depends on how you used and the audience's tolerance level. good one indeed."
+        }
+    ],
+    "theme": "hardwork",
+    "length": 1
+}
