@@ -27,7 +27,6 @@ export default class Snippet extends React.Component {
         let url = './sample-data/snippets/';
         await axios.get(url + this.state.path).then(response => snippet = response.data);
 
-        console.log(snippet);
         this.setState({
             name: snippet.name,
             content: snippet.content,
@@ -41,7 +40,7 @@ export default class Snippet extends React.Component {
         })
     }
 
-
+    // utility function to update state variable to change current view to show or hide
     updateShowHide = (event) => {
         this.state[event.target.name] === true ?
             this.setState({
@@ -52,12 +51,14 @@ export default class Snippet extends React.Component {
             })
     }
 
+    // utility function to update state variable with new value entered by users
     updateField = (event)=>{
         this.setState({
             [event.target.name]: event.target.value,
         })
     }
 
+    // function to render form for adding new comment
     displayAddComment = () => {
         return (
             <React.Fragment>
@@ -81,6 +82,7 @@ export default class Snippet extends React.Component {
         )
     }
 
+    // main render function for the snippet view, which is in accordion style
     render() {
         return (
             <React.Fragment>

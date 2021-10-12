@@ -4,9 +4,10 @@ import './Main.css'
 export default class Main extends React.Component {
     state={
         dropdownStatus: false,
-        selectedView: null
+        categorySelected: null
     }
 
+    // utility function to update state variable to change current view to show or hide
     updateStatus=(event)=>{
         console.log('event target is ', event.target.name);
         console.log('event target current status is ', this.state[event.target.name]);
@@ -19,9 +20,10 @@ export default class Main extends React.Component {
             })
     }
 
+    // function to update state variable with category selected by users for viewing
     updateView=(event)=>{
         this.setState({
-            selectedView: event.target.name,
+            categorySelected: event.target.name,
             dropdownStatus: false
         })
     }
@@ -32,7 +34,7 @@ export default class Main extends React.Component {
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="container-fluid">
                         <a className="navbar-brand" href="#">Navbar</a>
-                        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <button className="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <button className="navbar-toggler-icon"></button>
                         </button>
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -43,8 +45,8 @@ export default class Main extends React.Component {
                                 <li className="nav-item">
                                     <button className="nav-link navbarBtn" href="#">About</button>
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" role="button" name="dropdownStatus" onMouseOver={this.updateStatus} aria-expanded="false">
+                                <li className="nav-item dropdown" onMouseOver={this.updateStatus} onMouseLeave={this.updateStatus}>
+                                    <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" role="button" name="dropdownStatus" aria-expanded="false">
                                         See Snippets By
                                     </button>
                                     {this.state.dropdownStatus===true?
@@ -64,6 +66,14 @@ export default class Main extends React.Component {
                         </div>
                     </div>
                 </nav>
+                <header className="py-1 mb-0 border-bottom border-top">
+                    <div className="container d-flex flex-wrap justify-content-center">
+                        <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
+                            <span className="fs-4">{this.state.categorySelected? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
+                        </a>
+                        <div className="b-example-divider"></div>
+                    </div>
+                </header>
             </React.Fragment>
         )
     }
