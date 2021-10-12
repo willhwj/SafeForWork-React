@@ -12,26 +12,11 @@ function App() {
       <Main />
       <div className="card-group">
         <Category
-          imageFilePath={"theme-kindness.jpg"}
-          selectedCategory={'kindness'.toUpperCase()}
-          catDescription={'Explore these heart-warming stories and insights about some of the most beautiful aspects of human relationships.'}
-          numSnippets={5}
-          numComments={17}
-          numCollected={21} />
+          filePath={"themes.json"}/>
         <Category
-          imageFilePath={"theme-hardwork.jpg"}
-          selectedCategory={'hardwork'.toUpperCase()}
-          catDescription={'Come here when you need a pat on your shoulder on the hard work you have done.'}
-          numSnippets={10}
-          numComments={19}
-          numCollected={31} />
+          filePath={"themes.json"} />
       <Category
-          imageFilePath={"theme-life.jpg"}
-          selectedCategory={'life'.toUpperCase()}
-          catDescription={'This is your life - live the way you want to. Take a look at what others think about life.'}
-          numSnippets={29}
-          numComments={47}
-          numCollected={38} />
+          filePath={"themes.json"} />
       </div>
       <div className="accordion" id="accordionExample">
         <Snippet filePath={'snippet1.json'} snippetInitialStatus={true} />

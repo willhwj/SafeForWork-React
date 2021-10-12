@@ -1,0 +1,47 @@
+[
+    {
+        "_id": "500001",
+        "optionName": "work",
+        "optionDescription": "Suitable for work settings",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "500002",
+        "optionName": "networking",
+        "optionDescription": "Suitable for conversations at networking events, such as a conference, exhibition, seminar, etc.",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "500003",
+        "optionName": "speech",
+        "optionDescription": "Suitable for usage in a speech to a medium to large audience.",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "500004",
+        "optionName": "presentation",
+        "optionDescription": "suitable for business presentations to colleagues, clients and business partners",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "500005",
+        "optionName": "chat",
+        "optionDescription": "Suitable for casual chats with professional contacts",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    }
+]

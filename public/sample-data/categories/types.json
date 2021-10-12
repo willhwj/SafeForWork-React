@@ -1,0 +1,29 @@
+[
+    {
+        "_id": "600001",
+        "optionName": "quote",
+        "optionDescription": "a quotation from another person, preferably named person",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "600002",
+        "optionName": "joke",
+        "optionDescription": "a light-hearted joke, safe for cracking your professional contacts without offending any sensibilities. Avoid topics on politics, religions or identity",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "600003",
+        "optionName": "story",
+        "optionDescription": "a short story with a storyline that is relevant to your main topic",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    }
+]
