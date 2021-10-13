@@ -5,26 +5,31 @@ import './snippet.css'
 export default class Snippet3 extends React.Component {
 
     state = {
-        commentStatus: false,
-        snippetStatus: false
+        // commentStatus: false,
+        snippetStatus: true,
+        allSnippets: []
     };
-
-    snippet={};
 
     async componentDidMount() {
         // let dataList = [];
-        let oneSnippet = null;
-        await axios.get('./sample-data/snippets/snippet1.json').then(response => oneSnippet = response.data);
+        let response = await axios.get('./sample-data/snippets/snippetTest.json')
+        let snippets = response.data;
+        // await axios.get('./sample-data/snippets/snippet1.json').then(response => dataList[1] = response.data);
         // dataList.push(oneSnippet);
         // await axios.get('./sample-data/snippets/snippet2.json').then(response => dataList[1] = response.data);
+        // dataList.push(oneSnippet);
         // await axios.get('./sample-data/snippets/snippet3.json').then(response => dataList[2] = response.data);
+        // dataList.push(oneSnippet);
         // await axios.get('./sample-data/snippets/snippet4.json').then(response => dataList[3] = response.data);
+        // dataList.push(oneSnippet);
 
-        console.log('first snippet is ', oneSnippet);
+        console.log('response data is ', snippets);
 
-        this.snippet=oneSnippet; 
+        // this.snippet=oneSnippet; 
         // let array= Array.from(this.state.snippet.occasions);
-        console.log('state variable snippet is ', this.snippet);
+        this.setState({
+            allSnippets: snippets
+        })
     }
 
     updateShowHide = (event) => {
@@ -37,59 +42,57 @@ export default class Snippet3 extends React.Component {
             })
     }
 
-    displayOneSnippet = () => {
-        let name=this.snippet.name;
-        let content=this.snippet.content;
-        let type=this.snippet.type;
-        let creator=this.snippet.creator.username;
-        let theme=this.snippet.theme;
-        let length=this.snippet.length;
-        let occasions=this.snippet.occasions;
-        let collectedBy=[...this.snippet.collectedBy];
-        let comments=[...this.snippet.comments];
-
+    displayOneSnippet = (oneSnippet) => {
+        console.log(oneSnippet);
         return (
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingOne">
-                    <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" onClick={this.updateShowHide} data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                        {name}
+                    <button classßName="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" onClick={this.updateShowHide} data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        {oneSnippet.name}
                     </button>
                 </h2>
                 <div id="collapseOne" className={this.state.snippetStatus === true ? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                     <div className="accordion-body p-2 px-4">
-                        {content}
+                        {oneSnippet.content}
                     </div>
                     <section className="m-2 attribute">
-                        <span className="btn btn-primary mx-1 py-0 type">{type}</span>
-                        <span className="btn btn-primary m-1 py-0 theme">{theme}</span>
-                        <span className="btn btn-primary m-1 py-0 length">{length} {length > 1 ? 'mins' : 'min'}</span>
-                        {collectedBy.length > 0 ?
-                            <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {collectedBy.length} users</span>
+                        <span className="btn btn-primary mx-1 py-0 type">{oneSnippet.type}</span>
+                        <span className="btn btn-primary m-1 py-0 theme">{oneSnippet.theme}</span>
+                        <span className="btn btn-primary m-1 py-0 length">{oneSnippet.length} {oneSnippet.length > 1 ? 'mins' : 'min'}</span>
+                        {oneSnippet.collectedBy.length > 0 ?
+                            <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {oneSnippet.collectedBy.length} users</span>
                             : null}
-                        <span className="btn btn-primary m-1 py-0 occasions">For {
-                                    occasions.map(eachOccasion =>
-                                        <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)
-                                }
-                                </span>
-                        <span className="btn btn-primary m-1 py-0 creator">Contributed by {creator}</span>
+                        <span className="btn btn-primary m-1 py-0 occasions">For {oneSnippet.occasions.map(eachOccasion =>
+                            <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
+                        </span>
+                        <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
                     </section>
                     <p>
                         <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
-                            {comments.length} Comments
+                            {oneSnippet.comments.length} Comments
                         </button>
                     </p>
-                    {comments.map(eachComment =>
-                        this.state.commentStatus === true ?
-                            <div className="collapse show m-2">
-                                <div className="card card-body m-1">
-                                    {eachComment.comment}
-                                </div>
-                            </div> :
-                            <div className="collapse m-2">
-                                <div className="card card-body m-1">
-                                    {eachComment.comment}
-                                </div>
+                    {/* {this.state.commentStatus === true ?
+                        <div><button name="addNewComment" onClick={this.updateShowHide}>Add New Comment</button></div>
+                        : null}
+                    {this.state.addNewComment === false ? null : this.displayAddComment()} */}
+                    {oneSnippet.comments.map(eachComment =>
+                        <div className="collapse show m-2">
+                            <div className="card card-body m-1">
+                                {eachComment.comment}
                             </div>
+                        </div>
+                        // this.state.commentStatus === true ?
+                        //     <div className="collapse show m-2">
+                        //         <div className="card card-body m-1">
+                        //             {eachComment.comment}
+                        //         </div>
+                        //     </div> :
+                        //     <div className="collapse m-2">
+                        //         <div className="card card-body m-1">
+                        //             {eachComment.comment}
+                        //         </div>
+                        //     </div>
                     )}
                 </div>
             </div>
@@ -97,22 +100,12 @@ export default class Snippet3 extends React.Component {
     }
 
     render() {
+        console.log(typeof (this.state.allSnippets));
+        console.log(this.state.allSnippets);
         return (
             <React.Fragment>
                 <div className="accordion" id="accordionExample">
-                    {this.displayOneSnippet()}
-                    <div className="accordion-item">
-                        <h2 className="accordion-header" id="headingTwo">
-                            <button className="accordion-button collapsed text-center" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                Accordion Item #2
-                            </button>
-                        </h2>
-                        <div id="collapseTwo" className="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div className="accordion-body">
-                                <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
-                            </div>
-                        </div>
-                    </div>
+                    {this.state.allSnippets.map((eachSnippet) => this.displayOneSnippet(eachSnippet))}
                 </div>
             </React.Fragment>
         )
