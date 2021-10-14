@@ -9,8 +9,10 @@ export default class Snippet3 extends React.Component {
         snippetStatus: true,
         currentSnippet: "00001",
         commentStatus: true,
-        addNewComment: true,
-        allSnippets: []
+        addNewComment: false,
+        allSnippets: [],
+        newComment: '',
+        newCommentUsername: ''
     };
 
     async componentDidMount() {
@@ -34,6 +36,41 @@ export default class Snippet3 extends React.Component {
             allSnippets: snippets
         })
     }
+
+    // utility function to update state variable with new value entered by users
+    updateField = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    // function to render form for adding new comment
+    displayAddComment = () => {
+        return (
+            <React.Fragment>
+                <div>
+                    <label>New Comment: </label>
+                    <input
+                        name="newComment"
+                        type="text"
+                        value={this.state.newComment}
+                        onChange={this.updateField}></input>
+                </div>
+                <div>
+                    <label>Username: </label>
+                    <input
+                        name="newCommentUsername"
+                        type="text"
+                        value={this.state.newCommentUsername}
+                        onChange={this.updateField}></input>
+                </div>
+            </React.Fragment>
+        )
+    }
+
+    // displayCommentList = () => {
+
+    // }
 
     updateShowHide = (event) => {
         this.state[event.target.name] === true ?
@@ -78,9 +115,10 @@ export default class Snippet3 extends React.Component {
                                 {oneSnippet.comments.length} Comments
                             </button>
                         </p>
-                        {this.state.commentStatus === true ?
+                        {this.state.commentStatus?
                             <div>
                                 <div><button name="addNewComment" onClick={this.updateShowHide}>Add New Comment</button></div>
+                                {this.state.addNewComment? this.displayAddComment() : null}
                                 {oneSnippet.comments.map(eachComment =>
                                     <div className="collapse show m-2" >
                                         <div className="card card-body m-1">
@@ -90,7 +128,6 @@ export default class Snippet3 extends React.Component {
                                 )}
                             </div>
                             : null}
-                        {/* {this.state.addNewComment === false ? null : this.displayAddComment()} */}
                     </div>
                 </div>
             </React.Fragment>
