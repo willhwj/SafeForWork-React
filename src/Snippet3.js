@@ -7,6 +7,7 @@ export default class Snippet3 extends React.Component {
     state = {
         // commentStatus: false,
         snippetStatus: true,
+        currentSnippet: "00001",
         allSnippets: []
     };
 
@@ -35,23 +36,26 @@ export default class Snippet3 extends React.Component {
     updateShowHide = (event) => {
         this.state[event.target.name] === true ?
             this.setState({
-                [event.target.name]: false
+                [event.target.name]: false,
+                currentSnippet: event.target.getAttribute('data-target-snippet')
             }) :
             this.setState({
-                [event.target.name]: true
+                [event.target.name]: true,
+                currentSnippet: event.target.getAttribute('data-target-snippet')
             })
     }
 
     displayOneSnippet = (oneSnippet) => {
         console.log(oneSnippet);
         return (
+            <React.Fragment key={oneSnippet._id} >
             <div className="accordion-item">
                 <h2 className="accordion-header" id="headingOne">
-                    <button classßName="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" onClick={this.updateShowHide} data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                    <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-target-snippet={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
                         {oneSnippet.name}
                     </button>
                 </h2>
-                <div id="collapseOne" className={this.state.snippetStatus === true ? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                <div id="collapseOne" className={this.state.snippetStatus === true && this.state.currentSnippet=== oneSnippet._id? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby="headingOne">
                     <div className="accordion-body p-2 px-4">
                         {oneSnippet.content}
                     </div>
@@ -96,6 +100,7 @@ export default class Snippet3 extends React.Component {
                     )}
                 </div>
             </div>
+            </React.Fragment>
         )
     }
 
