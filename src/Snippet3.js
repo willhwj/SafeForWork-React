@@ -8,6 +8,8 @@ export default class Snippet3 extends React.Component {
         // commentStatus: false,
         snippetStatus: true,
         currentSnippet: "00001",
+        commentStatus: true,
+        addNewComment: true,
         allSnippets: []
     };
 
@@ -37,11 +39,11 @@ export default class Snippet3 extends React.Component {
         this.state[event.target.name] === true ?
             this.setState({
                 [event.target.name]: false,
-                currentSnippet: event.target.getAttribute('data-target-snippet')
+                [event.target.getAttribute('data-current')]: event.target.getAttribute('data-target-id')
             }) :
             this.setState({
                 [event.target.name]: true,
-                currentSnippet: event.target.getAttribute('data-target-snippet')
+                [event.target.getAttribute('data-current')]: event.target.getAttribute('data-target-id')
             })
     }
 
@@ -49,57 +51,48 @@ export default class Snippet3 extends React.Component {
         console.log(oneSnippet);
         return (
             <React.Fragment key={oneSnippet._id} >
-            <div className="accordion-item">
-                <h2 className="accordion-header" id="headingOne">
-                    <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-target-snippet={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
-                        {oneSnippet.name}
-                    </button>
-                </h2>
-                <div id="collapseOne" className={this.state.snippetStatus === true && this.state.currentSnippet=== oneSnippet._id? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby="headingOne">
-                    <div className="accordion-body p-2 px-4">
-                        {oneSnippet.content}
-                    </div>
-                    <section className="m-2 attribute">
-                        <span className="btn btn-primary mx-1 py-0 type">{oneSnippet.type}</span>
-                        <span className="btn btn-primary m-1 py-0 theme">{oneSnippet.theme}</span>
-                        <span className="btn btn-primary m-1 py-0 length">{oneSnippet.length} {oneSnippet.length > 1 ? 'mins' : 'min'}</span>
-                        {oneSnippet.collectedBy.length > 0 ?
-                            <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {oneSnippet.collectedBy.length} users</span>
-                            : null}
-                        <span className="btn btn-primary m-1 py-0 occasions">For {oneSnippet.occasions.map(eachOccasion =>
-                            <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
-                        </span>
-                        <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
-                    </section>
-                    <p>
-                        <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
-                            {oneSnippet.comments.length} Comments
+                <div className="accordion-item">
+                    <h2 className="accordion-header" id="headingOne">
+                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippet" data-target-id={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
+                            {oneSnippet.name}
                         </button>
-                    </p>
-                    {/* {this.state.commentStatus === true ?
-                        <div><button name="addNewComment" onClick={this.updateShowHide}>Add New Comment</button></div>
-                        : null}
-                    {this.state.addNewComment === false ? null : this.displayAddComment()} */}
-                    {oneSnippet.comments.map(eachComment =>
-                        <div className="collapse show m-2">
-                            <div className="card card-body m-1">
-                                {eachComment.comment}
-                            </div>
+                    </h2>
+                    <div id="collapseOne" className={this.state.snippetStatus === true && this.state.currentSnippet === oneSnippet._id ? "accordion-collapse collapse show" : "accordion-collapse collapse"} aria-labelledby="headingOne">
+                        <div className="accordion-body p-2 px-4">
+                            {oneSnippet.content}
                         </div>
-                        // this.state.commentStatus === true ?
-                        //     <div className="collapse show m-2">
-                        //         <div className="card card-body m-1">
-                        //             {eachComment.comment}
-                        //         </div>
-                        //     </div> :
-                        //     <div className="collapse m-2">
-                        //         <div className="card card-body m-1">
-                        //             {eachComment.comment}
-                        //         </div>
-                        //     </div>
-                    )}
+                        <section className="m-2 attribute">
+                            <span className="btn btn-primary mx-1 py-0 type">{oneSnippet.type}</span>
+                            <span className="btn btn-primary m-1 py-0 theme">{oneSnippet.theme}</span>
+                            <span className="btn btn-primary m-1 py-0 length">{oneSnippet.length} {oneSnippet.length > 1 ? 'mins' : 'min'}</span>
+                            {oneSnippet.collectedBy.length > 0 ?
+                                <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {oneSnippet.collectedBy.length} users</span>
+                                : null}
+                            <span className="btn btn-primary m-1 py-0 occasions">For {oneSnippet.occasions.map(eachOccasion =>
+                                <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
+                            </span>
+                            <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
+                        </section>
+                        <p>
+                            <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
+                                {oneSnippet.comments.length} Comments
+                            </button>
+                        </p>
+                        {this.state.commentStatus === true ?
+                            <div>
+                                <div><button name="addNewComment" onClick={this.updateShowHide}>Add New Comment</button></div>
+                                {oneSnippet.comments.map(eachComment =>
+                                    <div className="collapse show m-2" >
+                                        <div className="card card-body m-1">
+                                            {eachComment.comment}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                            : null}
+                        {/* {this.state.addNewComment === false ? null : this.displayAddComment()} */}
+                    </div>
                 </div>
-            </div>
             </React.Fragment>
         )
     }
