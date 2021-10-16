@@ -95,15 +95,27 @@ export default class Snippet3 extends React.Component {
     }
 
     updateSnippetState = (snippet) => {
-        this.setState({
-            displayModal: true,
-            snippetCreator: snippet.creator.username,
-            snippetContent: snippet.content,
-            snippetTheme: snippet.theme,
-            snippetOccasions: [...snippet.occasions],
-            snippetType: snippet.type,
-            snippetLength: snippet.length
-        });
+        if ( typeof snippet._id ==="string"){
+            this.setState({
+                displayModal: true,
+                snippetCreator: snippet.creator.username,
+                snippetContent: snippet.content,
+                snippetTheme: snippet.theme,
+                snippetOccasions: [...snippet.occasions],
+                snippetType: snippet.type,
+                snippetLength: snippet.length
+            })
+        } else {
+            this.setState({
+                displayModal: false,
+                snippetCreator: "",
+                snippetContent: "",
+                snippetTheme: "",
+                snippetOccasions: [],
+                snippetType: "",
+                snippetLength: -1
+            })
+        }
     }
 
     // utility function to show or hide any display modal and collapsible displays
@@ -232,10 +244,10 @@ export default class Snippet3 extends React.Component {
                     </div>
                     <div>How many minutes does it take to narrate this snippet?</div>
                     <select className="form-select" aria-label="Default select example">
-                        <option value="1">Less than One Minute</option>
-                        <option value="2">One to Two Minutes</option>
-                        <option value="3">Two to Three Minutes</option>
-                        <option value="4">Above Three Minutes</option>
+                        <option name="snippetLength" selected={this.state.snippetLength===1} value={1} onChange={this.updateField}>Less than One Minute</option>
+                        <option selected={this.state.snippetLength===2} value={2} onChange={this.updateField}>One to Two Minutes</option>
+                        <option selected={this.state.snippetLength===3} value={3} onChange={this.updateField}>Two to Three Minutes</option>
+                        <option selected={this.state.snippetLength===4} value={4} onChange={this.updateField}>Above Three Minutes</option>
                     </select>
                 </div>
             </React.Fragment>
@@ -264,7 +276,7 @@ export default class Snippet3 extends React.Component {
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
                                         name="displayModal"
-                                        onClick={this.updateShowHide}
+                                        onClick={this.updateSnippetState}
                                     ></button>
                                 </div>
                                 <div className="modal-body">
@@ -276,7 +288,7 @@ export default class Snippet3 extends React.Component {
                                         className="btn btn-secondary"
                                         data-bs-dismiss="modal"
                                         name="displayModal"
-                                        onClick={this.updateShowHide}
+                                        onClick={this.updateSnippetState}
                                     >
                                         Close
                                     </button>
@@ -284,7 +296,7 @@ export default class Snippet3 extends React.Component {
                                         type="button"
                                         className="btn btn-primary"
                                         name="displayModal"
-                                        onClick={this.updateShowHide}
+                                        onClick={this.updateSnippetState}
                                     >
                                         Save changes
                                     </button>
@@ -316,8 +328,13 @@ export default class Snippet3 extends React.Component {
                             {oneSnippet.content}
                         </div>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="update" onClick={() => { this.updateSnippetState(oneSnippet) }}>Edit</button>{this.displayModalBox()}
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="delete" onClick={this.updateShowHide}>Delete</button>{this.displayModalBox()}
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="update" onClick={() => { this.updateSnippetState(oneSnippet)}}>Edit</button>
+                            
+                            {this.displayModalBox()}
+                            
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="delete" onClick={this.updateShowHide}>Delete</button>
+                            
+                            {this.displayModalBox()}
                         </div>
                         <section className="m-2 attribute">
                             <span className="btn btn-primary mx-1 py-0 type">{oneSnippet.type}</span>
