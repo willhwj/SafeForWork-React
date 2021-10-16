@@ -95,9 +95,26 @@ export default class Snippet3 extends React.Component {
         )
     }
 
+    // function to initiate API call to communicate changes to server
+    sendToServer = (action) => {
+        console.log('action to the server is ', action);
+        this.setState({
+            action: "",
+            displayModal: false,
+            snippetCreator: "",
+            snippetContent: "",
+            snippetTheme: "",
+            snippetOccasions: [],
+            snippetType: "",
+            snippetLength: -1
+        })
+    }
+
+    // function to update snippet related state variables so that the snippet form shows existing snippet for edit, empty for add, and re-set state variables to null when change is cancelled.
     updateSnippetState = (snippet) => {
         if ( typeof snippet._id ==="string"){
             this.setState({
+                action: "updateSnippet",
                 displayModal: true,
                 snippetCreator: snippet.creator.username,
                 snippetContent: snippet.content,
@@ -294,17 +311,15 @@ export default class Snippet3 extends React.Component {
                                         type="button"
                                         className="btn btn-secondary"
                                         data-bs-dismiss="modal"
-                                        name="displayModal"
-                                        onClick={this.updateSnippetState}
-                                    >
+                                        name="cancelSnippet"
+                                        onClick={this.updateSnippetState}>
                                         Cancel
                                     </button>
                                     <button
                                         type="button"
                                         className="btn btn-primary"
-                                        name="displayModal"
-                                        onClick={this.updateSnippetState}
-                                    >
+                                        name="confirmSnippet"
+                                        onClick={()=>{this.sendToServer(this.state.action)}}>
                                         Confirm
                                     </button>
                                 </div>
@@ -339,7 +354,7 @@ export default class Snippet3 extends React.Component {
                             
                             {this.displayModalBox()}
                             
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="delete" onClick={this.updateShowHide}>Delete</button>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Delete</button>
                             
                             {this.displayModalBox()}
                         </div>
@@ -360,7 +375,7 @@ export default class Snippet3 extends React.Component {
                         </p>
                         {this.state.commentStatus ?
                             <div>
-                                <div><button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="delete" onClick={this.updateShowHide}>Add New Comment</button></div>
+                                <div><button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Add New Comment</button></div>
                                 {this.state.addNewComment ? this.displayAddComment() : null}
                                 {this.displayCommentList(oneSnippet)}
                             </div>
@@ -376,7 +391,7 @@ export default class Snippet3 extends React.Component {
             <React.Fragment>
                 <div className="accordion" id="accordionExample">
                     <div>
-                        <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={this.updateShowHide}>Add New Snippet</button>{this.displayModalBox()}
+                        <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={this.updateShowHide}>Add New Snippet</button>{this.displayModalBox()}
                     </div>
                     {this.state.allSnippets.map((eachSnippet) => this.displayOneSnippet(eachSnippet))}
                 </div>
