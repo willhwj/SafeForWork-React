@@ -5,7 +5,6 @@ import './snippet.css'
 export default class Snippet3 extends React.Component {
 
     state = {
-        // commentStatus: false,
         snippetStatus: true,
         currentSnippet: "00001",
         commentStatus: true,
@@ -15,23 +14,11 @@ export default class Snippet3 extends React.Component {
         newCommentUsername: ''
     };
 
+    // read all snippets into state variable
     async componentDidMount() {
-        // let dataList = [];
-        let response = await axios.get('./sample-data/snippets/snippetTest.json')
+        let response = await axios.get('./sample-data/snippets/snippetList.json')
         let snippets = response.data;
-        // await axios.get('./sample-data/snippets/snippet1.json').then(response => dataList[1] = response.data);
-        // dataList.push(oneSnippet);
-        // await axios.get('./sample-data/snippets/snippet2.json').then(response => dataList[1] = response.data);
-        // dataList.push(oneSnippet);
-        // await axios.get('./sample-data/snippets/snippet3.json').then(response => dataList[2] = response.data);
-        // dataList.push(oneSnippet);
-        // await axios.get('./sample-data/snippets/snippet4.json').then(response => dataList[3] = response.data);
-        // dataList.push(oneSnippet);
-
         console.log('response data is ', snippets);
-
-        // this.snippet=oneSnippet; 
-        // let array= Array.from(this.state.snippet.occasions);
         this.setState({
             allSnippets: snippets
         })
@@ -68,20 +55,64 @@ export default class Snippet3 extends React.Component {
         )
     }
 
-    // displayCommentList = () => {
-
-    // }
+    displayCommentList = (snippet) => {
+        return (
+            snippet.comments.map(eachComment =>
+                <React.Fragment key={snippet._id}>
+                    <div className="collapse show m-2" >
+                        <div className="card card-body m-1">
+                            {eachComment.comment}
+                        </div>
+                    </div>
+                </React.Fragment>
+            )
+        )
+    }
 
     updateShowHide = (event) => {
-        this.state[event.target.name] === true ?
+        if (event.target.name ==='snippetStatus'){
+            switch (true){
+                case this.state[event.target.name] && this.state.currentSnippet===event.target.getAttribute('data-snippet-id'):
+                    this.setState({
+                        [event.target.name]: false,
+                    });
+                    break;
+
+                case !this.state[event.target.name] && this.state.currentSnippet===event.target.getAttribute('data-snippet-id'):
+                    this.setState({
+                        [event.target.name]: true,
+                    });
+                    break;
+                case this.state.currentSnippet!==event.target.getAttribute('data-snippet-id'):
+                    this.setState({
+                        [event.target.name]: true,
+                        currentSnippet: event.target.getAttribute('data-snippet-id'),
+                        commentStatus: true,
+                        addNewComment: false
+                    });
+                    break;
+                default:
+                    console.log('invalid scenario in switch statement for updateShowHide function');
+            }
+        } else {
+            this.state[event.target.name] ?
             this.setState({
-                [event.target.name]: false,
-                [event.target.getAttribute('data-current')]: event.target.getAttribute('data-target-id')
+                [event.target.name]: false
             }) :
             this.setState({
-                [event.target.name]: true,
-                [event.target.getAttribute('data-current')]: event.target.getAttribute('data-target-id')
+                [event.target.name]: true
             })
+        }
+    }
+
+    displayOccasionList = (snippet) => {
+        return (
+            <React.Fragment key={snippet._id}>
+                <span className="btn btn-primary m-1 py-0 occasions">For {snippet.occasions.map(eachOccasion =>
+                    <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
+                </span>
+            </React.Fragment>
+        )
     }
 
     displayOneSnippet = (oneSnippet) => {
@@ -90,7 +121,7 @@ export default class Snippet3 extends React.Component {
             <React.Fragment key={oneSnippet._id} >
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingOne">
-                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippet" data-target-id={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
+                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippet" data-snippet-id={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
                             {oneSnippet.name}
                         </button>
                     </h2>
@@ -105,9 +136,7 @@ export default class Snippet3 extends React.Component {
                             {oneSnippet.collectedBy.length > 0 ?
                                 <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {oneSnippet.collectedBy.length} users</span>
                                 : null}
-                            <span className="btn btn-primary m-1 py-0 occasions">For {oneSnippet.occasions.map(eachOccasion =>
-                                <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
-                            </span>
+                            {this.displayOccasionList(oneSnippet)}
                             <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
                         </section>
                         <p>
@@ -115,17 +144,11 @@ export default class Snippet3 extends React.Component {
                                 {oneSnippet.comments.length} Comments
                             </button>
                         </p>
-                        {this.state.commentStatus?
+                        {this.state.commentStatus ?
                             <div>
                                 <div><button name="addNewComment" onClick={this.updateShowHide}>Add New Comment</button></div>
-                                {this.state.addNewComment? this.displayAddComment() : null}
-                                {oneSnippet.comments.map(eachComment =>
-                                    <div className="collapse show m-2" >
-                                        <div className="card card-body m-1">
-                                            {eachComment.comment}
-                                        </div>
-                                    </div>
-                                )}
+                                {this.state.addNewComment ? this.displayAddComment() : null}
+                                {this.displayCommentList(oneSnippet)}
                             </div>
                             : null}
                     </div>

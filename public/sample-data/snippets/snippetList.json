@@ -1,0 +1,213 @@
+[
+    {
+        "_id": "00001",
+        "name": "smart-ass stinks",
+        "content": "People say genius is 99% perspiration and 1% inspiration. Maybe that's why sometimes a smart-ass really stinks.",
+        "occasions": [
+            "work",
+            "speech",
+            "presentation"
+        ],
+        "type": "joke",
+        "creator": {
+            "_id": "100003",
+            "username": "timeKiller"
+        },
+        "collectedBy": [
+            {
+                "_id": "100001",
+                "username": "bossWannabe"
+            },
+            {
+                "_id": "100002",
+                "username": "inspiringSpeaker"
+            },
+            {
+                "_id": "100003",
+                "username": "timeKiller"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "200001",
+                "comment": "I used it at workplace, everyone was laughing. loved it!"
+            },
+            {
+                "_id": "200002",
+                "comment": "lame... not my thing"
+            },
+            {
+                "_id": "200003",
+                "comment": "not bad. I tried it at my class presentation by changing smart ass to engineer (nothing against engineer, just that the class topic is on engineering creaticity, so i wanted to crack some jokes), and everyone was enjoying it. most say it's witty. but some find it a bit rude, but acceptable. so i guess it depends on how you used and the audience's tolerance level. good one indeed."
+            }
+        ],
+        "theme": "hardwork",
+        "length": 1
+    },
+    {
+        "_id": "00002",
+        "name": "Mr Sweet",
+        "content": "Mr Sweet is a student at a programming bootcamp. He is a very considerate young chap. One day, one of his classmates went out to pack lunch. On her way back, it suddenly rained dogs and cats. Mr Sweet immediately called her to ask where she was, and brought one umbrella to fetch her. Even though there were 2 umbrellas in the room and he knew he needed 2 umbrellas, he decided to only bring 1, just in case someone else might need the other umbrella. So he was all drenched when he came back.",
+        "occasions": [
+            "school",
+            "speech",
+            "presentation",
+            "work"
+        ],
+        "type": "story",
+        "creator": {
+            "_id": "100004",
+            "username": "abcUser"
+        },
+        "collectedBy": [
+            {
+                "_id": "100002",
+                "username": "inspiringSpeaker"
+            },
+            {
+                "_id": "100003",
+                "username": "timeKiller"
+            },
+            {
+                "_id": "100004",
+                "username": "abcUser"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "200004",
+                "comment": "great story! will share at my seminar for kindness"
+            },
+            {
+                "_id": "200005",
+                "comment": "indeed very sweet"
+            },
+            {
+                "_id": "200006",
+                "comment": "lovely story! love it"
+            }
+        ],
+        "theme": "kindness",
+        "length": 3
+    },
+    {
+        "_id": "00003",
+        "name": "Marathon",
+        "content": "Life is a marathon, not a sprint. Those who get ahead early in the race may not finish first. You do not have to finish fast to enjoy the race. In fact, it does not have to be a race, if it does not spark joy in you. Make it your game.",
+        "occasions": [
+            "school",
+            "speech",
+            "chat",
+            "work"
+        ],
+        "type": "quote",
+        "creator": {
+            "_id": "100004",
+            "username": "abcUser"
+        },
+        "collectedBy": [
+            {
+                "_id": "100002",
+                "username": "inspiringSpeaker"
+            },
+            {
+                "_id": "100004",
+                "username": "abcUser"
+            },
+            {
+                "_id": "100005",
+                "username": "lol111"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "200007",
+                "comment": "hmmm, a bit lame leh. cliche"
+            },
+            {
+                "_id": "200008",
+                "comment": "very well said. i'll make it my motto!"
+            },
+            {
+                "_id": "200009",
+                "comment": "good food for thought. Thanks for sharing!"
+            },
+            {
+                "_id": "200010",
+                "comment": "..... disagree. life is a battle, must fight to the end!"
+            }
+        ],
+        "theme": "life",
+        "length": 2
+    },
+    {
+        "_id": "00004",
+        "name": "Patience in Waiting",
+        "content": "Patience is not the ability to wait, but the ability to keep a good attitude while waiting. ---- by Joyce Meyer",
+        "occasions": [
+            "school",
+            "speech",
+            "work"
+        ],
+        "type": "quote",
+        "creator": {
+            "_id": "100005",
+            "username": "lol111"
+        },
+        "collectedBy": [
+            {
+                "_id": "100003",
+                "username": "lann8899"
+            },
+            {
+                "_id": "100005",
+                "username": "lol111"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "200011",
+                "comment": "wow, this is mind blowing."
+            },
+            {
+                "_id": "200012",
+                "comment": "i love it. i shared it in my staff meeting earlier this week and everyone resonated very strongly with it. it's very thought-provoking - that's what good quotes do. Thank you sharing it! looking forward to more of such quotes in this website. keep it up!"
+            }
+        ],
+        "theme": "perseverance",
+        "length": 1
+    },
+    {
+        "_id": "00005",
+        "name": "don't mistake kindness for weakness",
+        "content": "One thing people need to understand about extremely kind, nice, and loving people, is that their other side is just as extreme. It's the hell they survive that makes them gentle. Don't mistake their self-control for weakness. The best in them is sleeping, not dead.",
+        "occasions": [
+            "speech",
+            "work",
+            "chat"
+        ],
+        "type": "quote",
+        "creator": {
+            "_id": "100004",
+            "username": "abcUser"
+        },
+        "collectedBy": [
+            {
+                "_id": "100002",
+                "username": "inspiringSpeaker"
+            },
+            {
+                "_id": "100005",
+                "username": "lol111"
+            }
+        ],
+        "comments": [
+            {
+                "_id": "200013",
+                "comment": "this is very true. don't abuse people's kindness. just be kind to everyone."
+            }
+        ],
+        "theme": "kindness",
+        "length": 2
+    }
+]
