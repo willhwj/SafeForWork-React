@@ -12,7 +12,15 @@ export default class Snippet3 extends React.Component {
         allSnippets: [],
         newComment: '',
         newCommentUsername: '',
-        displayModal: false
+        displayModal: false,
+
+        // state variables for add & edit snippet
+        snippetCreator: '',
+        snippetContent: '',
+        snippetTheme: '',
+        snippetOccasions: [],
+        snippetType: '',
+        snippetLength: -1
     };
 
     // read all snippets into state variable
@@ -30,6 +38,22 @@ export default class Snippet3 extends React.Component {
         this.setState({
             [event.target.name]: event.target.value,
         })
+    }
+
+    // utility function to update state variable of array with new values selected in checkboxes
+    updateArray = (event)=>{
+        if(this.state[event.target.name].includes(event.target.value)){
+            let indexToRemove = this.state[event.target.name].indexOf(event.target.value);
+            let cloned = [...this.state[event.target.name]];
+            cloned.splice(indexToRemove,1);
+            this.setState({
+                [event.target.name]: cloned
+            })
+        } else {
+            this.setState({
+                [event.target.name]: [...this.state[event.target.name], event.target.value]
+            })
+        }
     }
 
     // function to render form for adding new comment
@@ -126,49 +150,49 @@ export default class Snippet3 extends React.Component {
                 <div>
                     <div className="mb-3">
                         <label for="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                        <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp"/>
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
                         <label for="snippetContent" className="form-label">Enter Your Snippet Content</label>
-                        <textarea row="3" className="form-control" id="snippetContent" />
+                        <textarea row="3" className="form-control" id="snippetContent" name='snippetContent' value={this.state.snippetContent} onChange={this.updateField} />
                     </div>
                     <div>On Which Occasions is this Snippet Suitable?</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="networking" checked />
-                        <label className="form-check-label" for="networking">
+                        <input className="form-check-input" type="checkbox" value="" id="work" name='snippetOccasions' value="work"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('work')} />
+                        <label className="form-check-label" for="work">
                             Work
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="networking" checked />
+                        <input className="form-check-input" type="checkbox" value="" id="networking" name='snippetOccasions' value="networking"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('networking')} />
                         <label className="form-check-label" for="networking">
                             Networking
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="presentation" checked />
+                        <input className="form-check-input" type="checkbox" value="" id="presentation" name='snippetOccasions' value="presentation"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('presentation')} />
                         <label className="form-check-label" for="presentation">
                             Presentation
                         </label>
                     </div>
                     <div>What's the Type of the Snippet?</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="joke" />
+                        <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={this.state.snippetType==="joke"} onChange={this.updateField}/>
                         <label className="form-check-label" for="joke">
                             Joke
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="story" />
+                        <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={this.state.snippetType==="story"} onChange={this.updateField}/>
                         <label className="form-check-label" for="story">
                             Story
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="flexRadioDefault" id="quote" checked />
+                        <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={this.state.snippetType==="quote"} onChange={this.updateField}/>
                         <label className="form-check-label" for="quote">
-                            Story
+                            Quote
                         </label>
                     </div>
                     <div>How many minutes does it take to narrate this snippet?</div>
