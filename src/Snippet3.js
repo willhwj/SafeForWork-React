@@ -27,7 +27,6 @@ export default class Snippet3 extends React.Component {
     async componentDidMount() {
         let response = await axios.get('./sample-data/snippets/snippetList.json')
         let snippets = response.data;
-        console.log('response data is ', snippets);
         this.setState({
             allSnippets: snippets
         })
@@ -41,11 +40,11 @@ export default class Snippet3 extends React.Component {
     }
 
     // utility function to update state variable of array with new values selected in checkboxes
-    updateArray = (event)=>{
-        if(this.state[event.target.name].includes(event.target.value)){
+    updateArray = (event) => {
+        if (this.state[event.target.name].includes(event.target.value)) {
             let indexToRemove = this.state[event.target.name].indexOf(event.target.value);
             let cloned = [...this.state[event.target.name]];
-            cloned.splice(indexToRemove,1);
+            cloned.splice(indexToRemove, 1);
             this.setState({
                 [event.target.name]: cloned
             })
@@ -95,33 +94,50 @@ export default class Snippet3 extends React.Component {
         )
     }
 
+    updateSnippetState = (snippet) => {
+        this.setState({
+            displayModal: true,
+            snippetCreator: snippet.creator.username,
+            snippetContent: snippet.content,
+            snippetTheme: snippet.theme,
+            snippetOccasions: [...snippet.occasions],
+            snippetType: snippet.type,
+            snippetLength: snippet.length
+        });
+    }
+
     // utility function to show or hide any display modal and collapsible displays
     updateShowHide = (event) => {
+        // scenarios when user clicks on a snippet
         if (event.target.name === 'snippetStatus') {
             switch (true) {
+                // the clicked snippet is already open and user clicks on it again
                 case this.state[event.target.name] && this.state.currentSnippet === event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: false,
                     });
                     break;
-
+                // the clicked snippet is not open and user clicks on it again
                 case !this.state[event.target.name] && this.state.currentSnippet === event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: true,
                     });
                     break;
+                // user clicks on a different snippet
                 case this.state.currentSnippet !== event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: true,
                         currentSnippet: event.target.getAttribute('data-snippet-id'),
                         commentStatus: true,
-                        addNewComment: false
+                        addNewComment: false,
                     });
                     break;
                 default:
                     console.log('invalid scenario in switch statement for updateShowHide function');
             }
-        } else {
+        }
+        // scenarios when user clicks on buttons within a snippet
+        else {
             this.state[event.target.name] ?
                 this.setState({
                     [event.target.name]: false
@@ -144,13 +160,13 @@ export default class Snippet3 extends React.Component {
     }
 
     // function to display form for adding new snippets
-    displaySnippetForm=() => {
+    displaySnippetForm = () => {
         return (
             <React.Fragment>
                 <div>
                     <div className="mb-3">
                         <label for="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp"/>
+                        <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp" />
                         <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div className="mb-3">
@@ -159,38 +175,57 @@ export default class Snippet3 extends React.Component {
                     </div>
                     <div>On Which Occasions is this Snippet Suitable?</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="work" name='snippetOccasions' value="work"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('work')} />
+                        <input className="form-check-input" type="checkbox" id="work" name='snippetOccasions' value="work" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('work')} />
                         <label className="form-check-label" for="work">
                             Work
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="networking" name='snippetOccasions' value="networking"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('networking')} />
+                        <input className="form-check-input" type="checkbox" id="networking" name='snippetOccasions' value="networking" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('networking')} />
                         <label className="form-check-label" for="networking">
                             Networking
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" value="" id="presentation" name='snippetOccasions' value="presentation"  onChange={this.updateArray} checked={this.state.snippetOccasions.includes('presentation')} />
+                        <input className="form-check-input" type="checkbox" id="presentation" name='snippetOccasions' value="presentation" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('presentation')} />
                         <label className="form-check-label" for="presentation">
                             Presentation
                         </label>
                     </div>
+                    <div>What's the Theme of the Snippet?</div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="snippetTheme" value="life" id="life" checked={this.state.snippetTheme === "life"} onChange={this.updateField} />
+                        <label className="form-check-label" for="life">
+                            Life
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="snippetTheme" value="hardwork" id="hardwork" checked={this.state.snippetTheme === "hardwork"} onChange={this.updateField} />
+                        <label className="form-check-label" for="hardwork">
+                            Hardwork
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="snippetTheme" value="kindness" id="kindness" checked={this.state.snippetTheme === "kindness"} onChange={this.updateField} />
+                        <label className="form-check-label" for="kindness">
+                            Kindness
+                        </label>
+                    </div>
                     <div>What's the Type of the Snippet?</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={this.state.snippetType==="joke"} onChange={this.updateField}/>
+                        <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={this.state.snippetType === "joke"} onChange={this.updateField} />
                         <label className="form-check-label" for="joke">
                             Joke
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={this.state.snippetType==="story"} onChange={this.updateField}/>
+                        <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={this.state.snippetType === "story"} onChange={this.updateField} />
                         <label className="form-check-label" for="story">
                             Story
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={this.state.snippetType==="quote"} onChange={this.updateField}/>
+                        <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={this.state.snippetType === "quote"} onChange={this.updateField} />
                         <label className="form-check-label" for="quote">
                             Quote
                         </label>
@@ -265,7 +300,6 @@ export default class Snippet3 extends React.Component {
     }
 
     displayOneSnippet = (oneSnippet) => {
-        console.log(oneSnippet);
         return (
             <React.Fragment key={oneSnippet._id} >
                 <div className="accordion-item">
@@ -282,7 +316,7 @@ export default class Snippet3 extends React.Component {
                             {oneSnippet.content}
                         </div>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="update" onClick={this.updateShowHide}>Edit</button>{this.displayModalBox()}
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="update" onClick={() => { this.updateSnippetState(oneSnippet) }}>Edit</button>{this.displayModalBox()}
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="delete" onClick={this.updateShowHide}>Delete</button>{this.displayModalBox()}
                         </div>
                         <section className="m-2 attribute">

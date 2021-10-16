@@ -33,7 +33,7 @@ export default class Main extends React.Component {
             <React.Fragment>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="container-fluid">
-                        <a className="navbar-brand" href="#">Navbar</a>
+                        <span className="navbar-brand">Navbar</span>
                         <button className="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                             <button className="navbar-toggler-icon"></button>
                         </button>
@@ -43,10 +43,10 @@ export default class Main extends React.Component {
                                     <button className="nav-link active navbarBtn" aria-current="page">Home</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link navbarBtn" href="#">About</button>
+                                    <button className="nav-link navbarBtn">About</button>
                                 </li>
                                 <li className="nav-item dropdown" onMouseOver={this.updateStatus} onMouseLeave={this.updateStatus}>
-                                    <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" role="button" name="dropdownStatus" aria-expanded="false">
+                                    <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
                                         See Snippets By
                                     </button>
                                     {this.state.dropdownStatus===true?
