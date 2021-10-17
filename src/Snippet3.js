@@ -96,18 +96,15 @@ export default class Snippet3 extends React.Component {
                     <div className="collapse show m-2" >
                         <div className="card card-body m-1">
                             {eachComment.comment}
-                        </div>
-                        <div class="card-footer text-muted">
-                            Posted on {eachComment.date}
-                        </div>
-                        <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={() => { this.updateCommentState(eachComment, snippet._id) }}>Edit</button>
-
-                            {this.displayModalBox()}
-
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={this.updateShowHide}>Delete</button>
-
-                            {this.displayModalBox()}
+                            <div class="card-footer text-muted m-0 p-0">
+                                Posted on {eachComment.date}
+                            </div>
+                            <div>
+                                <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" onClick={() => { this.updateCommentState(eachComment, snippet._id) }}>Edit</button>
+                                {this.displayModalBox()}
+                                <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={this.updateShowHide}>Delete</button>
+                                {this.displayModalBox()}
+                            </div>
                         </div>
                     </div>
                 </React.Fragment>
@@ -334,7 +331,7 @@ export default class Snippet3 extends React.Component {
     }
 
     // function to conditionally render display within the displayModalBox, depending on the user action of the state.
-    switchDisplay=()=>{
+    switchDisplay = () => {
         switch (this.state.action) {
             case "deleteSnippet":
                 return (
@@ -432,7 +429,7 @@ export default class Snippet3 extends React.Component {
                 );
         }
     }
-    
+
     // utility function to display a modal popup for all CRUD operations related to snippets and comments
     displayModalBox() {
         if (this.state.displayModal) {
