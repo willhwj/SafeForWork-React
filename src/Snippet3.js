@@ -5,23 +5,31 @@ import './snippet.css'
 export default class Snippet3 extends React.Component {
 
     state = {
+        // state variables for read n display snippets & comments
         snippetStatus: true,
         currentSnippet: "00001",
         commentStatus: true,
-        addNewComment: false,
         allSnippets: [],
-        newComment: '',
-        newCommentUsername: '',
         displayModal: false,
 
-        // state variables for add & edit snippet
+        // state variables for add & edit snippets
         snippetCreator: '',
         snippetContent: '',
         snippetTheme: '',
         snippetOccasions: [],
         snippetType: '',
         snippetLength: -1,
-        action: ""
+        snippetID: '',
+
+        // state variables for add & edit comments
+        comment: '',
+        commentUsername: '',
+        addNewComment: false,
+        snippetIDOfComment: '',
+        commentID: '',
+
+        // to indicate create, update or update to snippet or comment
+        action: "",
     };
 
     // read all snippets into state variable
@@ -65,7 +73,7 @@ export default class Snippet3 extends React.Component {
                     <input
                         name="newComment"
                         type="text"
-                        value={this.state.newComment}
+                        value={this.state.comment}
                         onChange={this.updateField}></input>
                 </div>
                 <div>
@@ -73,7 +81,7 @@ export default class Snippet3 extends React.Component {
                     <input
                         name="newCommentUsername"
                         type="text"
-                        value={this.state.newCommentUsername}
+                        value={this.state.commentUsername}
                         onChange={this.updateField}></input>
                 </div>
             </React.Fragment>
@@ -89,9 +97,61 @@ export default class Snippet3 extends React.Component {
                         <div className="card card-body m-1">
                             {eachComment.comment}
                         </div>
+                        <div class="card-footer text-muted">
+                            Posted on {eachComment.date}
+                        </div>
+                        <div>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={() => { this.updateCommentState(eachComment, snippet._id) }}>Edit</button>
+
+                            {this.displayModalBox()}
+
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={this.updateShowHide}>Delete</button>
+
+                            {this.displayModalBox()}
+                        </div>
                     </div>
                 </React.Fragment>
             )
+        )
+    }
+
+    // function to populate comment form with current comment for edit
+    updateCommentState = (comment, snippetID) => {
+        if (typeof comment._id === "string") {
+            this.setState({
+                action: "updateComment",
+                displayModal: true,
+                commentUsername: comment.username,
+                comment: comment.comment,
+                commentID: comment._id,
+                sniipetIDOfComment: snippetID
+            })
+        } else {
+            this.setState({
+                action: "",
+                displayModal: false,
+                commentUsername: "",
+                comment: "",
+                commentID: "",
+                sniipetIDOfComment: ""
+            })
+        }
+    }
+
+    // function to display form for edit & add comment
+    displayCommentForm = () => {
+        return (
+            <div>
+                <div className="mb-3">
+                    <label for="commentUsername" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="commentUsername" name='commentUsername' value={this.state.commentUsername} onChange={this.updateField} aria-describedby="emailHelp" />
+                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div className="mb-3">
+                    <label for="comment" className="form-label">Enter Your Snippet Content</label>
+                    <textarea row="3" className="form-control" id="comment" name='comment' value={this.state.comment} onChange={this.updateField} />
+                </div>
+            </div>
         )
     }
 
@@ -110,9 +170,9 @@ export default class Snippet3 extends React.Component {
         })
     }
 
-    // function to update snippet related state variables so that the snippet form shows existing snippet for edit, empty for add, and re-set state variables to null when change is cancelled.
+    // function to populate snippet form with current snippet info for edit.
     updateSnippetState = (snippet) => {
-        if ( typeof snippet._id ==="string"){
+        if (typeof snippet._id === "string") {
             this.setState({
                 action: "updateSnippet",
                 displayModal: true,
@@ -195,138 +255,201 @@ export default class Snippet3 extends React.Component {
     // function to display form for adding new snippets
     displaySnippetForm = () => {
         return (
-            <React.Fragment>
-                <div>
-                    <div className="mb-3">
-                        <label for="exampleInputEmail1" className="form-label">Email address</label>
-                        <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp" />
-                        <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
-                    </div>
-                    <div className="mb-3">
-                        <label for="snippetContent" className="form-label">Enter Your Snippet Content</label>
-                        <textarea row="3" className="form-control" id="snippetContent" name='snippetContent' value={this.state.snippetContent} onChange={this.updateField} />
-                    </div>
-                    <div>On Which Occasions is this Snippet Suitable?</div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="work" name='snippetOccasions' value="work" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('work')} />
-                        <label className="form-check-label" for="work">
-                            Work
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="networking" name='snippetOccasions' value="networking" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('networking')} />
-                        <label className="form-check-label" for="networking">
-                            Networking
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="checkbox" id="presentation" name='snippetOccasions' value="presentation" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('presentation')} />
-                        <label className="form-check-label" for="presentation">
-                            Presentation
-                        </label>
-                    </div>
-                    <div>What's the Theme of the Snippet?</div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="life" id="life" checked={this.state.snippetTheme === "life"} onChange={this.updateField} />
-                        <label className="form-check-label" for="life">
-                            Life
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="hardwork" id="hardwork" checked={this.state.snippetTheme === "hardwork"} onChange={this.updateField} />
-                        <label className="form-check-label" for="hardwork">
-                            Hardwork
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="kindness" id="kindness" checked={this.state.snippetTheme === "kindness"} onChange={this.updateField} />
-                        <label className="form-check-label" for="kindness">
-                            Kindness
-                        </label>
-                    </div>
-                    <div>What's the Type of the Snippet?</div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={this.state.snippetType === "joke"} onChange={this.updateField} />
-                        <label className="form-check-label" for="joke">
-                            Joke
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={this.state.snippetType === "story"} onChange={this.updateField} />
-                        <label className="form-check-label" for="story">
-                            Story
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={this.state.snippetType === "quote"} onChange={this.updateField} />
-                        <label className="form-check-label" for="quote">
-                            Quote
-                        </label>
-                    </div>
-                    <div>How many minutes does it take to narrate this snippet?</div>
-                    <select className="form-select" name="snippetLength" onChange={this.updateField} value={this.state.snippetLength} aria-label="Default select example">
-                        <option value={1}>Less than One Minute</option>
-                        <option value={2}>One to Two Minutes</option>
-                        <option value={3}>Two to Three Minutes</option>
-                        <option value={4}>Above Three Minutes</option>
-                    </select>
+            <div>
+                <div className="mb-3">
+                    <label for="exampleInputEmail1" className="form-label">Email address</label>
+                    <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp" />
+                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
-            </React.Fragment>
+                <div className="mb-3">
+                    <label for="snippetContent" className="form-label">Enter Your Snippet Content</label>
+                    <textarea row="3" className="form-control" id="snippetContent" name='snippetContent' value={this.state.snippetContent} onChange={this.updateField} />
+                </div>
+                <div>On Which Occasions is this Snippet Suitable?</div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="checkbox" id="work" name='snippetOccasions' value="work" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('work')} />
+                    <label className="form-check-label" for="work">
+                        Work
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="checkbox" id="networking" name='snippetOccasions' value="networking" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('networking')} />
+                    <label className="form-check-label" for="networking">
+                        Networking
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="checkbox" id="presentation" name='snippetOccasions' value="presentation" onChange={this.updateArray} checked={this.state.snippetOccasions.includes('presentation')} />
+                    <label className="form-check-label" for="presentation">
+                        Presentation
+                    </label>
+                </div>
+                <div>What's the Theme of the Snippet?</div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetTheme" value="life" id="life" checked={this.state.snippetTheme === "life"} onChange={this.updateField} />
+                    <label className="form-check-label" for="life">
+                        Life
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetTheme" value="hardwork" id="hardwork" checked={this.state.snippetTheme === "hardwork"} onChange={this.updateField} />
+                    <label className="form-check-label" for="hardwork">
+                        Hardwork
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetTheme" value="kindness" id="kindness" checked={this.state.snippetTheme === "kindness"} onChange={this.updateField} />
+                    <label className="form-check-label" for="kindness">
+                        Kindness
+                    </label>
+                </div>
+                <div>What's the Type of the Snippet?</div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={this.state.snippetType === "joke"} onChange={this.updateField} />
+                    <label className="form-check-label" for="joke">
+                        Joke
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={this.state.snippetType === "story"} onChange={this.updateField} />
+                    <label className="form-check-label" for="story">
+                        Story
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={this.state.snippetType === "quote"} onChange={this.updateField} />
+                    <label className="form-check-label" for="quote">
+                        Quote
+                    </label>
+                </div>
+                <div>How many minutes does it take to narrate this snippet?</div>
+                <select className="form-select" name="snippetLength" onChange={this.updateField} value={this.state.snippetLength} aria-label="Default select example">
+                    <option value={1}>Less than One Minute</option>
+                    <option value={2}>One to Two Minutes</option>
+                    <option value={3}>Two to Three Minutes</option>
+                    <option value={4}>Above Three Minutes</option>
+                </select>
+            </div>
         )
     }
 
+    // function to conditionally render display within the displayModalBox, depending on the user action of the state.
+    switchDisplay=()=>{
+        switch (this.state.action) {
+            case "deleteSnippet":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateShowHide}></button>
+                        </div>
+                        <div className="modal-body">
+                            <button className="btn btn-danger">Are You Sure You Want to Delete This Snippet?</button>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" name="displayModal" onClick={this.updateShowHide}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+            case "deleteComment":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateSnippetState}></button>
+                        </div>
+                        <div className="modal-body">
+                            <button className="btn btn-danger">Are You Sure You Want to Delete This Comment?</button>
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" name="displayModal" onClick={this.updateShowHide}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+            case "updateSnippet":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Edit Snippet</h5>
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateSnippetState}></button>
+                        </div>
+                        <div className="modal-body">
+                            {this.displaySnippetForm()}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.updateSnippetState}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+            case "updateComment":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Edit Comment</h5>
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
+                        </div>
+                        <div className="modal-body">
+                            {this.displayCommentForm()}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.updateCommentState}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+            case "createSnippet":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Edit Snippet</h5>
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateSnippetState}></button>
+                        </div>
+                        <div className="modal-body">
+                            {this.displaySnippetForm()}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.updateSnippetState}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+            case "createComment":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Edit Snippet</h5>
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
+                        </div>
+                        <div className="modal-body">
+                            {this.displayCommentForm()}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.updateCommentState}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+        }
+    }
+    
     // utility function to display a modal popup for all CRUD operations related to snippets and comments
     displayModalBox() {
         if (this.state.displayModal) {
             return (
-                <React.Fragment>
-                    <div
-                        className="modal show fade"
-                        tabIndex="-1"
-                        style={{
-                            display: "block",
-                            backgroundColor: "rgba(0.5, 0.5, 0.5, 0.5)"
-                        }}>
-                        <div className="modal-dialog modal-lg">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                {this.state.action==="delete"?
-                                null:
-                                <h5 className="modal-title">New Comment</h5>
-                                }
-                                <button type="button"
-                                        className="btn-close"
-                                        data-bs-dismiss="modal"
-                                        aria-label="Close"
-                                        name="displayModal"
-                                        onClick={this.updateSnippetState}></button>
-                                </div>
-                                <div className="modal-body">
-                                    {this.state.action==="delete"? 
-                                    <button className="btn btn-danger">Are You Sure You Want to Delete This Snippet?</button>:
-                                    this.displaySnippetForm()}
-                                </div>
-                                <div className="modal-footer">
-                                    <button
-                                        type="button"
-                                        className="btn btn-secondary"
-                                        data-bs-dismiss="modal"
-                                        name="cancelSnippet"
-                                        onClick={this.updateSnippetState}>
-                                        Cancel
-                                    </button>
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary"
-                                        name="confirmSnippet"
-                                        onClick={()=>{this.sendToServer(this.state.action)}}>
-                                        Confirm
-                                    </button>
-                                </div>
-                            </div>
+                <div
+                    className="modal show fade"
+                    tabIndex="-1"
+                    style={{
+                        display: "block",
+                        backgroundColor: "rgba(0.5, 0.5, 0.5, 0.5)"
+                    }}>
+                    <div className="modal-dialog modal-lg">
+                        <div className="modal-content">
+                            {this.switchDisplay()}
                         </div>
                     </div>
-                </React.Fragment>
+                </div>
             );
         } else {
             return null;
@@ -350,12 +473,12 @@ export default class Snippet3 extends React.Component {
                             {oneSnippet.content}
                         </div>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={() => { this.updateSnippetState(oneSnippet)}}>Edit</button>
-                            
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={() => { this.updateSnippetState(oneSnippet) }}>Edit</button>
+
                             {this.displayModalBox()}
-                            
+
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Delete</button>
-                            
+
                             {this.displayModalBox()}
                         </div>
                         <section className="m-2 attribute">
