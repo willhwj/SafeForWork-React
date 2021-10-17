@@ -10,14 +10,9 @@ function App() {
   return (
     <React.Fragment>
       <Main />
-      <div className="card-group">
-        <Category
-          filePath={"themes.json"}/>
-        <Category
-          filePath={"themes.json"} />
-        <Category
-          filePath={"themes.json"} />
-      </div>
+      <Category categoryType={"theme"}/>
+      <Category categoryType={"type"}/>
+      
       {/* <div className="accordion" id="accordionExample">
         <Snippet filePath={'snippet1.json'} snippetInitialStatus={true} />
         <Snippet filePath={'snippet2.json'} snippetInitialStatus={false} />

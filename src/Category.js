@@ -2,47 +2,42 @@ import React from 'react';
 import axios from 'axios';
 
 export default class Category extends React.Component {
-// path state variable is used to store the document path of the data file
+    // path state variable is used to store the document path of the data file
     state = {
-        catName: null,
-        optionName: null,
-        optionDescription: null,
-        numSnippets: null,
-        numComments: null,
-        numCollected: null,
-        image: null,
-        path: this.props.filePath
+        catList: [],
+        catType: this.props.categoryType,
     }
 
-    async componentDidMount(){
-        let category ={};
+    async componentDidMount() {
+        let categoryList = [];
         let url = './sample-data/categories/';
-        await axios.get(url + this.state.path).then(response => category = response.data[0]);
+        await axios.get(url + this.state.catType + ".json").then(response => categoryList = response.data);
 
+        console.log("categoryList is ", categoryList);
         this.setState({
-            optionName: category.optionName,
-            optionDescription: category.optionDescription,
-            numSnippets: category.numSnippets,
-            numComments: category.numComments,
-            numCollected: category.numCollected,
-            image: category.imagePath
+            catList: categoryList
         })
     }
-    
+
     render() {
         return (
-            <React.Fragment>              
-                    <div className="card">
-                        <img src={`./images/${this.state.image}`} className="card-img-top" alt="..." />
-                        <div className="card-body">
-                            <h5 className="card-title text-center">{this.state.optionName}</h5>
-                            <p className="card-text">{this.state.optionDescription}</p>
-                            <p className="card-text my-0 py-0"><small class="text-muted">There are {this.state.numSnippets} snippets under this {this.state.category}</small></p>
-                            <p className="card-text my-0 py-0"><small class="text-muted">They attracted {this.state.numComments} comments. Leave your thought here, too!</small></p>
-                            <p className="card-text my-0 py-0"><small class="text-muted">And have been collected {this.state.numCollected} times. Collect your favourites, too!</small></p>
-                        </div>
+            <div className="card-group">
+            {this.state.catList.map(eachCategory => 
+                <div className="card">
+                    {typeof eachCategory.imagePath==="string"?
+                    <img src={`./images/${eachCategory.imagePath}`} className="card-img-top" alt="..." />
+                    : null
+                    }
+                    <div className="card-body">
+                        <h5 className="card-title text-center">{eachCategory.optionName}</h5>
+                        <p className="card-text">{eachCategory.optionDescription}</p>
+                        <p className="card-text my-0 py-0"><small class="text-muted">There are {eachCategory.numSnippets} snippets under this {this.state.catType}</small></p>
+                        <p className="card-text my-0 py-0"><small class="text-muted">They attracted {eachCategory.numComments} comments. Leave your thought here, too!</small></p>
+                        <p className="card-text my-0 py-0"><small class="text-muted">And have been collected {eachCategory.numCollected} times. Collect your favourites, too!</small></p>
                     </div>
-            </React.Fragment>
+                </div>
+            )}
+            </div>
         )
     }
 }
