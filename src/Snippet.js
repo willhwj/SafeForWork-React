@@ -611,16 +611,16 @@ export default class Snippet extends React.Component {
                             {this.displayOccasionList(oneSnippet)}
                             <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
                         </section>
-                        {typeof oneSnippet.comments != "undefined" ?
-                            <p>
-                                <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
-                                    {oneSnippet.comments.length} Comments
-                                </button>
-                            </p>
-                            : null}
-                        {typeof oneSnippet.comments != "undefined" && this.state.commentStatus && oneSnippet.comments.length >0 ?
+                        <p>
+                            <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
+                                {typeof oneSnippet.comments != "undefined" ? oneSnippet.comments.length + " Comments" : "No Comments Yet"}
+                            </button>
+                        </p>
+                        <div>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Add New Comment</button>
+                        </div>
+                        {typeof oneSnippet.comments != "undefined" && this.state.commentStatus && oneSnippet.comments.length > 0 ?
                             <div>
-                                <div><button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Add New Comment</button></div>
                                 {this.state.addNewComment ? this.displayAddComment() : null}
                                 {this.displayCommentList(oneSnippet)}
                             </div>
