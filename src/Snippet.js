@@ -102,7 +102,7 @@ export default class Snippet extends React.Component {
                                 Posted on {eachComment.date}
                             </div>
                             <div>
-                                <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" data-crud="editComment" onClick={(event) => { this.updateCommentState(eachComment, snippet._id, event) }}>Edit</button>
+                                <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" data-crud="updateComment" onClick={(event) => { this.updateCommentState(eachComment, snippet._id, event) }}>Edit</button>
                                 {this.displayModalBox()}
                                 <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={(event) => { this.updateCommentState(eachComment, snippet._id, event) }}>Delete</button>
                                 {this.displayModalBox()}
@@ -276,10 +276,10 @@ export default class Snippet extends React.Component {
                 response = await axios.patch(url + `/${this.state.snippetIDOfComment}/comments/delete/${this.state.commentID}`);
                 clonedSnippets = this.state.allSnippets;
                 indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
-                // method 1:
+                // method 1: get updated comment from state variable directly, use array filter function
                 // newSnippet = {...this.state.allSnippets[indexOfChange]};
                 // newSnippet.comments=newSnippet.comments.filter( eachComment => eachComment._id !== this.state.commentID);
-                // method 2:
+                // method 2: use the updated snippet from express server response
                 newSnippet = response.data.value;
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
                 console.log(clonedSnippets);
@@ -295,6 +295,31 @@ export default class Snippet extends React.Component {
                 });
                 break;
             case "updateComment":
+                console.log("enter updateComment in sendToServer");
+                // send new snippet to express server for processing
+                response = await axios.patch(url + `/${this.state.snippetIDOfComment}/comments/update/${this.state.commentID}`, {
+                    username: this.state.commentUsername,
+                    comment: this.state.comment
+                });
+                clonedSnippets = this.state.allSnippets;
+                indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
+                // method 1: use array map function
+                // newSnippet = {...this.state.allSnippets[indexOfChange]};
+                // newSnippet.comments=newSnippet.comments.map( eachComment._id === this.state.commentID? eachComment.comment = this.state.comment : null);
+                // method 2: get the updated snippet from express server response
+                newSnippet = response.data.value;
+                clonedSnippets.splice(indexOfChange, 1, newSnippet);
+                console.log(clonedSnippets);
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    commentUsername: "",
+                    comment: "",
+                    addNewComment: false,
+                    commentID: "",
+                    snippetIDOfComment: ""
+                });
                 break;
             case "createComment":
                 console.log("enter createComment in sendToServer");
@@ -534,7 +559,7 @@ export default class Snippet extends React.Component {
                         </div>
                     </React.Fragment>
                 );
-                case "createSnippet":
+            case "createSnippet":
                 return (
                     <React.Fragment>
                         <div className="modal-header">
@@ -550,7 +575,7 @@ export default class Snippet extends React.Component {
                         </div>
                     </React.Fragment>
                 );
-                case "deleteComment":
+            case "deleteComment":
                     return (
                         <React.Fragment>
                             <div className="modal-header">
@@ -565,7 +590,7 @@ export default class Snippet extends React.Component {
                             </div>
                         </React.Fragment>
                     );
-                case "updateComment":
+            case "updateComment":
                 return (
                     <React.Fragment>
                         <div className="modal-header">
