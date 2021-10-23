@@ -285,10 +285,10 @@ export default class Snippet extends React.Component {
                 let postDay = Date ();
                 console.log("postDay is ", postDay);
                 newSnippet.comments.push({
-                    "_id": response.data.insertedId,
-                    "username": this.state.commentUsername,
-                    "date": postDay,
-                    "comment": this.state.comment
+                    "_id": response.data.value.comments[0]._id,
+                    "username": response.data.value.comments[0].username,
+                    "date": response.data.value.comments[0].date,
+                    "comment": response.data.value.comments[0].comment
                 });
                 // console.log("newSnippet is ", newSnippet);
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
