@@ -102,9 +102,9 @@ export default class Snippet extends React.Component {
                                 Posted on {eachComment.date}
                             </div>
                             <div>
-                                <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" onClick={() => { this.updateCommentState(eachComment, snippet._id) }}>Edit</button>
+                                <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" data-crud="editComment" onClick={(event) => { this.updateCommentState(eachComment, snippet._id, event) }}>Edit</button>
                                 {this.displayModalBox()}
-                                <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={this.updateShowHide}>Delete</button>
+                                <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={(event) => { this.updateCommentState(eachComment, snippet._id, event) }}>Delete</button>
                                 {this.displayModalBox()}
                             </div>
                         </div>
@@ -115,10 +115,10 @@ export default class Snippet extends React.Component {
     }
 
     // function to populate comment form with current comment for edit
-    updateCommentState = (comment, snippetID) => {
+    updateCommentState = (comment, snippetID, event) => {
         if (typeof comment._id === "string") {
             this.setState({
-                action: "updateComment",
+                action: event.target.getAttribute("data-crud"),
                 displayModal: true,
                 commentUsername: comment.username,
                 comment: comment.comment,
@@ -162,7 +162,9 @@ export default class Snippet extends React.Component {
         switch (action) {
             case "deleteSnippet":
                 console.log("enter deleteSnippet in sendToServer");
+                // method 1:
                 // let response = await axios.delete(url + "/delete/"+ this.state.currentSnippetID);
+                // method 2:
                 response = await axios.delete(url + `/delete/${this.state.currentSnippetID}`);
                 console.log("response of deleteSnippet is ", response);
                 clonedSnippets = this.state.allSnippets
@@ -269,6 +271,28 @@ export default class Snippet extends React.Component {
                 });
                 break;
             case "deleteComment":
+                console.log("enter deleteComment in sendToServer");
+                // send new snippet to express server for processing
+                response = await axios.patch(url + `/${this.state.snippetIDOfComment}/comments/delete/${this.state.commentID}`);
+                clonedSnippets = this.state.allSnippets;
+                indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
+                // method 1:
+                // newSnippet = {...this.state.allSnippets[indexOfChange]};
+                // newSnippet.comments=newSnippet.comments.filter( eachComment => eachComment._id !== this.state.commentID);
+                // method 2:
+                newSnippet = response.data.value;
+                clonedSnippets.splice(indexOfChange, 1, newSnippet);
+                console.log(clonedSnippets);
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    commentUsername: "",
+                    comment: "",
+                    addNewComment: false,
+                    commentID: "",
+                    snippetIDOfComment: ""
+                });
                 break;
             case "updateComment":
                 break;
@@ -282,15 +306,12 @@ export default class Snippet extends React.Component {
                 clonedSnippets = this.state.allSnippets;
                 indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
                 newSnippet = {...this.state.allSnippets[indexOfChange]};
-                let postDay = Date ();
-                console.log("postDay is ", postDay);
                 newSnippet.comments.push({
                     "_id": response.data.value.comments[0]._id,
                     "username": response.data.value.comments[0].username,
                     "date": response.data.value.comments[0].date,
                     "comment": response.data.value.comments[0].comment
                 });
-                // console.log("newSnippet is ", newSnippet);
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
 
                 this.setState({
@@ -497,21 +518,6 @@ export default class Snippet extends React.Component {
                         </div>
                     </React.Fragment>
                 );
-            case "deleteComment":
-                return (
-                    <React.Fragment>
-                        <div className="modal-header">
-                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateSnippetState}></button>
-                        </div>
-                        <div className="modal-body">
-                            <button className="btn btn-danger">Are You Sure You Want to Delete This Comment?</button>
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" name="displayModal" onClick={this.updateShowHide}>Cancel</button>
-                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
-                        </div>
-                    </React.Fragment>
-                );
             case "updateSnippet":
                 return (
                     <React.Fragment>
@@ -528,23 +534,7 @@ export default class Snippet extends React.Component {
                         </div>
                     </React.Fragment>
                 );
-            case "updateComment":
-                return (
-                    <React.Fragment>
-                        <div className="modal-header">
-                            <h5 className="modal-title">Edit Comment</h5>
-                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
-                        </div>
-                        <div className="modal-body">
-                            {this.displayCommentForm()}
-                        </div>
-                        <div className="modal-footer">
-                            <button type="button" className="btn btn-secondary" onClick={this.updateCommentState}>Cancel</button>
-                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
-                        </div>
-                    </React.Fragment>
-                );
-            case "createSnippet":
+                case "createSnippet":
                 return (
                     <React.Fragment>
                         <div className="modal-header">
@@ -556,6 +546,37 @@ export default class Snippet extends React.Component {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" onClick={this.updateSnippetState}>Cancel</button>
+                            <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                        </div>
+                    </React.Fragment>
+                );
+                case "deleteComment":
+                    return (
+                        <React.Fragment>
+                            <div className="modal-header">
+                                <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
+                            </div>
+                            <div className="modal-body">
+                                <button className="btn btn-danger">Are You Sure You Want to Delete This Comment?</button>
+                            </div>
+                            <div className="modal-footer">
+                                <button type="button" className="btn btn-secondary" name="displayModal" onClick={this.updateCommentState}>Cancel</button>
+                                <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
+                            </div>
+                        </React.Fragment>
+                    );
+                case "updateComment":
+                return (
+                    <React.Fragment>
+                        <div className="modal-header">
+                            <h5 className="modal-title">Edit Comment</h5>
+                            <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
+                        </div>
+                        <div className="modal-body">
+                            {this.displayCommentForm()}
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" onClick={this.updateCommentState}>Cancel</button>
                             <button type="button" className="btn btn-primary" onClick={() => { this.sendToServer(this.state.action) }}>Confirm</button>
                         </div>
                     </React.Fragment>
