@@ -7,12 +7,13 @@ export default class Snippet extends React.Component {
     state = {
         // state variables for read n display snippets & comments
         snippetStatus: true,
-        currentSnippet: "00001",
+        currentSnippetID: "",
         commentStatus: true,
         allSnippets: [],
         displayModal: false,
 
         // state variables for add & edit snippets
+        snippetName: '',
         snippetCreator: '',
         snippetContent: '',
         snippetTheme: '',
@@ -34,7 +35,7 @@ export default class Snippet extends React.Component {
 
     // read all snippets into state variable
     async componentDidMount() {
-        let response = await axios.get('./sample-data/snippets/snippetList.json')
+        let response = await axios.get('http://localhost:8888/snippets')
         let snippets = response.data;
         this.setState({
             allSnippets: snippets
@@ -43,6 +44,7 @@ export default class Snippet extends React.Component {
 
     // utility function to update state variable with new value entered by users
     updateField = (event) => {
+        // console.log("event is ", event.target.name, event.target.value, event.target.id);
         this.setState({
             [event.target.name]: event.target.value,
         })
@@ -121,7 +123,7 @@ export default class Snippet extends React.Component {
                 commentUsername: comment.username,
                 comment: comment.comment,
                 commentID: comment._id,
-                sniipetIDOfComment: snippetID
+                snippetIDOfComment: snippetID
             })
         } else {
             this.setState({
@@ -153,18 +155,132 @@ export default class Snippet extends React.Component {
     }
 
     // function to initiate API call to communicate changes to server
-    sendToServer = (action) => {
-        console.log('action to the server is ', action);
-        this.setState({
-            action: "",
-            displayModal: false,
-            snippetCreator: "",
-            snippetContent: "",
-            snippetTheme: "",
-            snippetOccasions: [],
-            snippetType: "",
-            snippetLength: -1
-        })
+    sendToServer = async (action) => {
+        let url = 'http://localhost:8888/snippets';
+        let [response, clonedSnippets, indexOfChange, newSnippet] = ["", "", "", ""];
+
+        switch (action) {
+            case "deleteSnippet":
+                console.log("enter deleteSnippet in sendToServer");
+                // let response = await axios.delete(url + "/delete/"+ this.state.currentSnippetID);
+                response = await axios.delete(url + `/delete/${this.state.currentSnippetID}`);
+                console.log("response of deleteSnippet is ", response);
+                clonedSnippets = this.state.allSnippets
+                indexOfChange = clonedSnippets.findIndex(deletedSnippet => deletedSnippet._id === this.state.currentSnippetID);
+                clonedSnippets.splice(indexOfChange, 1);
+
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    snippetCreator: "",
+                    snippetContent: "",
+                    snippetTheme: "",
+                    snippetOccasions: [],
+                    snippetType: "",
+                    snippetLength: -1,
+                    currentSnippetID: ""
+                });
+                break;
+            case "updateSnippet":
+                console.log("enter updateSnippet in sendToServer");
+                // send update to express server for processing
+                response = await axios.patch(url + `/update/${this.state.currentSnippetID}`, {
+                    name: this.state.snippetName,
+                    content: this.state.snippetContent,
+                    occasions: [...this.state.snippetOccasions],
+                    type: this.state.snippetType,
+                    theme: this.state.snippetTheme,
+                    length: this.state.snippetLength
+                });
+                // update the state variable allSnippets array with the modified snippet object
+                // also update state variables used for tracking current snippet to null
+                clonedSnippets = this.state.allSnippets;
+                indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
+                // target object is the current snippet before update. 
+                // source object is the key value pairs which have been updated.
+                newSnippet = Object.assign({ ...this.state.allSnippets[indexOfChange] }, {
+                    name: this.state.snippetName,
+                    content: this.state.snippetContent,
+                    occasions: [...this.state.snippetOccasions],
+                    type: this.state.snippetType,
+                    theme: this.state.snippetTheme,
+                    length: this.state.snippetLength
+                });
+                // console.log("newSnippet is ", newSnippet);
+                clonedSnippets.splice(indexOfChange, 1, newSnippet);
+
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    snippetCreator: "",
+                    snippetContent: "",
+                    snippetTheme: "",
+                    snippetOccasions: [],
+                    snippetType: "",
+                    snippetLength: -1,
+                    currentSnippetID: ""
+                });
+                break;
+            case "createSnippet":
+                console.log("enter createSnippet in sendToServer");
+                // send new snippet to express server for processing
+                response = await axios.post(url + `/create`, {
+                    creator: {
+                        _id: '100004',
+                        username: this.state.snippetCreator
+                    },
+                    name: this.state.snippetName,
+                    content: this.state.snippetContent,
+                    occasions: [...this.state.snippetOccasions],
+                    type: this.state.snippetType,
+                    theme: this.state.snippetTheme,
+                    length: this.state.snippetLength
+                });
+                // update the state variable allSnippets array with the new snippet object
+                // also update state variables used for tracking current snippet to null
+                clonedSnippets = this.state.allSnippets;
+                // newSnippet object includes the MongoDB objectID. 
+                newSnippet = {
+                    _id: response.data.insertedId,
+                    name: this.state.snippetName,
+                    content: this.state.snippetContent,
+                    occasions: [...this.state.snippetOccasions],
+                    type: this.state.snippetType,
+                    theme: this.state.snippetTheme,
+                    length: this.state.snippetLength
+                };
+                console.log("newSnippet is ", newSnippet);
+                clonedSnippets.push(newSnippet);
+                console.log("clonedSnippets is ", clonedSnippets);
+
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    snippetCreator: "",
+                    snippetContent: "",
+                    snippetTheme: "",
+                    snippetOccasions: [],
+                    snippetType: "",
+                    snippetLength: -1,
+                    currentSnippetID: ""
+                });
+                break;
+            case "deleteComment":
+                break;
+            case "updateComment":
+                break;
+            case "createComment":
+                break;
+            default:
+                console.log("sendToServer function, no valid input");
+        }
+
+
+
+
     }
 
     // function to populate snippet form with current snippet info for edit.
@@ -178,7 +294,8 @@ export default class Snippet extends React.Component {
                 snippetTheme: snippet.theme,
                 snippetOccasions: [...snippet.occasions],
                 snippetType: snippet.type,
-                snippetLength: snippet.length
+                snippetLength: snippet.length,
+                snippetName: snippet.name
             })
         } else {
             this.setState({
@@ -200,22 +317,22 @@ export default class Snippet extends React.Component {
         if (event.target.name === 'snippetStatus') {
             switch (true) {
                 // the clicked snippet is already open and user clicks on it again
-                case this.state[event.target.name] && this.state.currentSnippet === event.target.getAttribute('data-snippet-id'):
+                case this.state[event.target.name] && this.state.currentSnippetID === event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: false,
                     });
                     break;
                 // the clicked snippet is not open and user clicks on it again
-                case !this.state[event.target.name] && this.state.currentSnippet === event.target.getAttribute('data-snippet-id'):
+                case !this.state[event.target.name] && this.state.currentSnippetID === event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: true,
                     });
                     break;
                 // user clicks on a different snippet
-                case this.state.currentSnippet !== event.target.getAttribute('data-snippet-id'):
+                case this.state.currentSnippetID !== event.target.getAttribute('data-snippet-id'):
                     this.setState({
                         [event.target.name]: true,
-                        currentSnippet: event.target.getAttribute('data-snippet-id'),
+                        currentSnippetID: event.target.getAttribute('data-snippet-id'),
                         commentStatus: true,
                         addNewComment: false,
                     });
@@ -257,6 +374,10 @@ export default class Snippet extends React.Component {
                     <label for="exampleInputEmail1" className="form-label">Email address</label>
                     <input type="email" className="form-control" id="exampleInputEmail1" name='snippetCreator' value={this.state.snippetCreator} onChange={this.updateField} aria-describedby="emailHelp" />
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div className="mb-3">
+                    <label for="snippetName" className="form-label">Snippet Name</label>
+                    <input type="email" className="form-control" id="snippetName" name='snippetName' value={this.state.snippetName} onChange={this.updateField} />
                 </div>
                 <div className="mb-3">
                     <label for="snippetContent" className="form-label">Enter Your Snippet Content</label>
@@ -427,6 +548,8 @@ export default class Snippet extends React.Component {
                         </div>
                     </React.Fragment>
                 );
+            default:
+                console.log("switchDisplay function, no valid input");
         }
     }
 
@@ -458,12 +581,12 @@ export default class Snippet extends React.Component {
             <React.Fragment key={oneSnippet._id} >
                 <div className="accordion-item">
                     <h2 className="accordion-header" id="headingOne">
-                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippet" data-snippet-id={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
+                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippetID" data-snippet-id={oneSnippet._id} onClick={this.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
                             {oneSnippet.name}
                         </button>
                     </h2>
                     <div id="collapseOne" aria-labelledby="headingOne"
-                        className={this.state.snippetStatus === true && this.state.currentSnippet === oneSnippet._id ?
+                        className={this.state.snippetStatus === true && this.state.currentSnippetID === oneSnippet._id ?
                             "accordion-collapse collapse show" :
                             "accordion-collapse collapse"}>
                         <div className="accordion-body p-2 px-4">
@@ -482,18 +605,20 @@ export default class Snippet extends React.Component {
                             <span className="btn btn-primary mx-1 py-0 type">{oneSnippet.type}</span>
                             <span className="btn btn-primary m-1 py-0 theme">{oneSnippet.theme}</span>
                             <span className="btn btn-primary m-1 py-0 length">{oneSnippet.length} {oneSnippet.length > 1 ? 'mins' : 'min'}</span>
-                            {oneSnippet.collectedBy.length > 0 ?
+                            {typeof oneSnippet.collectedBy != 'undefined' && oneSnippet.collectedBy.length > 0 ?
                                 <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {oneSnippet.collectedBy.length} users</span>
                                 : null}
                             {this.displayOccasionList(oneSnippet)}
                             <span className="btn btn-primary m-1 py-0 creator">Contributed by {oneSnippet.creator.name}</span>
                         </section>
-                        <p>
-                            <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
-                                {oneSnippet.comments.length} Comments
-                            </button>
-                        </p>
-                        {this.state.commentStatus ?
+                        {typeof oneSnippet.comments != "undefined" ?
+                            <p>
+                                <button className="btn btn-primary m-2" type="button" onClick={this.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
+                                    {oneSnippet.comments.length} Comments
+                                </button>
+                            </p>
+                            : null}
+                        {typeof oneSnippet.comments != "undefined" && this.state.commentStatus && oneSnippet.comments.length >0 ?
                             <div>
                                 <div><button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Add New Comment</button></div>
                                 {this.state.addNewComment ? this.displayAddComment() : null}
@@ -513,7 +638,7 @@ export default class Snippet extends React.Component {
                     <div>
                         <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={this.updateShowHide}>Add New Snippet</button>{this.displayModalBox()}
                     </div>
-                    {this.state.allSnippets.map((eachSnippet) => this.displayOneSnippet(eachSnippet))}
+                    {this.state.allSnippets.map(eachSnippet => this.displayOneSnippet(eachSnippet))}
                 </div>
             </React.Fragment>
         )
