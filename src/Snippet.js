@@ -147,7 +147,7 @@ export default class Snippet extends React.Component {
                     <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
                 </div>
                 <div className="mb-3">
-                    <label for="comment" className="form-label">Enter Your Snippet Content</label>
+                    <label for="comment" className="form-label">Enter Your Comment</label>
                     <textarea row="3" className="form-control" id="comment" name='comment' value={this.state.comment} onChange={this.updateField} />
                 </div>
             </div>
@@ -273,6 +273,34 @@ export default class Snippet extends React.Component {
             case "updateComment":
                 break;
             case "createComment":
+                console.log("enter createComment in sendToServer");
+                // send new snippet to express server for processing
+                response = await axios.patch(url + `/${this.state.currentSnippetID}/comments/create`, {
+                    username: this.state.commentUsername,
+                    comment: this.state.comment
+                });
+                clonedSnippets = this.state.allSnippets;
+                indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
+                newSnippet = {...this.state.allSnippets[indexOfChange]};
+                let postDay = Date ();
+                console.log("postDay is ", postDay);
+                newSnippet.comments.push({
+                    "_id": response.data.insertedId,
+                    "username": this.state.commentUsername,
+                    "date": postDay,
+                    "comment": this.state.comment
+                });
+                // console.log("newSnippet is ", newSnippet);
+                clonedSnippets.splice(indexOfChange, 1, newSnippet);
+
+                this.setState({
+                    allSnippets: clonedSnippets,
+                    action: "",
+                    displayModal: false,
+                    commentUsername: "",
+                    comment: "",
+                    addNewComment: false
+                });
                 break;
             default:
                 console.log("sendToServer function, no valid input");
@@ -536,7 +564,7 @@ export default class Snippet extends React.Component {
                 return (
                     <React.Fragment>
                         <div className="modal-header">
-                            <h5 className="modal-title">Edit Snippet</h5>
+                            <h5 className="modal-title">Add New Comment</h5>
                             <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={this.updateCommentState}></button>
                         </div>
                         <div className="modal-body">
@@ -617,11 +645,11 @@ export default class Snippet extends React.Component {
                             </button>
                         </p>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={this.updateShowHide}>Add New Comment</button>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createComment" onClick={this.updateShowHide}>Add New Comment</button>
+                            {this.state.addNewComment ? this.displayAddComment() : null}
                         </div>
                         {typeof oneSnippet.comments != "undefined" && this.state.commentStatus && oneSnippet.comments.length > 0 ?
                             <div>
-                                {this.state.addNewComment ? this.displayAddComment() : null}
                                 {this.displayCommentList(oneSnippet)}
                             </div>
                             : null}
