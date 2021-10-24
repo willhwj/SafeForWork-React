@@ -1,0 +1,14 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: stretch !important;
+    height: 800px;
+}
+
+.row > div[class^="col"]{
+    display: flex;
+}
+
+.card-footer {
+    font-size: x-small !important;
+}

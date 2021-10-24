@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import './snippet.css'
 import DisplayEachSnippet from './DisplayEachSnippet'
 
 export default class SnippetList extends React.Component {
