@@ -1,5 +1,5 @@
 import React from 'react';
-import Snippet from './Snippet';
+import SnippetList from './SnippetList';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Main from './Main';
 import Category from './Category';
@@ -19,12 +19,14 @@ export default class SFW extends React.Component{
                 )
             case "snippet":
                 return(
-                    <Snippet/>
+                    <SnippetList/>
                 )
             case "user":
                 return(
                     <User/>
                 )
+            default:
+                console.log("no option for renderContent in SFW.js")
         }
     }
 
