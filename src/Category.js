@@ -9,9 +9,10 @@ export default class Category extends React.Component {
     }
 
     async componentDidMount() {
+        console.log("componentDidMount for Category.js");
         let categoryList = [];
-        let url = './sample-data/categories/';
-        await axios.get(url + this.state.catType + ".json").then(response => categoryList = response.data);
+        let url = 'http://localhost:8888/categories';
+        await axios.get(url).then(response => categoryList = response.data);
 
         console.log("categoryList is ", categoryList);
         this.setState({

@@ -34,8 +34,9 @@ export default class SnippetList extends React.Component {
 
   // read all snippets into state variable
   async componentDidMount() {
-    let response = await axios.get('http://localhost:8888/snippets')
-    let snippets = response.data;
+    let snippets = [];
+    await axios.get('http://localhost:8888/snippets').then(response => snippets = response.data);
+    
     this.setState({
       allSnippets: snippets
     })

@@ -21,9 +21,15 @@ export default function DisplaySnippetForm(props) {
                 </div>
                 <div>On Which Occasions is this Snippet Suitable?</div>
                 <div className="form-check form-check-inline">
-                    <input className="form-check-input" type="checkbox" id="work" name='snippetOccasions' value="work" onChange={props.updateArray} checked={props.snippetOccasions.includes('work')} />
-                    <label className="form-check-label" for="work">
-                        Work
+                    <input className="form-check-input" type="checkbox" id="speech" name='snippetOccasions' value="speech" onChange={props.updateArray} checked={props.snippetOccasions.includes('speech')} />
+                    <label className="form-check-label" for="speech">
+                        Speech
+                    </label>
+                </div>
+                <div className="form-check form-check-inline">
+                    <input className="form-check-input" type="checkbox" id="chat" name='snippetOccasions' value="chat" onChange={props.updateArray} checked={props.snippetOccasions.includes('chat')} />
+                    <label className="form-check-label" for="chat">
+                        Chat
                     </label>
                 </div>
                 <div className="form-check form-check-inline">

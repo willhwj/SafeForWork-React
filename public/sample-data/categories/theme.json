@@ -1,29 +1,32 @@
 [
     {
         "_id": "400001",
+        "category": "theme",
         "optionName": "kindness",
         "optionDescription": "Explore these heart-warming stories and insights about some of the most beautiful aspects of human relationships.",
-        "numSnippets": 28,
-        "numComments": 189,
-        "numCollected": 209,
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
         "imagePath": "theme-kindness.jpg"
     },
     {
         "_id": "400002",
+        "category": "theme",
         "optionName": "hardwork",
         "optionDescription": "Come here when you need a pat on your shoulder on the hard work you have done.",
-        "numSnippets": 23,
-        "numComments": 49,
-        "numCollected": 85,
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
         "imagePath": "theme-hardwork.jpg"
     },
     {
         "_id": "400003",
+        "category": "theme",
         "optionName": "life",
         "optionDescription": "This is your life - live the way you want to. Take a look at what others think about life.",
-        "numSnippets": 4,
-        "numComments": 14,
-        "numCollected": 42,
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
         "imagePath": "theme-life.jpg"
     }
 ]

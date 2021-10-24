@@ -7,7 +7,7 @@ import User from './User';
 
 export default class SFW extends React.Component{
     state={
-        active: "snippet",
+        active: "category",
         selectedCategory: "theme",
     }
 

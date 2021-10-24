@@ -1,0 +1,42 @@
+[
+    {
+        "_id": "700001",
+        "category": "length",
+        "optionName": "1",
+        "optionDescription": "It takes less than one minute to narrate this snippet",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "700002",
+        "category": "length",
+        "optionName": "2",
+        "optionDescription": "It takes one to two minutes to narrate this snippet",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "700003",
+        "category": "length",
+        "optionName": "3",
+        "optionDescription": "It takes two to three minutes to narrate this snippet",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    },
+    {
+        "_id": "700004",
+        "category": "length",
+        "optionName": "4",
+        "optionDescription": "It takes four minutes or more to narrate this snippet",
+        "numSnippets": 0,
+        "numComments": 0,
+        "numCollected": 0,
+        "imagePath": "theme-kindness.jpg"
+    }
+]
