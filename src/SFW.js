@@ -9,13 +9,16 @@ export default class SFW extends React.Component{
     state={
         active: "category",
         selectedCategory: "theme",
+        selectedOption: "all"
     }
 
     renderContent =()=>{
         switch (this.state.active){
             case "category":
                 return(
-                    <Category categoryType={this.state.selectedCategory}/>
+                    <Category   category={this.state.selectedCategory}
+                                option={this.state.selectedOption}
+                    />
                 )
             case "snippet":
                 return(

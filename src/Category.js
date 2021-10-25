@@ -6,14 +6,15 @@ export default class Category extends React.Component {
     // path state variable is used to store the document path of the data file
     state = {
         catList: [],
-        catType: this.props.categoryType,
+        category: this.props.category,
+        option: this.props.option
     }
 
     async componentDidMount() {
         console.log("componentDidMount for Category.js");
         let categoryList = [];
         let url = 'http://localhost:8888/categories';
-        await axios.get(url).then(response => categoryList = response.data);
+        await axios.get(url+ `/${this.state.category}/${this.state.option}`).then(response => categoryList = response.data);
 
         console.log("categoryList is ", categoryList);
         this.setState({
