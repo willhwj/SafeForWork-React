@@ -187,7 +187,9 @@ export default class SnippetList extends React.Component {
                     occasions: [...this.state.snippetOccasions],
                     type: this.state.snippetType,
                     theme: this.state.snippetTheme,
-                    length: this.state.snippetLength
+                    length: this.state.snippetLength,
+                    comments:[],
+                    collectedBy: []
                 });
                 // update the state variable allSnippets array with the new snippet object
                 // also update state variables used for tracking current snippet to null
