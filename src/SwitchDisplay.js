@@ -43,7 +43,7 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={props.updateSnippetState}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );
@@ -69,7 +69,7 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" onClick={props.updateSnippetState}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );

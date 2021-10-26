@@ -5,93 +5,96 @@ import DisplayEachSnippet from './DisplayEachSnippet'
 
 export default class SnippetList extends React.Component {
 
-  state = {
-    // state variables for read n display snippets & comments
-    snippetStatus: false,
-    currentSnippetID: "",
-    commentStatus: false,
-    allSnippets: [],
-    displayModal: false,
-
-    // state variables for add & edit snippets
-    snippetName: '',
-    snippetCreator: '',
-    snippetContent: '',
-    snippetTheme: '',
-    snippetOccasions: [],
-    snippetType: '',
-    snippetLength: -1,
-
-    // state variables for add & edit comments
-    comment: '',
-    commentUsername: '',
-    addNewComment: false,
-    snippetIDOfComment: '',
-    commentID: '',
-
-    // to indicate create, update or update to snippet or comment
-    action: "",
-  };
-
-  // read all snippets into state variable
-  async componentDidMount() {
-    let snippets = [];
-    await axios.get('http://localhost:8888/snippets').then(response => snippets = response.data);
-    
-    this.setState({
-      allSnippets: snippets
-    })
-  }
-
-  // utility function to update state variable with new value entered by users
-  updateField = (event) => {
-    // console.log("event is ", event.target.name, event.target.value, event.target.id);
-    this.setState({
-      [event.target.name]: event.target.value,
-    })
-  }
-
-  // utility function to update state variable of array with new values selected in checkboxes
-  updateArray = (event) => {
-    if (this.state[event.target.name].includes(event.target.value)) {
-      let indexToRemove = this.state[event.target.name].indexOf(event.target.value);
-      let cloned = [...this.state[event.target.name]];
-      cloned.splice(indexToRemove, 1);
-      this.setState({
-        [event.target.name]: cloned
-      })
-    } else {
-      this.setState({
-        [event.target.name]: [...this.state[event.target.name], event.target.value]
-      })
-    }
-  }
-
-  // function to populate comment form with current comment for edit
-  updateCommentState = (comment, snippetID, event) => {
-    if (typeof comment._id === "string") {
-      this.setState({
-        action: event.target.getAttribute("data-crud"),
-        displayModal: true,
-        commentUsername: comment.username,
-        comment: comment.comment,
-        commentID: comment._id,
-        snippetIDOfComment: snippetID
-      })
-    } else {
-      this.setState({
-        action: "",
+    state = {
+        // state variables for read n display snippets & comments
+        snippetStatus: false,
+        currentSnippetID: "",
+        commentStatus: false,
+        allSnippets: [],
         displayModal: false,
-        commentUsername: "",
-        comment: "",
-        commentID: "",
-        sniipetIDOfComment: ""
-      })
-    }
-  }
 
-      // function to initiate API call to communicate changes to server
-      sendToServer = async (action) => {
+        // state variables for add & edit snippets
+        snippetName: '',
+        snippetCreator: '',
+        snippetContent: '',
+        snippetTheme: '',
+        snippetOccasions: [],
+        snippetType: '',
+        snippetLength: -1,
+
+        snippetNumComments: 0,
+        snippetNumCollectedBy: 0,
+
+        // state variables for add & edit comments
+        comment: '',
+        commentUsername: '',
+        addNewComment: false,
+        snippetIDOfComment: '',
+        commentID: '',
+
+        // to indicate create, update or update to snippet or comment
+        action: "",
+    };
+
+    // read all snippets into state variable
+    async componentDidMount() {
+        let snippets = [];
+        await axios.get('http://localhost:8888/snippets').then(response => snippets = response.data);
+
+        this.setState({
+            allSnippets: snippets
+        })
+    }
+
+    // utility function to update state variable with new value entered by users
+    updateField = (event) => {
+        console.log("event is ", event.target.name, event.target.value);
+        this.setState({
+            [event.target.name]: event.target.value,
+        })
+    }
+
+    // utility function to update state variable of array with new values selected in checkboxes
+    updateArray = (event) => {
+        if (this.state[event.target.name].includes(event.target.value)) {
+            let indexToRemove = this.state[event.target.name].indexOf(event.target.value);
+            let cloned = [...this.state[event.target.name]];
+            cloned.splice(indexToRemove, 1);
+            this.setState({
+                [event.target.name]: cloned
+            })
+        } else {
+            this.setState({
+                [event.target.name]: [...this.state[event.target.name], event.target.value]
+            })
+        }
+    }
+
+    // function to populate comment form with current comment for edit
+    updateCommentState = (comment, snippetID, event) => {
+        if (typeof comment._id === "string") {
+            this.setState({
+                action: event.target.getAttribute("data-crud"),
+                displayModal: true,
+                commentUsername: comment.username,
+                comment: comment.comment,
+                commentID: comment._id,
+                snippetIDOfComment: snippetID
+            })
+        } else {
+            this.setState({
+                action: "",
+                displayModal: false,
+                commentUsername: "",
+                comment: "",
+                commentID: "",
+                snippetIDOfComment: ""
+            })
+        }
+    }
+
+    // function to initiate API call to communicate changes to server
+    sendToServer = async (action) => {
         let url = 'http://localhost:8888/snippets';
         let [response, clonedSnippets, indexOfChange, newSnippet] = ["", "", "", ""];
 
@@ -101,7 +104,17 @@ export default class SnippetList extends React.Component {
                 // method 1:
                 // let response = await axios.delete(url + "/delete/"+ this.state.currentSnippetID);
                 // method 2:
-                response = await axios.delete(url + `/delete/${this.state.currentSnippetID}`);
+                response = await axios.delete(url + `/delete/${this.state.currentSnippetID}`, {
+                    data: {
+                        "theme": this.state.snippetTheme,
+                        "type": this.state.snippetType,
+                        "length": this.state.snippetLength,
+                        "occasion": this.state.snippetOccasions,
+                        "changeInSnippets": -1,
+                        "changeInComments": -this.state.snippetNumComments,
+                        "changeInCollections": -this.state.snippetNumCollectedBy
+                    }
+                });
                 console.log("response of deleteSnippet is ", response);
                 clonedSnippets = this.state.allSnippets
                 indexOfChange = clonedSnippets.findIndex(deletedSnippet => deletedSnippet._id === this.state.currentSnippetID);
@@ -270,9 +283,9 @@ export default class SnippetList extends React.Component {
                 });
                 clonedSnippets = this.state.allSnippets;
                 indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
-                newSnippet = {...this.state.allSnippets[indexOfChange]};
-                if (typeof newSnippet.comments ==="undefined"){
-                    newSnippet.comments=[{
+                newSnippet = { ...this.state.allSnippets[indexOfChange] };
+                if (typeof newSnippet.comments === "undefined") {
+                    newSnippet.comments = [{
                         "_id": response.data.value.comments[0]._id,
                         "username": response.data.value.comments[0].username,
                         "date": response.data.value.comments[0].date,
@@ -314,7 +327,9 @@ export default class SnippetList extends React.Component {
                 snippetOccasions: [...snippet.occasions],
                 snippetType: snippet.type,
                 snippetLength: snippet.length,
-                snippetName: snippet.name
+                snippetName: snippet.name,
+                snippetNumComments: snippet.comments.length,
+                snippetNumCollectedBy: snippet.collectedBy.length
             })
         } else {
             this.setState({
@@ -325,7 +340,9 @@ export default class SnippetList extends React.Component {
                 snippetTheme: "",
                 snippetOccasions: [],
                 snippetType: "",
-                snippetLength: -1
+                snippetLength: -1,
+                snippetNumComments: 0,
+                snippetNumCollectedBy: 0
             })
         }
     }
@@ -374,39 +391,39 @@ export default class SnippetList extends React.Component {
         }
     }
 
-  render() {
-    return (
-      <DisplayEachSnippet snippetStatus={this.state.snippetStatus} 
-                          currentSnippetID={this.state.currentSnippetID}
-                          commentStatus={this.state.commentStatus}
-                          allSnippets={this.state.allSnippets}
-                          displayModal={this.state.displayModal}
-                          
-                          snippetName={this.state.snippetName}
-                          snippetCreator={this.state.snippetCreator}
-                          snippetContent={this.state.snippetContent}
-                          snippetTheme={this.state.snippetTheme}
-                          snippetOccasions={this.state.snippetOccasions}
-                          snippetType={this.state.snippetType}
-                          snippetLength={this.state.snippetLength}
-                        
-                          comment={this.state.comment}
-                          commentUsername={this.state.commentUsername}
-                          addNewComment={this.state.addNewComment}
-                          snippetIDOfComment={this.state.snippetIDOfComment}
-                          commentID={this.state.commentID}
+    render() {
+        return (
+            <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
+                currentSnippetID={this.state.currentSnippetID}
+                commentStatus={this.state.commentStatus}
+                allSnippets={this.state.allSnippets}
+                displayModal={this.state.displayModal}
 
-                          action={this.state.action}
+                snippetName={this.state.snippetName}
+                snippetCreator={this.state.snippetCreator}
+                snippetContent={this.state.snippetContent}
+                snippetTheme={this.state.snippetTheme}
+                snippetOccasions={this.state.snippetOccasions}
+                snippetType={this.state.snippetType}
+                snippetLength={this.state.snippetLength}
 
-                          updateField={this.updateField}
-                          updateArray={this.updateArray}
-                          updateCommentState={this.updateCommentState}
-                          sendToServer={this.sendToServer}
-                          updateSnippetState={this.updateSnippetState}
-                          updateShowHide={this.updateShowHide}
-      />
-    );
-  }
+                comment={this.state.comment}
+                commentUsername={this.state.commentUsername}
+                addNewComment={this.state.addNewComment}
+                snippetIDOfComment={this.state.snippetIDOfComment}
+                commentID={this.state.commentID}
+
+                action={this.state.action}
+
+                updateField={this.updateField}
+                updateArray={this.updateArray}
+                updateCommentState={this.updateCommentState}
+                sendToServer={this.sendToServer}
+                updateSnippetState={this.updateSnippetState}
+                updateShowHide={this.updateShowHide}
+            />
+        );
+    }
 
 
 
