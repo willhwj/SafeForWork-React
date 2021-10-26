@@ -128,7 +128,7 @@ export default function DisplayEachSnippet(props) {
                                 <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {eachSnippet.collectedBy.length} users</span>
                                 : null}
                             <DisplayOccasionList snippet={eachSnippet} />
-                            <span className="btn btn-primary m-1 py-0 creator">Contributed by {eachSnippet.creator.name}</span>
+                            <span className="btn btn-primary m-1 py-0 creator">Contributed by {eachSnippet.creator.username}</span>
                         </section>
                         <p>
                             <button className="btn btn-primary m-2" type="button" onClick={props.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">

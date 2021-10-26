@@ -48,7 +48,7 @@ export default class SnippetList extends React.Component {
 
     // utility function to update state variable with new value entered by users
     updateField = (event) => {
-        console.log("event is ", event.target.name, event.target.value);
+        // console.log("event is ", event.target.name, event.target.value);
         this.setState({
             [event.target.name]: event.target.value,
         })
@@ -125,6 +125,7 @@ export default class SnippetList extends React.Component {
                     action: "",
                     displayModal: false,
                     snippetCreator: "",
+                    snippetName: '',
                     snippetContent: "",
                     snippetTheme: "",
                     snippetOccasions: [],
@@ -167,6 +168,7 @@ export default class SnippetList extends React.Component {
                     displayModal: false,
                     snippetCreator: "",
                     snippetContent: "",
+                    snippetName: '',
                     snippetTheme: "",
                     snippetOccasions: [],
                     snippetType: "",
@@ -208,15 +210,14 @@ export default class SnippetList extends React.Component {
                         name: this.state.snippetCreator
                     }
                 };
-                console.log("newSnippet is ", newSnippet);
                 clonedSnippets.push(newSnippet);
-                console.log("clonedSnippets is ", clonedSnippets);
 
                 this.setState({
                     allSnippets: clonedSnippets,
                     action: "",
                     displayModal: false,
                     snippetCreator: "",
+                    snippetName: '',
                     snippetContent: "",
                     snippetTheme: "",
                     snippetOccasions: [],
@@ -235,9 +236,7 @@ export default class SnippetList extends React.Component {
                 // newSnippet = {...this.state.allSnippets[indexOfChange]};
                 // newSnippet.comments=newSnippet.comments.filter( eachComment => eachComment._id !== this.state.commentID);
                 // method 2: use the updated snippet from express server response
-                newSnippet = response.data.value;
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
-                console.log(clonedSnippets);
                 this.setState({
                     allSnippets: clonedSnippets,
                     action: "",
@@ -264,7 +263,6 @@ export default class SnippetList extends React.Component {
                 // method 2: get the updated snippet from express server response
                 newSnippet = response.data.value;
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
-                console.log(clonedSnippets);
                 this.setState({
                     allSnippets: clonedSnippets,
                     action: "",
