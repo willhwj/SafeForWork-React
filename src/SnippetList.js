@@ -1,7 +1,8 @@
 import React from 'react';
 import axios from 'axios';
-import './snippet.css'
-import DisplayEachSnippet from './DisplayEachSnippet'
+import './snippet.css';
+import DisplayEachSnippet from './DisplayEachSnippet';
+import DisplayModalBox from './DisplayModalBox'
 
 export default class SnippetList extends React.Component {
 
@@ -11,7 +12,7 @@ export default class SnippetList extends React.Component {
         currentSnippetID: "",
         commentStatus: false,
         allSnippets: [],
-        displayModal: "",
+        displayModal: false,
 
         // state variables for add & edit snippets
         snippetName: '',
@@ -172,7 +173,6 @@ export default class SnippetList extends React.Component {
                     snippetOccasions: [],
                     snippetType: "",
                     snippetLength: -1,
-                    currentSnippetID: ""
                 });
                 break;
             case "createSnippet":
@@ -189,7 +189,7 @@ export default class SnippetList extends React.Component {
                     type: this.state.snippetType,
                     theme: this.state.snippetTheme,
                     length: this.state.snippetLength,
-                    comments:[],
+                    comments: [],
                     collectedBy: []
                 });
                 // update the state variable allSnippets array with the new snippet object
@@ -222,7 +222,7 @@ export default class SnippetList extends React.Component {
                     snippetOccasions: [],
                     snippetType: "",
                     snippetLength: -1,
-                    currentSnippetID: ""
+                    currentSnippetID: newSnippet._id
                 });
                 break;
             case "deleteComment":
@@ -235,6 +235,7 @@ export default class SnippetList extends React.Component {
                 // newSnippet = {...this.state.allSnippets[indexOfChange]};
                 // newSnippet.comments=newSnippet.comments.filter( eachComment => eachComment._id !== this.state.commentID);
                 // method 2: use the updated snippet from express server response
+                newSnippet = response.data.value;
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
                 this.setState({
                     allSnippets: clonedSnippets,
@@ -316,7 +317,7 @@ export default class SnippetList extends React.Component {
         if (typeof snippet._id === "string") {
             this.setState({
                 action: "updateSnippet",
-                displayModal: "updateSnippet",
+                displayModal: true,
                 snippetCreator: snippet.creator.username,
                 snippetContent: snippet.content,
                 snippetTheme: snippet.theme,
@@ -330,7 +331,7 @@ export default class SnippetList extends React.Component {
         } else {
             this.setState({
                 action: "",
-                displayModal: "",
+                displayModal: false,
                 snippetCreator: "",
                 snippetContent: "",
                 snippetTheme: "",
@@ -371,19 +372,7 @@ export default class SnippetList extends React.Component {
                 default:
                     console.log('invalid scenario in switch statement for updateShowHide function');
             }
-        }
-        // scenarios when user clicks on buttons within a snippet
-        else if(event.target.name==="displayModal"){
-            this.state.displayModal === ""?
-            this.setState({
-                displayModal: event.target.getAttribute('data-crud'),
-                action: event.target.getAttribute('data-crud')
-            })
-            : this.setState({
-                displayModal: "",
-                action: ""
-            })
-        } else{
+        }else {
             this.state[event.target.name] ?
                 this.setState({
                     [event.target.name]: false
@@ -398,34 +387,47 @@ export default class SnippetList extends React.Component {
 
     render() {
         return (
-            <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
-                currentSnippetID={this.state.currentSnippetID}
-                commentStatus={this.state.commentStatus}
-                allSnippets={this.state.allSnippets}
-                displayModal={this.state.displayModal}
+            <React.Fragment>
+                <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
+                    currentSnippetID={this.state.currentSnippetID}
+                    commentStatus={this.state.commentStatus}
+                    allSnippets={this.state.allSnippets}
 
-                snippetName={this.state.snippetName}
-                snippetCreator={this.state.snippetCreator}
-                snippetContent={this.state.snippetContent}
-                snippetTheme={this.state.snippetTheme}
-                snippetOccasions={this.state.snippetOccasions}
-                snippetType={this.state.snippetType}
-                snippetLength={this.state.snippetLength}
+                    updateCommentState={this.updateCommentState}
+                    updateSnippetState={this.updateSnippetState}
+                    updateShowHide={this.updateShowHide}
+                />
+                {this.state.displayModal === true ?
+                    <DisplayModalBox snippetStatus={this.state.snippetStatus}
+                        currentSnippetID={this.state.currentSnippetID}
+                        commentStatus={this.state.commentStatus}
+                        allSnippets={this.state.allSnippets}
+                        displayModal={this.state.displayModal}
 
-                comment={this.state.comment}
-                commentUsername={this.state.commentUsername}
-                snippetIDOfComment={this.state.snippetIDOfComment}
-                commentID={this.state.commentID}
+                        snippetName={this.state.snippetName}
+                        snippetCreator={this.state.snippetCreator}
+                        snippetContent={this.state.snippetContent}
+                        snippetTheme={this.state.snippetTheme}
+                        snippetOccasions={this.state.snippetOccasions}
+                        snippetType={this.state.snippetType}
+                        snippetLength={this.state.snippetLength}
 
-                action={this.state.action}
+                        comment={this.state.comment}
+                        commentUsername={this.state.commentUsername}
+                        snippetIDOfComment={this.state.snippetIDOfComment}
+                        commentID={this.state.commentID}
 
-                updateField={this.updateField}
-                updateArray={this.updateArray}
-                updateCommentState={this.updateCommentState}
-                sendToServer={this.sendToServer}
-                updateSnippetState={this.updateSnippetState}
-                updateShowHide={this.updateShowHide}
-            />
+                        action={this.state.action}
+
+                        updateField={this.updateField}
+                        updateArray={this.updateArray}
+                        updateCommentState={this.updateCommentState}
+                        sendToServer={this.sendToServer}
+                        updateSnippetState={this.updateSnippetState}
+                        updateShowHide={this.updateShowHide}
+                    />
+                    : null}
+            </React.Fragment>
         );
     }
 

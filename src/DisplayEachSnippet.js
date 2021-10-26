@@ -1,9 +1,7 @@
 import React from 'react';
 import './snippet.css'
 import DisplayCommentList from './DisplayCommentList';
-import DisplayAddComment from './DisplayAddComment';
 import DisplayOccasionList from './DisplayOccasionList';
-import DisplayModalBox from './DisplayModalBox';
 
 // function to display one snippet
 export default function DisplayEachSnippet(props) {
@@ -11,37 +9,6 @@ export default function DisplayEachSnippet(props) {
         <div className="accordion" id="accordionExample">
             <div>
                 <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={props.updateShowHide}>Add New Snippet</button>
-                {props.displayModal=== "createSnippet" ? 
-                <DisplayModalBox    snippetStatus={props.snippetStatus}
-                                    currentSnippetID={props.currentSnippetID}
-                                    commentStatus={props.commentStatus}
-                                    allSnippets={props.allSnippets}
-                                    displayModal={props.displayModal}
-
-                                    snippetName={props.snippetName}
-                                    snippetCreator={props.snippetCreator}
-                                    snippetContent={props.snippetContent}
-                                    snippetTheme={props.snippetTheme}
-                                    snippetOccasions={props.snippetOccasions}
-                                    snippetType={props.snippetType}
-                                    snippetLength={props.snippetLength}
-
-                                    comment={props.comment}
-                                    commentUsername={props.commentUsername}
-                                    addNewComment={props.addNewComment}
-                                    snippetIDOfComment={props.snippetIDOfComment}
-                                    commentID={props.commentID}
-
-                                    action={props.action}
-
-                                    updateField={props.updateField}
-                                    updateArray={props.updateArray}
-                                    updateCommentState={props.updateCommentState}
-                                    sendToServer={props.sendToServer}
-                                    updateSnippetState={props.updateSnippetState}
-                                    updateShowHide={props.updateShowHide}
-                />
-            : null}
             </div>
             {props.allSnippets.map(eachSnippet =>
                 <div className="accordion-item" key={eachSnippet._id}>
@@ -59,72 +26,7 @@ export default function DisplayEachSnippet(props) {
                         </div>
                         <div>
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="updateSnippet" onClick={() => { props.updateSnippetState(eachSnippet) }}>Edit</button>
-
-                            {props.displayModal=== "updateSnippet"? 
-                            <DisplayModalBox    snippetStatus={props.snippetStatus}
-                                                currentSnippetID={props.currentSnippetID}
-                                                commentStatus={props.commentStatus}
-                                                allSnippets={props.allSnippets}
-                                                displayModal={props.displayModal}
-
-                                                snippetName={props.snippetName}
-                                                snippetCreator={props.snippetCreator}
-                                                snippetContent={props.snippetContent}
-                                                snippetTheme={props.snippetTheme}
-                                                snippetOccasions={props.snippetOccasions}
-                                                snippetType={props.snippetType}
-                                                snippetLength={props.snippetLength}
-
-                                                comment={props.comment}
-                                                commentUsername={props.commentUsername}
-                                                addNewComment={props.addNewComment}
-                                                snippetIDOfComment={props.snippetIDOfComment}
-                                                commentID={props.commentID}
-
-                                                action={props.action}
-
-                                                updateField={props.updateField}
-                                                updateArray={props.updateArray}
-                                                updateCommentState={props.updateCommentState}
-                                                sendToServer={props.sendToServer}
-                                                updateSnippetState={props.updateSnippetState}
-                                                updateShowHide={props.updateShowHide}
-                            />
-                            : null}
-
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={props.updateShowHide}>Delete</button>
-
-                            {props.displayModal=== "deleteSnippet"? 
-                            <DisplayModalBox    snippetStatus={props.snippetStatus}
-                                                currentSnippetID={props.currentSnippetID}
-                                                commentStatus={props.commentStatus}
-                                                allSnippets={props.allSnippets}
-                                                displayModal={props.displayModal}
-
-                                                snippetName={props.snippetName}
-                                                snippetCreator={props.snippetCreator}
-                                                snippetContent={props.snippetContent}
-                                                snippetTheme={props.snippetTheme}
-                                                snippetOccasions={props.snippetOccasions}
-                                                snippetType={props.snippetType}
-                                                snippetLength={props.snippetLength}
-
-                                                comment={props.comment}
-                                                commentUsername={props.commentUsername}
-                                                addNewComment={props.addNewComment}
-                                                snippetIDOfComment={props.snippetIDOfComment}
-                                                commentID={props.commentID}
-
-                                                action={props.action}
-
-                                                updateField={props.updateField}
-                                                updateArray={props.updateArray}
-                                                updateCommentState={props.updateCommentState}
-                                                sendToServer={props.sendToServer}
-                                                updateSnippetState={props.updateSnippetState}
-                                                updateShowHide={props.updateShowHide}
-                            />
-                            : null}
                         </div>
                         <section className="m-2 attribute">
                             <span className="btn btn-primary mx-1 py-0 type">{eachSnippet.type}</span>
@@ -148,34 +50,7 @@ export default function DisplayEachSnippet(props) {
                         {typeof eachSnippet.comments != "undefined" && props.commentStatus && eachSnippet.comments.length > 0 ?
                             <div>
                                 <DisplayCommentList snippet={eachSnippet}
-                                                    snippetStatus={props.snippetStatus}
-                                                    currentSnippetID={props.currentSnippetID}
-                                                    commentStatus={props.commentStatus}
-                                                    allSnippets={props.allSnippets}
-                                                    displayModal={props.displayModal}
-                    
-                                                    snippetName={props.snippetName}
-                                                    snippetCreator={props.snippetCreator}
-                                                    snippetContent={props.snippetContent}
-                                                    snippetTheme={props.snippetTheme}
-                                                    snippetOccasions={props.snippetOccasions}
-                                                    snippetType={props.snippetType}
-                                                    snippetLength={props.snippetLength}
-                    
-                                                    comment={props.comment}
-                                                    commentUsername={props.commentUsername}
-                                                    addNewComment={props.addNewComment}
-                                                    snippetIDOfComment={props.snippetIDOfComment}
-                                                    commentID={props.commentID}
-                    
-                                                    action={props.action}
-                    
-                                                    updateField={props.updateField}
-                                                    updateArray={props.updateArray}
                                                     updateCommentState={props.updateCommentState}
-                                                    sendToServer={props.sendToServer}
-                                                    updateSnippetState={props.updateSnippetState}
-                                                    updateShowHide={props.updateShowHide}
                                 />
                             </div>
                             : null}

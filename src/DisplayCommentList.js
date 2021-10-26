@@ -1,6 +1,5 @@
 import React from 'react';
 import './snippet.css';
-import DisplayModalBox from './DisplayModalBox';
 
 // function to display list of comments posted to a snippet
 export default function DisplayCommentList(props) {
@@ -15,63 +14,7 @@ export default function DisplayCommentList(props) {
                         </div>
                         <div>
                             <button className="btn btn-secondary ms-0 me-1 py-0" name="displayModal" data-crud="updateComment" onClick={(event) => { props.updateCommentState(eachComment, props.snippet._id, event) }}>Edit</button>
-                            <DisplayModalBox    snippetStatus={props.snippetStatus}
-                                                currentSnippetID={props.currentSnippetID}
-                                                commentStatus={props.commentStatus}
-                                                allSnippets={props.allSnippets}
-                                                displayModal={props.displayModal}
-                    
-                                                snippetName={props.snippetName}
-                                                snippetCreator={props.snippetCreator}
-                                                snippetContent={props.snippetContent}
-                                                snippetTheme={props.snippetTheme}
-                                                snippetOccasions={props.snippetOccasions}
-                                                snippetType={props.snippetType}
-                                                snippetLength={props.snippetLength}
-                    
-                                                comment={props.comment}
-                                                commentUsername={props.commentUsername}
-                                                snippetIDOfComment={props.snippetIDOfComment}
-                                                commentID={props.commentID}
-                    
-                                                action={props.action}
-                    
-                                                updateField={props.updateField}
-                                                updateArray={props.updateArray}
-                                                updateCommentState={props.updateCommentState}
-                                                sendToServer={props.sendToServer}
-                                                updateSnippetState={props.updateSnippetState}
-                                                updateShowHide={props.updateShowHide}                            
-                            />
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteComment" onClick={(event) => { props.updateCommentState(eachComment, props.snippet._id, event) }}>Delete</button>
-                            <DisplayModalBox    snippetStatus={props.snippetStatus}
-                                                currentSnippetID={props.currentSnippetID}
-                                                commentStatus={props.commentStatus}
-                                                allSnippets={props.allSnippets}
-                                                displayModal={props.displayModal}
-                    
-                                                snippetName={props.snippetName}
-                                                snippetCreator={props.snippetCreator}
-                                                snippetContent={props.snippetContent}
-                                                snippetTheme={props.snippetTheme}
-                                                snippetOccasions={props.snippetOccasions}
-                                                snippetType={props.snippetType}
-                                                snippetLength={props.snippetLength}
-                    
-                                                comment={props.comment}
-                                                commentUsername={props.commentUsername}
-                                                snippetIDOfComment={props.snippetIDOfComment}
-                                                commentID={props.commentID}
-                    
-                                                action={props.action}
-                    
-                                                updateField={props.updateField}
-                                                updateArray={props.updateArray}
-                                                updateCommentState={props.updateCommentState}
-                                                sendToServer={props.sendToServer}
-                                                updateSnippetState={props.updateSnippetState}
-                                                updateShowHide={props.updateShowHide}
-                            />
                         </div>
                     </div>
                 </div>
