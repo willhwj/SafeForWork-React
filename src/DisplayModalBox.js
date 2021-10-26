@@ -9,26 +9,15 @@ export default function DisplayModalBox(props) {
             <div className="modal show fade" tabIndex="-1" style={{display: "block", backgroundColor: "rgba(0.5, 0.5, 0.5, 0.5)"}}>
                 <div className="modal-dialog modal-lg">
                     <div className="modal-content">
-                        <SwitchDisplay  snippetStatus={props.snippetStatus}
-                                        currentSnippetID={props.currentSnippetID}
-                                        commentStatus={props.commentStatus}
-                                        allSnippets={props.allSnippets}
-                                        displayModal={props.displayModal}
-
-                                        snippetName={props.snippetName}
+                        <SwitchDisplay  snippetName={props.snippetName}
                                         snippetCreator={props.snippetCreator}
                                         snippetContent={props.snippetContent}
                                         snippetTheme={props.snippetTheme}
                                         snippetOccasions={props.snippetOccasions}
                                         snippetType={props.snippetType}
                                         snippetLength={props.snippetLength}
-
                                         comment={props.comment}
                                         commentUsername={props.commentUsername}
-                                        addNewComment={props.addNewComment}
-                                        snippetIDOfComment={props.snippetIDOfComment}
-                                        commentID={props.commentID}
-
                                         action={props.action}
 
                                         updateField={props.updateField}

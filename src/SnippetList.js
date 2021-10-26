@@ -398,33 +398,24 @@ export default class SnippetList extends React.Component {
                     updateShowHide={this.updateShowHide}
                 />
                 {this.state.displayModal === true ?
-                    <DisplayModalBox snippetStatus={this.state.snippetStatus}
-                        currentSnippetID={this.state.currentSnippetID}
-                        commentStatus={this.state.commentStatus}
-                        allSnippets={this.state.allSnippets}
-                        displayModal={this.state.displayModal}
+                    <DisplayModalBox    displayModal={this.state.displayModal}
+                                        snippetName={this.state.snippetName}
+                                        snippetCreator={this.state.snippetCreator}
+                                        snippetContent={this.state.snippetContent}
+                                        snippetTheme={this.state.snippetTheme}
+                                        snippetOccasions={this.state.snippetOccasions}
+                                        snippetType={this.state.snippetType}
+                                        snippetLength={this.state.snippetLength}
+                                        comment={this.state.comment}
+                                        commentUsername={this.state.commentUsername}
+                                        action={this.state.action}
 
-                        snippetName={this.state.snippetName}
-                        snippetCreator={this.state.snippetCreator}
-                        snippetContent={this.state.snippetContent}
-                        snippetTheme={this.state.snippetTheme}
-                        snippetOccasions={this.state.snippetOccasions}
-                        snippetType={this.state.snippetType}
-                        snippetLength={this.state.snippetLength}
-
-                        comment={this.state.comment}
-                        commentUsername={this.state.commentUsername}
-                        snippetIDOfComment={this.state.snippetIDOfComment}
-                        commentID={this.state.commentID}
-
-                        action={this.state.action}
-
-                        updateField={this.updateField}
-                        updateArray={this.updateArray}
-                        updateCommentState={this.updateCommentState}
-                        sendToServer={this.sendToServer}
-                        updateSnippetState={this.updateSnippetState}
-                        updateShowHide={this.updateShowHide}
+                                        updateField={this.updateField}
+                                        updateArray={this.updateArray}
+                                        updateCommentState={this.updateCommentState}
+                                        sendToServer={this.sendToServer}
+                                        updateSnippetState={this.updateSnippetState}
+                                        updateShowHide={this.updateShowHide}
                     />
                     : null}
             </React.Fragment>

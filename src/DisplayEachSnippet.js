@@ -1,7 +1,6 @@
 import React from 'react';
 import './snippet.css'
 import DisplayCommentList from './DisplayCommentList';
-import DisplayOccasionList from './DisplayOccasionList';
 
 // function to display one snippet
 export default function DisplayEachSnippet(props) {
@@ -35,7 +34,9 @@ export default function DisplayEachSnippet(props) {
                             {typeof eachSnippet.collectedBy != 'undefined' && eachSnippet.collectedBy.length > 0 ?
                                 <span className="btn btn-primary m-1 py-0 collectedBy">Collected by {eachSnippet.collectedBy.length} users</span>
                                 : null}
-                            <DisplayOccasionList snippet={eachSnippet} />
+                            <span className="btn btn-primary m-1 py-0 occasions">For {eachSnippet.occasions.map(eachOccasion =>
+                                <span className="btn btn-primary mx-1 my-0 p-0 eachOccasion">{eachOccasion}</span>)}
+                            </span>
                             <span className="btn btn-primary m-1 py-0 creator">Contributed by {eachSnippet.creator.username}</span>
                         </section>
                         <p>
@@ -49,9 +50,10 @@ export default function DisplayEachSnippet(props) {
                         </div>
                         {typeof eachSnippet.comments != "undefined" && props.commentStatus && eachSnippet.comments.length > 0 ?
                             <div>
-                                <DisplayCommentList snippet={eachSnippet}
-                                                    updateCommentState={props.updateCommentState}
+                                {props.currentSnippetID ===eachSnippet._id ?<DisplayCommentList snippet={eachSnippet}
+                                    updateCommentState={props.updateCommentState}
                                 />
+                            : null}
                             </div>
                             : null}
                     </div>
