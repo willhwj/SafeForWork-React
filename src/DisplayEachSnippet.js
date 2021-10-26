@@ -11,6 +11,7 @@ export default function DisplayEachSnippet(props) {
         <div className="accordion" id="accordionExample">
             <div>
                 <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={props.updateShowHide}>Add New Snippet</button>
+                {props.displayModal=== "createSnippet" ? 
                 <DisplayModalBox    snippetStatus={props.snippetStatus}
                                     currentSnippetID={props.currentSnippetID}
                                     commentStatus={props.commentStatus}
@@ -40,6 +41,7 @@ export default function DisplayEachSnippet(props) {
                                     updateSnippetState={props.updateSnippetState}
                                     updateShowHide={props.updateShowHide}
                 />
+            : null}
             </div>
             {props.allSnippets.map(eachSnippet =>
                 <div className="accordion-item" key={eachSnippet._id}>
@@ -56,8 +58,9 @@ export default function DisplayEachSnippet(props) {
                             {eachSnippet.content}
                         </div>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" onClick={() => { props.updateSnippetState(eachSnippet) }}>Edit</button>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="updateSnippet" onClick={() => { props.updateSnippetState(eachSnippet) }}>Edit</button>
 
+                            {props.displayModal=== "updateSnippet"? 
                             <DisplayModalBox    snippetStatus={props.snippetStatus}
                                                 currentSnippetID={props.currentSnippetID}
                                                 commentStatus={props.commentStatus}
@@ -87,9 +90,11 @@ export default function DisplayEachSnippet(props) {
                                                 updateSnippetState={props.updateSnippetState}
                                                 updateShowHide={props.updateShowHide}
                             />
+                            : null}
 
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={props.updateShowHide}>Delete</button>
 
+                            {props.displayModal=== "deleteSnippet"? 
                             <DisplayModalBox    snippetStatus={props.snippetStatus}
                                                 currentSnippetID={props.currentSnippetID}
                                                 commentStatus={props.commentStatus}
@@ -119,6 +124,7 @@ export default function DisplayEachSnippet(props) {
                                                 updateSnippetState={props.updateSnippetState}
                                                 updateShowHide={props.updateShowHide}
                             />
+                            : null}
                         </div>
                         <section className="m-2 attribute">
                             <span className="btn btn-primary mx-1 py-0 type">{eachSnippet.type}</span>
@@ -137,12 +143,7 @@ export default function DisplayEachSnippet(props) {
                         </p>
                         <div>
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createComment" onClick={props.updateShowHide}>Add New Comment</button>
-                            {props.addNewComment ?
-                                <DisplayAddComment  comment={props.comment}
-                                                    commentUsername={props.commentUsername}
-                                                    updateField={props.updateField}
-                                />
-                                : null}
+
                         </div>
                         {typeof eachSnippet.comments != "undefined" && props.commentStatus && eachSnippet.comments.length > 0 ?
                             <div>

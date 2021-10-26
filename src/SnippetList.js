@@ -11,7 +11,7 @@ export default class SnippetList extends React.Component {
         currentSnippetID: "",
         commentStatus: false,
         allSnippets: [],
-        displayModal: false,
+        displayModal: "",
 
         // state variables for add & edit snippets
         snippetName: '',
@@ -28,7 +28,6 @@ export default class SnippetList extends React.Component {
         // state variables for add & edit comments
         comment: '',
         commentUsername: '',
-        addNewComment: false,
         snippetIDOfComment: '',
         commentID: '',
 
@@ -243,7 +242,6 @@ export default class SnippetList extends React.Component {
                     displayModal: false,
                     commentUsername: "",
                     comment: "",
-                    addNewComment: false,
                     commentID: "",
                     snippetIDOfComment: ""
                 });
@@ -269,7 +267,6 @@ export default class SnippetList extends React.Component {
                     displayModal: false,
                     commentUsername: "",
                     comment: "",
-                    addNewComment: false,
                     commentID: "",
                     snippetIDOfComment: ""
                 });
@@ -307,7 +304,6 @@ export default class SnippetList extends React.Component {
                     displayModal: false,
                     commentUsername: "",
                     comment: "",
-                    addNewComment: false
                 });
                 break;
             default:
@@ -320,7 +316,7 @@ export default class SnippetList extends React.Component {
         if (typeof snippet._id === "string") {
             this.setState({
                 action: "updateSnippet",
-                displayModal: true,
+                displayModal: "updateSnippet",
                 snippetCreator: snippet.creator.username,
                 snippetContent: snippet.content,
                 snippetTheme: snippet.theme,
@@ -334,7 +330,7 @@ export default class SnippetList extends React.Component {
         } else {
             this.setState({
                 action: "",
-                displayModal: false,
+                displayModal: "",
                 snippetCreator: "",
                 snippetContent: "",
                 snippetTheme: "",
@@ -370,7 +366,6 @@ export default class SnippetList extends React.Component {
                         [event.target.name]: true,
                         currentSnippetID: event.target.getAttribute('data-snippet-id'),
                         commentStatus: true,
-                        addNewComment: false,
                     });
                     break;
                 default:
@@ -378,7 +373,17 @@ export default class SnippetList extends React.Component {
             }
         }
         // scenarios when user clicks on buttons within a snippet
-        else {
+        else if(event.target.name==="displayModal"){
+            this.state.displayModal === ""?
+            this.setState({
+                displayModal: event.target.getAttribute('data-crud'),
+                action: event.target.getAttribute('data-crud')
+            })
+            : this.setState({
+                displayModal: "",
+                action: ""
+            })
+        } else{
             this.state[event.target.name] ?
                 this.setState({
                     [event.target.name]: false
@@ -409,7 +414,6 @@ export default class SnippetList extends React.Component {
 
                 comment={this.state.comment}
                 commentUsername={this.state.commentUsername}
-                addNewComment={this.state.addNewComment}
                 snippetIDOfComment={this.state.snippetIDOfComment}
                 commentID={this.state.commentID}
 

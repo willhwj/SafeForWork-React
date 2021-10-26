@@ -31,7 +31,6 @@ export default function DisplayCommentList(props) {
                     
                                                 comment={props.comment}
                                                 commentUsername={props.commentUsername}
-                                                addNewComment={props.addNewComment}
                                                 snippetIDOfComment={props.snippetIDOfComment}
                                                 commentID={props.commentID}
                     
@@ -61,7 +60,6 @@ export default function DisplayCommentList(props) {
                     
                                                 comment={props.comment}
                                                 commentUsername={props.commentUsername}
-                                                addNewComment={props.addNewComment}
                                                 snippetIDOfComment={props.snippetIDOfComment}
                                                 commentID={props.commentID}
                     
