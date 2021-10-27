@@ -5,22 +5,51 @@ import './category.css';
 export default class Category extends React.Component {
     // path state variable is used to store the document path of the data file
     state = {
-        catList: [],
-        category: this.props.category,
-        option: this.props.option
+        catList: []
     }
 
-    async componentDidMount() {
-        console.log("componentDidMount for Category.js");
+    fetchData = async () => {
         let categoryList = [];
         let url = 'http://localhost:8888/categories';
-        await axios.get(url+ `/${this.state.category}/${this.state.option}`).then(response => categoryList = response.data);
+        console.log(this.props.category, this.props.option);
+        await axios.get(url + `/${this.props.category}/${this.props.option}`).then(response => categoryList = response.data);
 
         console.log("categoryList is ", categoryList);
         this.setState({
             catList: categoryList
         })
     }
+
+    async componentDidMount() {
+        console.log("componentDidMount for Category.js");
+        this.fetchData();
+    }
+
+    componentDidUpdate(prevProps) {
+        console.log(prevProps);
+        if (prevProps.category !== this.props.category) {
+            console.log(this.props);
+            this.fetchData();
+        }
+
+    }
+
+    // static async getDerivedStateFromProps(nextProps, prevState) {
+    //     console.log("getDerivedStateFromProps for Category.js");
+    //     if (nextProps.category !== prevState.category || nextProps.option !== prevState.option) {
+    //         console.log("enter if statement for getDerivedStateFromProps");
+    //         let categoryList = [];
+    //         let url = 'http://localhost:8888/categories';
+    //         await axios.get(url + `/${nextProps.category}/${nextProps.option}`).then(response => categoryList = response.data);
+    //         console.log("axios results from getDerivedStateFromProps", categoryList);
+    //         this.setState ({
+    //             catList: categoryList,
+    //             category: nextProps.category,
+    //             option: nextProps.option
+    //         })
+    //     }
+    //     return null;
+    // }
 
     render() {
         return (

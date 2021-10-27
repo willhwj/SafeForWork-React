@@ -109,7 +109,7 @@ export default class Main extends React.Component {
                 <header className="py-1 mb-0 border-bottom border-top">
                     <div className="container d-flex flex-wrap justify-content-center">
                         <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
-                            <span className="fs-4">{this.state.categorySelected? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
+                            <span className="fs-4">{this.state.activePage==="category" ? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
                         </a>
                         <div className="b-example-divider"></div>
                     </div>
