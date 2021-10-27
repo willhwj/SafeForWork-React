@@ -7,8 +7,8 @@ import SnippetList from './SnippetList';
 export default class Main extends React.Component {
     state={
         dropdownStatus: false,
-        categorySelected: null,
-        optionSelected: null,
+        categorySelected: "all",
+        optionSelected: "all",
         activePage: "category"
     }
 
@@ -114,6 +114,7 @@ export default class Main extends React.Component {
                         <div className="b-example-divider"></div>
                     </div>
                 </header>
+                {this.renderContent()}
             </React.Fragment>
         )
     }
