@@ -106,13 +106,15 @@ export default class SnippetList extends React.Component {
                 // method 2:
                 response = await axios.delete(url + `/delete/${this.state.currentSnippetID}`, {
                     data: {
-                        "theme": this.state.snippetTheme,
-                        "type": this.state.snippetType,
-                        "length": this.state.snippetLength,
-                        "occasion": this.state.snippetOccasions,
-                        "changeInSnippets": -1,
-                        "changeInComments": -this.state.snippetNumComments,
-                        "changeInCollections": -this.state.snippetNumCollectedBy
+                        categoryChange: {
+                            "theme": this.state.snippetTheme,
+                            "type": this.state.snippetType,
+                            "length": this.state.snippetLength,
+                            "occasion": this.state.snippetOccasions,
+                            "changeInSnippets": -1,
+                            "changeInComments": -this.state.snippetNumComments,
+                            "changeInCollections": -this.state.snippetNumCollectedBy
+                        }
                     }
                 });
                 console.log("response of deleteSnippet is ", response);
@@ -190,7 +192,16 @@ export default class SnippetList extends React.Component {
                     theme: this.state.snippetTheme,
                     length: this.state.snippetLength,
                     comments: [],
-                    collectedBy: []
+                    collectedBy: [],
+                    categoryChange: {
+                        "theme": this.state.snippetTheme,
+                        "type": this.state.snippetType,
+                        "length": this.state.snippetLength,
+                        "occasions": [...this.state.snippetOccasions],
+                        "changeInSnippets": 1,
+                        "changeInComments": 0,
+                        "changeInCollections": 0
+                    }
                 });
                 // update the state variable allSnippets array with the new snippet object
                 // also update state variables used for tracking current snippet to null
@@ -228,7 +239,17 @@ export default class SnippetList extends React.Component {
             case "deleteComment":
                 console.log("enter deleteComment in sendToServer");
                 // send new snippet to express server for processing
-                response = await axios.patch(url + `/${this.state.snippetIDOfComment}/comments/delete/${this.state.commentID}`);
+                response = await axios.patch(url + `/${this.state.snippetIDOfComment}/comments/delete/${this.state.commentID}`, {
+                    categoryChange: {
+                        "theme": this.state.snippetTheme,
+                        "type": this.state.snippetType,
+                        "length": this.state.snippetLength,
+                        "occasions": [...this.state.snippetOccasions],
+                        "changeInSnippets": 0,
+                        "changeInComments": -1,
+                        "changeInCollections": 0
+                    }
+                });
                 clonedSnippets = this.state.allSnippets;
                 indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
                 // method 1: get updated comment from state variable directly, use array filter function
@@ -277,7 +298,16 @@ export default class SnippetList extends React.Component {
                 // send new snippet to express server for processing
                 response = await axios.patch(url + `/${this.state.currentSnippetID}/comments/create`, {
                     username: this.state.commentUsername,
-                    comment: this.state.comment
+                    comment: this.state.comment,
+                    categoryChange: {
+                        "theme": this.state.snippetTheme,
+                        "type": this.state.snippetType,
+                        "length": this.state.snippetLength,
+                        "occasions": [...this.state.snippetOccasions],
+                        "changeInSnippets": 0,
+                        "changeInComments": 1,
+                        "changeInCollections": 0
+                    }
                 });
                 clonedSnippets = this.state.allSnippets;
                 indexOfChange = clonedSnippets.findIndex(updatedSnippet => updatedSnippet._id === this.state.currentSnippetID);
@@ -372,7 +402,7 @@ export default class SnippetList extends React.Component {
                 default:
                     console.log('invalid scenario in switch statement for updateShowHide function');
             }
-        }else {
+        } else {
             this.state[event.target.name] ?
                 this.setState({
                     [event.target.name]: false
@@ -398,24 +428,24 @@ export default class SnippetList extends React.Component {
                     updateShowHide={this.updateShowHide}
                 />
                 {this.state.displayModal === true ?
-                    <DisplayModalBox    displayModal={this.state.displayModal}
-                                        snippetName={this.state.snippetName}
-                                        snippetCreator={this.state.snippetCreator}
-                                        snippetContent={this.state.snippetContent}
-                                        snippetTheme={this.state.snippetTheme}
-                                        snippetOccasions={this.state.snippetOccasions}
-                                        snippetType={this.state.snippetType}
-                                        snippetLength={this.state.snippetLength}
-                                        comment={this.state.comment}
-                                        commentUsername={this.state.commentUsername}
-                                        action={this.state.action}
+                    <DisplayModalBox displayModal={this.state.displayModal}
+                        snippetName={this.state.snippetName}
+                        snippetCreator={this.state.snippetCreator}
+                        snippetContent={this.state.snippetContent}
+                        snippetTheme={this.state.snippetTheme}
+                        snippetOccasions={this.state.snippetOccasions}
+                        snippetType={this.state.snippetType}
+                        snippetLength={this.state.snippetLength}
+                        comment={this.state.comment}
+                        commentUsername={this.state.commentUsername}
+                        action={this.state.action}
 
-                                        updateField={this.updateField}
-                                        updateArray={this.updateArray}
-                                        updateCommentState={this.updateCommentState}
-                                        sendToServer={this.sendToServer}
-                                        updateSnippetState={this.updateSnippetState}
-                                        updateShowHide={this.updateShowHide}
+                        updateField={this.updateField}
+                        updateArray={this.updateArray}
+                        updateCommentState={this.updateCommentState}
+                        sendToServer={this.sendToServer}
+                        updateSnippetState={this.updateSnippetState}
+                        updateShowHide={this.updateShowHide}
                     />
                     : null}
             </React.Fragment>
