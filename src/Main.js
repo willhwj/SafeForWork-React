@@ -1,31 +1,67 @@
 import React from 'react';
-import './Main.css'
+import './Main.css';
+import Category from './Category';
+import User from './User';
+import SnippetList from './SnippetList';
 
 export default class Main extends React.Component {
     state={
         dropdownStatus: false,
-        categorySelected: null
+        categorySelected: null,
+        optionSelected: null,
+        activePage: "category"
     }
 
     // utility function to update state variable to change current view to show or hide
-    updateStatus=(event)=>{
-        console.log('event target is ', event.target.name);
-        console.log('event target current status is ', this.state[event.target.name]);
-        this.state[event.target.name]=== true?
-            this.setState({ 
-                [event.target.name]: false 
-            }):
-            this.setState({ 
-                [event.target.name]: true
-            })
-    }
+    // updateStatus=(event)=>{
+    //     this.state[event.target.name]=== true?
+    //         this.setState({ 
+    //             [event.target.name]: false 
+    //         }):
+    //         this.setState({ 
+    //             [event.target.name]: true
+    //         })
+    // }
 
     // function to update state variable with category selected by users for viewing
     updateView=(event)=>{
-        this.setState({
-            categorySelected: event.target.name,
-            dropdownStatus: false
-        })
+        if (event.target.name === "dropdownStatus"){
+            this.state.dropdownStatus === true? 
+            this.setState({
+                dropdownStatus: false 
+            })
+            : this.setState({
+                dropdownStatus: true
+            })
+        } else {
+            this.setState({
+                activePage: event.target.getAttribute("data-active-page"),
+                categorySelected: event.target.name,
+                dropdownStatus: false
+            })
+        }
+    }
+
+    // function to conditionally render a page according to user selection at navbar
+    renderContent =()=>{
+        switch (this.state.activePage){
+            case "category":
+                return(
+                    <Category   category={this.state.categorySelected}
+                                option={this.state.optionSelected}
+                    />
+                )
+            case "snippet":
+                return(
+                    <SnippetList/>
+                )
+            case "user":
+                return(
+                    <User/>
+                )
+            default:
+                console.log("no option for renderContent in SFW.js")
+        }
     }
 
     render() {
@@ -45,16 +81,20 @@ export default class Main extends React.Component {
                                 <li className="nav-item">
                                     <button className="nav-link navbarBtn">About</button>
                                 </li>
-                                <li className="nav-item dropdown" onMouseOver={this.updateStatus} onMouseLeave={this.updateStatus}>
+                                <li className="nav-item">
+                                    <button className="nav-link navbarBtn" name="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
+                                </li>
+                                <li className="nav-item dropdown" name="dropdownStatus" onClick={this.updateView}>
                                     <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
-                                        See Snippets By
+                                        Categories
                                     </button>
                                     {this.state.dropdownStatus===true?
                                     <ul className="dropdown-menu" style={{display: "block"}} aria-labelledby="navbarDropdown">
-                                        <li><button className="dropdown-item navbarBtn submenu" name="theme" onClick={this.updateView} >Theme</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="type" onClick={this.updateView}>Type</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="occasion" onClick={this.updateView}>Occasion</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="popularity" onClick={this.updateView}>Popularity</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="all" data-active-page="category" onClick={this.updateView} >All</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="theme" data-active-page="category" onClick={this.updateView} >Theme</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="type" data-active-page="category" onClick={this.updateView}>Type</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="occasion" data-active-page="category" onClick={this.updateView}>Occasion</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="popularity" data-active-page="category" onClick={this.updateView}>Popularity</button></li>
                                     </ul>
                                     : null}
                                 </li>
