@@ -72,7 +72,7 @@ export default class SnippetList extends React.Component {
 
     // function to populate comment form with current comment for edit
     updateCommentState = (comment, snippetID, event) => {
-        if (typeof comment._id === "string") {
+        if (this.state.displayModal === false) {
             this.setState({
                 action: event.target.getAttribute("data-crud"),
                 displayModal: true,
@@ -110,7 +110,7 @@ export default class SnippetList extends React.Component {
                             "theme": this.state.snippetTheme,
                             "type": this.state.snippetType,
                             "length": this.state.snippetLength,
-                            "occasion": this.state.snippetOccasions,
+                            "occasions": this.state.snippetOccasions,
                             "changeInSnippets": -1,
                             "changeInComments": -this.state.snippetNumComments,
                             "changeInCollections": -this.state.snippetNumCollectedBy
@@ -140,12 +140,12 @@ export default class SnippetList extends React.Component {
                 console.log("enter updateSnippet in sendToServer");
                 // send update to express server for processing
                 response = await axios.patch(url + `/update/${this.state.currentSnippetID}`, {
-                    name: this.state.snippetName,
-                    content: this.state.snippetContent,
-                    occasions: [...this.state.snippetOccasions],
-                    type: this.state.snippetType,
-                    theme: this.state.snippetTheme,
-                    length: this.state.snippetLength
+                    'name': this.state.snippetName,
+                    'content': this.state.snippetContent,
+                    'occasions': [...this.state.snippetOccasions],
+                    'type': this.state.snippetType,
+                    'theme': this.state.snippetTheme,
+                    'length': this.state.snippetLength
                 });
                 // update the state variable allSnippets array with the modified snippet object
                 // also update state variables used for tracking current snippet to null
@@ -154,12 +154,12 @@ export default class SnippetList extends React.Component {
                 // target object is the current snippet before update. 
                 // source object is the key value pairs which have been updated.
                 newSnippet = Object.assign({ ...this.state.allSnippets[indexOfChange] }, {
-                    name: this.state.snippetName,
-                    content: this.state.snippetContent,
-                    occasions: [...this.state.snippetOccasions],
-                    type: this.state.snippetType,
-                    theme: this.state.snippetTheme,
-                    length: this.state.snippetLength
+                    'name': this.state.snippetName,
+                    'content': this.state.snippetContent,
+                    'occasions': [...this.state.snippetOccasions],
+                    'type': this.state.snippetType,
+                    'theme': this.state.snippetTheme,
+                    'length': this.state.snippetLength
                 });
                 // console.log("newSnippet is ", newSnippet);
                 clonedSnippets.splice(indexOfChange, 1, newSnippet);
@@ -181,19 +181,19 @@ export default class SnippetList extends React.Component {
                 console.log("enter createSnippet in sendToServer");
                 // send new snippet to express server for processing
                 response = await axios.post(url + `/create`, {
-                    creator: {
-                        _id: '100004',
-                        username: this.state.snippetCreator
+                    'creator': {
+                        '_id': '100004',
+                        'username': this.state.snippetCreator
                     },
-                    name: this.state.snippetName,
-                    content: this.state.snippetContent,
-                    occasions: [...this.state.snippetOccasions],
-                    type: this.state.snippetType,
-                    theme: this.state.snippetTheme,
-                    length: this.state.snippetLength,
-                    comments: [],
-                    collectedBy: [],
-                    categoryChange: {
+                    'name': this.state.snippetName,
+                    'content': this.state.snippetContent,
+                    'occasions': [...this.state.snippetOccasions],
+                    'type': this.state.snippetType,
+                    'theme': this.state.snippetTheme,
+                    'length': this.state.snippetLength,
+                    'comments': [],
+                    'collectedBy': [],
+                    'categoryChange': {
                         "theme": this.state.snippetTheme,
                         "type": this.state.snippetType,
                         "length": this.state.snippetLength,
@@ -208,16 +208,16 @@ export default class SnippetList extends React.Component {
                 clonedSnippets = this.state.allSnippets;
                 // newSnippet object includes the MongoDB objectID. 
                 newSnippet = {
-                    _id: response.data.insertedId,
-                    name: this.state.snippetName,
-                    content: this.state.snippetContent,
-                    occasions: [...this.state.snippetOccasions],
-                    type: this.state.snippetType,
-                    theme: this.state.snippetTheme,
-                    length: this.state.snippetLength,
-                    creator: {
-                        _id: '100004',
-                        username: this.state.snippetCreator
+                    '_id': response.data.insertedId,
+                    'name': this.state.snippetName,
+                    'content': this.state.snippetContent,
+                    'occasions': [...this.state.snippetOccasions],
+                    'type': this.state.snippetType,
+                    'theme': this.state.snippetTheme,
+                    'length': this.state.snippetLength,
+                    'creator': {
+                        '_id': '100004',
+                        'username': this.state.snippetCreator
                     }
                 };
                 clonedSnippets.push(newSnippet);
@@ -345,10 +345,37 @@ export default class SnippetList extends React.Component {
 
     // function to populate snippet form with current snippet info for edit.
     updateSnippetState = (snippet) => {
-        if (typeof snippet._id === "string") {
+        // if (typeof snippet._id === "string") {
+        //     this.setState({
+        //         action: "updateSnippet",
+        //         displayModal: true,
+        //         snippetCreator: snippet.creator.username,
+        //         snippetContent: snippet.content,
+        //         snippetTheme: snippet.theme,
+        //         snippetOccasions: [...snippet.occasions],
+        //         snippetType: snippet.type,
+        //         snippetLength: snippet.length,
+        //         snippetName: snippet.name,
+        //         snippetNumComments: snippet.comments.length,
+        //         snippetNumCollectedBy: snippet.collectedBy.length
+        //     })
+        // } else {
+        //     this.setState({
+        //         action: "",
+        //         displayModal: false,
+        //         snippetCreator: "",
+        //         snippetContent: "",
+        //         snippetTheme: "",
+        //         snippetOccasions: [],
+        //         snippetType: "",
+        //         snippetLength: -1,
+        //         snippetNumComments: 0,
+        //         snippetNumCollectedBy: 0
+        //     })
+        // }
+        
+        if (this.state.snippetCreator === "") {
             this.setState({
-                action: "updateSnippet",
-                displayModal: true,
                 snippetCreator: snippet.creator.username,
                 snippetContent: snippet.content,
                 snippetTheme: snippet.theme,
@@ -361,14 +388,12 @@ export default class SnippetList extends React.Component {
             })
         } else {
             this.setState({
-                action: "",
-                displayModal: false,
                 snippetCreator: "",
                 snippetContent: "",
                 snippetTheme: "",
                 snippetOccasions: [],
                 snippetType: "",
-                snippetLength: -1,
+                snippetLength: 0,
                 snippetNumComments: 0,
                 snippetNumCollectedBy: 0
             })

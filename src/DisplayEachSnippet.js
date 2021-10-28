@@ -12,7 +12,7 @@ export default function DisplayEachSnippet(props) {
             {props.allSnippets.map(eachSnippet =>
                 <div className="accordion-item" key={eachSnippet._id}>
                     <h2 className="accordion-header" id="headingOne">
-                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippetID" data-snippet-id={eachSnippet._id} onClick={props.updateShowHide} aria-expanded="true" aria-controls="collapseOne">
+                        <button className="accordion-button fw-bold text-center text-capitalize" type="button" name="snippetStatus" data-current="currentSnippetID" data-snippet-id={eachSnippet._id} onClick={(event)=> {props.updateSnippetState(eachSnippet); props.updateShowHide(event)}} aria-expanded="true" aria-controls="collapseOne">
                             {eachSnippet.name}
                         </button>
                     </h2>
@@ -24,7 +24,7 @@ export default function DisplayEachSnippet(props) {
                             {eachSnippet.content}
                         </div>
                         <div>
-                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="updateSnippet" onClick={() => { props.updateSnippetState(eachSnippet) }}>Edit</button>
+                            <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="updateSnippet" onClick={props.updateShowHide}>Edit</button>
                             <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="deleteSnippet" onClick={props.updateShowHide}>Delete</button>
                         </div>
                         <section className="m-2 attribute">
@@ -41,7 +41,7 @@ export default function DisplayEachSnippet(props) {
                         </section>
                         <p>
                             <button className="btn btn-primary m-2" type="button" onClick={props.updateShowHide} name="commentStatus" aria-expanded="false" aria-controls="collapseExample">
-                                {typeof eachSnippet.comments != "undefined" ? eachSnippet.comments.length + " Comments" : "No Comments Yet"}
+                                {eachSnippet.comments.length !== 0 ? eachSnippet.comments.length + " Comments" : "No Comments Yet"}
                             </button>
                         </p>
                         <div>

@@ -26,7 +26,7 @@ export default function SwitchDisplay(props) {
                 <React.Fragment>
                     <div className="modal-header">
                         <h5 className="modal-title">Edit Snippet</h5>
-                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateSnippetState}></button>
+                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
                         <DisplaySnippetForm snippetName={props.snippetName}
@@ -42,7 +42,7 @@ export default function SwitchDisplay(props) {
                         />
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={props.updateSnippetState}>Cancel</button>
+                        <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
                         <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
@@ -52,7 +52,7 @@ export default function SwitchDisplay(props) {
                 <React.Fragment>
                     <div className="modal-header">
                         <h5 className="modal-title">Edit Snippet</h5>
-                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateSnippetState}></button>
+                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
                         <DisplaySnippetForm snippetName={props.snippetName}
@@ -68,7 +68,7 @@ export default function SwitchDisplay(props) {
                         />
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={props.updateSnippetState}>Cancel</button>
+                        <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
                         <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
@@ -102,7 +102,7 @@ export default function SwitchDisplay(props) {
                         />
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={props.updateCommentState}>Cancel</button>
+                        <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateCommentState}>Cancel</button>
                         <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
@@ -112,7 +112,7 @@ export default function SwitchDisplay(props) {
                 <React.Fragment>
                     <div className="modal-header">
                         <h5 className="modal-title">Add New Comment</h5>
-                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateCommentState}></button>
+                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
                         <DisplayCommentForm comment={props.comment}
@@ -121,7 +121,7 @@ export default function SwitchDisplay(props) {
                         />
                     </div>
                     <div className="modal-footer">
-                        <button type="button" className="btn btn-secondary" onClick={props.updateCommentState}>Cancel</button>
+                        <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
                         <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
                     </div>
                 </React.Fragment>
