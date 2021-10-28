@@ -2,7 +2,7 @@ import React from 'react';
 import axios from 'axios';
 import './snippet.css';
 import DisplayEachSnippet from './DisplayEachSnippet';
-import DisplayModalBox from './DisplayModalBox'
+import DisplayModalBox from './DisplayModalBox';
 
 export default class SnippetList extends React.Component {
 
@@ -39,7 +39,10 @@ export default class SnippetList extends React.Component {
     // read all snippets into state variable
     async componentDidMount() {
         let snippets = [];
-        await axios.get('http://localhost:8888/snippets').then(response => snippets = response.data);
+        console.log("componentDidMount for SnippetList triggered");
+        console.log(this.props.category, this.props.option);
+        await axios.get(`http://localhost:8888/snippets/${this.props.category}/${this.props.option}`).then(response => snippets = response.data);
+        console.log(snippets);
 
         this.setState({
             allSnippets: snippets
@@ -219,8 +222,8 @@ export default class SnippetList extends React.Component {
                         '_id': '100004',
                         'username': this.state.snippetCreator
                     },
-                    'comments':[],
-                    'collectedBy':[]
+                    'comments': [],
+                    'collectedBy': []
                 };
                 clonedSnippets.push(newSnippet);
 
@@ -347,48 +350,34 @@ export default class SnippetList extends React.Component {
 
     // function to populate snippet form with current snippet info for edit.
     updateSnippetState = (snippet) => {
-        // if (typeof snippet._id === "string") {
-        //     this.setState({
-        //         action: "updateSnippet",
-        //         displayModal: true,
-        //         snippetCreator: snippet.creator.username,
-        //         snippetContent: snippet.content,
-        //         snippetTheme: snippet.theme,
-        //         snippetOccasions: [...snippet.occasions],
-        //         snippetType: snippet.type,
-        //         snippetLength: snippet.length,
-        //         snippetName: snippet.name,
-        //         snippetNumComments: snippet.comments.length,
-        //         snippetNumCollectedBy: snippet.collectedBy.length
-        //     })
-        // } else {
-        //     this.setState({
-        //         action: "",
-        //         displayModal: false,
-        //         snippetCreator: "",
-        //         snippetContent: "",
-        //         snippetTheme: "",
-        //         snippetOccasions: [],
-        //         snippetType: "",
-        //         snippetLength: -1,
-        //         snippetNumComments: 0,
-        //         snippetNumCollectedBy: 0
-        //     })
-        // }
-        
-        if (this.state.currentSnippetID !== snippet._id) {
-            this.setState({
-                snippetCreator: snippet.creator.username,
-                snippetContent: snippet.content,
-                snippetTheme: snippet.theme,
-                snippetOccasions: [...snippet.occasions],
-                snippetType: snippet.type,
-                snippetLength: snippet.length,
-                snippetName: snippet.name,
-                snippetNumComments: snippet.comments.length,
-                snippetNumCollectedBy: snippet.collectedBy.length,
-                currentSnippetID: snippet._id
-            })
+        if (typeof snippet === "object") {
+            if (this.state.currentSnippetID !== snippet._id) {
+                this.setState({
+                    snippetCreator: snippet.creator.username,
+                    snippetContent: snippet.content,
+                    snippetTheme: snippet.theme,
+                    snippetOccasions: [...snippet.occasions],
+                    snippetType: snippet.type,
+                    snippetLength: snippet.length,
+                    snippetName: snippet.name,
+                    snippetNumComments: snippet.comments.length,
+                    snippetNumCollectedBy: snippet.collectedBy.length,
+                    currentSnippetID: snippet._id
+                })
+            } else {
+                this.setState({
+                    snippetCreator: "",
+                    snippetContent: "",
+                    snippetTheme: "",
+                    snippetOccasions: [],
+                    snippetType: "",
+                    snippetLength: 0,
+                    snippetName:"",
+                    snippetNumComments: 0,
+                    snippetNumCollectedBy: 0,
+                    currentSnippetID: ""
+                })
+            }
         } else {
             this.setState({
                 snippetCreator: "",
@@ -397,11 +386,13 @@ export default class SnippetList extends React.Component {
                 snippetOccasions: [],
                 snippetType: "",
                 snippetLength: 0,
+                snippetName:"",
                 snippetNumComments: 0,
                 snippetNumCollectedBy: 0,
                 currentSnippetID: ""
             })
         }
+
     }
 
     // utility function to show or hide any display modal and collapsible displays

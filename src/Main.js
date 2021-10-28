@@ -37,6 +37,7 @@ export default class Main extends React.Component {
             this.setState({
                 activePage: event.target.getAttribute("data-active-page"),
                 categorySelected: event.target.name,
+                optionSelected: event.target.getAttribute("data-option-selected"),
                 dropdownStatus: false
             })
         }
@@ -49,11 +50,14 @@ export default class Main extends React.Component {
                 return(
                     <Category   category={this.state.categorySelected}
                                 option={this.state.optionSelected}
+                                updateView={this.updateView}
                     />
                 )
             case "snippet":
                 return(
-                    <SnippetList/>
+                    <SnippetList    category={this.state.categorySelected}
+                                    option={this.state.optionSelected}
+                    />
                 )
             case "user":
                 return(
@@ -82,7 +86,7 @@ export default class Main extends React.Component {
                                     <button className="nav-link navbarBtn">About</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link navbarBtn" name="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
+                                    <button className="nav-link navbarBtn" name="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
                                 </li>
                                 <li className="nav-item dropdown" name="dropdownStatus" onClick={this.updateView}>
                                     <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
@@ -90,11 +94,11 @@ export default class Main extends React.Component {
                                     </button>
                                     {this.state.dropdownStatus===true?
                                     <ul className="dropdown-menu" style={{display: "block"}} aria-labelledby="navbarDropdown">
-                                        <li><button className="dropdown-item navbarBtn submenu" name="all" data-active-page="category" onClick={this.updateView} >All</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="theme" data-active-page="category" onClick={this.updateView} >Theme</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="type" data-active-page="category" onClick={this.updateView}>Type</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="occasion" data-active-page="category" onClick={this.updateView}>Occasion</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="popularity" data-active-page="category" onClick={this.updateView}>Popularity</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="all" data-option-selected="all" data-active-page="category" onClick={this.updateView} >All</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="theme" data-option-selected="all" data-active-page="category" onClick={this.updateView} >Theme</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="type" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Type</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="occasion" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Occasion</button></li>
+                                        <li><button className="dropdown-item navbarBtn submenu" name="popularity" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Popularity</button></li>
                                     </ul>
                                     : null}
                                 </li>

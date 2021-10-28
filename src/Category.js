@@ -26,6 +26,7 @@ export default class Category extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
+        console.log("componentDidUpdate");
         console.log(prevProps);
         if (prevProps.category !== this.props.category) {
             console.log(this.props);
@@ -34,23 +35,8 @@ export default class Category extends React.Component {
 
     }
 
-    // static async getDerivedStateFromProps(nextProps, prevState) {
-    //     console.log("getDerivedStateFromProps for Category.js");
-    //     if (nextProps.category !== prevState.category || nextProps.option !== prevState.option) {
-    //         console.log("enter if statement for getDerivedStateFromProps");
-    //         let categoryList = [];
-    //         let url = 'http://localhost:8888/categories';
+    //         for dev n testing,use 'http://localhost:8888/categories';
     //         for deployment, use https://sfw-express.herokuapp.com
-    //         await axios.get(url + `/${nextProps.category}/${nextProps.option}`).then(response => categoryList = response.data);
-    //         console.log("axios results from getDerivedStateFromProps", categoryList);
-    //         this.setState ({
-    //             catList: categoryList,
-    //             category: nextProps.category,
-    //             option: nextProps.option
-    //         })
-    //     }
-    //     return null;
-    // }
 
     render() {
         return (
@@ -72,6 +58,7 @@ export default class Category extends React.Component {
                             <div class="card-footer text-muted mh-8 fs-6">
                                 Last Updated 2 days ago
                             </div>
+                            <button className="btn btn-secondary mx-1 py-0" data-option-selected={eachCategory.optionName} data-active-page="snippet" name={eachCategory.category} onClick={this.props.updateView} >Go To Snippets</button>
                         </div>
                     </div>
                 )}

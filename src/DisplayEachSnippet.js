@@ -7,7 +7,7 @@ export default function DisplayEachSnippet(props) {
     return (
         <div className="accordion" id="accordionExample">
             <div>
-                <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={props.updateShowHide}>Add New Snippet</button>
+                <button className="btn btn-secondary mx-1 py-0" name="displayModal" data-crud="createSnippet" onClick={(event)=> {props.updateSnippetState(); props.updateShowHide(event)}}>Add New Snippet</button>
             </div>
             {props.allSnippets.map(eachSnippet =>
                 <div className="accordion-item" key={eachSnippet._id}>
