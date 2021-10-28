@@ -217,7 +217,7 @@ export default class SnippetList extends React.Component {
                     length: this.state.snippetLength,
                     creator: {
                         _id: '100004',
-                        name: this.state.snippetCreator
+                        username: this.state.snippetCreator
                     }
                 };
                 clonedSnippets.push(newSnippet);
@@ -233,7 +233,8 @@ export default class SnippetList extends React.Component {
                     snippetOccasions: [],
                     snippetType: "",
                     snippetLength: -1,
-                    currentSnippetID: newSnippet._id
+                    currentSnippetID: newSnippet._id,
+                    snippetStatus: true
                 });
                 break;
             case "deleteComment":
