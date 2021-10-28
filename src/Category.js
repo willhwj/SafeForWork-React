@@ -10,7 +10,7 @@ export default class Category extends React.Component {
 
     fetchData = async () => {
         let categoryList = [];
-        let url = 'https://sfw-express.herokuapp.com/categories';
+        let url = 'http://localhost:8888/categories';
         console.log(this.props.category, this.props.option);
         await axios.get(url + `/${this.props.category}/${this.props.option}`).then(response => categoryList = response.data);
 
@@ -40,6 +40,7 @@ export default class Category extends React.Component {
     //         console.log("enter if statement for getDerivedStateFromProps");
     //         let categoryList = [];
     //         let url = 'http://localhost:8888/categories';
+    //         for deployment, use https://sfw-express.herokuapp.com
     //         await axios.get(url + `/${nextProps.category}/${nextProps.option}`).then(response => categoryList = response.data);
     //         console.log("axios results from getDerivedStateFromProps", categoryList);
     //         this.setState ({

@@ -39,7 +39,7 @@ export default class SnippetList extends React.Component {
     // read all snippets into state variable
     async componentDidMount() {
         let snippets = [];
-        await axios.get('https://sfw-express.herokuapp.com/snippets').then(response => snippets = response.data);
+        await axios.get('http://localhost:8888/snippets').then(response => snippets = response.data);
 
         this.setState({
             allSnippets: snippets
@@ -95,7 +95,7 @@ export default class SnippetList extends React.Component {
 
     // function to initiate API call to communicate changes to server
     sendToServer = async (action) => {
-        let url = 'https://sfw-express.herokuapp.com/snippets';
+        let url = 'http://localhost:8888/snippets';
         let [response, clonedSnippets, indexOfChange, newSnippet] = ["", "", "", ""];
 
         switch (action) {
@@ -218,7 +218,9 @@ export default class SnippetList extends React.Component {
                     'creator': {
                         '_id': '100004',
                         'username': this.state.snippetCreator
-                    }
+                    },
+                    'comments':[],
+                    'collectedBy':[]
                 };
                 clonedSnippets.push(newSnippet);
 
@@ -374,7 +376,7 @@ export default class SnippetList extends React.Component {
         //     })
         // }
         
-        if (this.state.snippetCreator === "") {
+        if (this.state.currentSnippetID !== snippet._id) {
             this.setState({
                 snippetCreator: snippet.creator.username,
                 snippetContent: snippet.content,
@@ -384,7 +386,8 @@ export default class SnippetList extends React.Component {
                 snippetLength: snippet.length,
                 snippetName: snippet.name,
                 snippetNumComments: snippet.comments.length,
-                snippetNumCollectedBy: snippet.collectedBy.length
+                snippetNumCollectedBy: snippet.collectedBy.length,
+                currentSnippetID: snippet._id
             })
         } else {
             this.setState({
@@ -395,7 +398,8 @@ export default class SnippetList extends React.Component {
                 snippetType: "",
                 snippetLength: 0,
                 snippetNumComments: 0,
-                snippetNumCollectedBy: 0
+                snippetNumCollectedBy: 0,
+                currentSnippetID: ""
             })
         }
     }
