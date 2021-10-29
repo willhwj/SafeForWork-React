@@ -12,17 +12,6 @@ export default class Main extends React.Component {
         activePage: "category"
     }
 
-    // utility function to update state variable to change current view to show or hide
-    // updateStatus=(event)=>{
-    //     this.state[event.target.name]=== true?
-    //         this.setState({ 
-    //             [event.target.name]: false 
-    //         }):
-    //         this.setState({ 
-    //             [event.target.name]: true
-    //         })
-    // }
-
     // function to update state variable with category selected by users for viewing
     updateView=(event)=>{
         if (event.target.name === "dropdownStatus"){
@@ -57,6 +46,7 @@ export default class Main extends React.Component {
                 return(
                     <SnippetList    category={this.state.categorySelected}
                                     option={this.state.optionSelected}
+                                    updateView={this.updateView}
                     />
                 )
             case "user":

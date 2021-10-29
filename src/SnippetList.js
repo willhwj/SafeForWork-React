@@ -3,6 +3,7 @@ import axios from 'axios';
 import './snippet.css';
 import DisplayEachSnippet from './DisplayEachSnippet';
 import DisplayModalBox from './DisplayModalBox';
+import SnippetFilter from './SnippetFilter';
 
 export default class SnippetList extends React.Component {
 
@@ -439,6 +440,8 @@ export default class SnippetList extends React.Component {
     render() {
         return (
             <React.Fragment>
+                <SnippetFilter updateView={this.props.updateView} />
+                <div>
                 <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
                     currentSnippetID={this.state.currentSnippetID}
                     commentStatus={this.state.commentStatus}
@@ -469,6 +472,7 @@ export default class SnippetList extends React.Component {
                         updateShowHide={this.updateShowHide}
                     />
                     : null}
+                    </div>
             </React.Fragment>
         );
     }
