@@ -42,6 +42,7 @@ export default class SnippetList extends React.Component {
         type: "all",
         occasions: [],
         length: "all",
+        keyword: ""
     };
 
     // read all snippets into state variable
@@ -82,6 +83,14 @@ export default class SnippetList extends React.Component {
             for (let currentOccasion of this.state.occasions){
                 snippetList = [...snippetList.filter(eachSnippet=> eachSnippet.occasions.includes(currentOccasion))]
             }
+        }
+        if (this.state.keyword !==""){
+            let keyword= this.state.keyword.toLowerCase();
+            snippetList = [...snippetList.filter(eachSnippet => {
+                let name=eachSnippet.name.toLowerCase();
+                let content=eachSnippet.content.toLowerCase();
+                return name.includes(keyword) || content.includes(keyword) ? true: false
+            })]
         }
         console.log(snippetList);
         this.setState({

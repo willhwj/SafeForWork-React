@@ -91,10 +91,10 @@ export default function SnippetFilter(props) {
                         Presentation
                     </label>
                 </div>
-                <input className="form-control me-2" type="search" placeholder="Search By Key Words in Title or Content" aria-label="Search" />
+                <input className="form-control me-2" type="search" placeholder="Search By Key Words in Title or Content" name="keyword" onChange={props.updateField} aria-label="Search" />
                 <button class="btn btn-outline-success" type="submit" onClick={(event) => {
                     event.preventDefault(); props.filterSnippets()
-                }} >Submit</button>
+                }} >Search</button>
             </form>
             {/* <div class="offcanvas show offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">
