@@ -66,18 +66,6 @@ export default class SnippetList extends React.Component {
         })
     }
 
-
-    // function to update snippet filter state variables
-    updateFilter = (event) => {
-        console.log(event.target);
-        this.setState({
-            [event.target.name]: event.target.value,
-        })
-        // this.setState({
-        //     [event.target.name]: event.target.getAttribute("data-filter"),
-        // })
-    }
-
     // function to filter which snippets to display, return a list of snippets
     filterSnippets = () => {
         let snippetList =[...this.state.allSnippets];
@@ -483,7 +471,8 @@ export default class SnippetList extends React.Component {
                     type={this.state.type}
                     length={this.state.length}
                     occasions={this.state.occasions}
-                    updateFilter={this.updateFilter}
+                    updateField={this.updateField}
+                    updateArray={this.updateArray}
                     filterSnippets={this.filterSnippets}
                 />
                 <div>
