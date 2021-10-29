@@ -35,8 +35,8 @@ export default class Category extends React.Component {
 
     }
 
-    //         for dev n testing,use 'http://localhost:8888/categories';
-    //         for deployment, use https://sfw-express.herokuapp.com
+    // for dev n testing,use 'http://localhost:8888/categories';
+    // for deployment, use https://sfw-express.herokuapp.com;
 
     render() {
         return (

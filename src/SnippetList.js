@@ -42,7 +42,8 @@ export default class SnippetList extends React.Component {
         type: "all",
         occasions: [],
         length: "all",
-        keyword: ""
+        keyword: "",
+        collapse: true,
     };
 
     // read all snippets into state variable
@@ -94,7 +95,8 @@ export default class SnippetList extends React.Component {
         }
         console.log(snippetList);
         this.setState({
-            filteredSnippets: [...snippetList]
+            filteredSnippets: [...snippetList],
+            snippetStatus: false
         })
     }
 
@@ -485,6 +487,8 @@ export default class SnippetList extends React.Component {
                     type={this.state.type}
                     length={this.state.length}
                     occasions={this.state.occasions}
+                    collapse={this.state.collapse}
+                    updateShowHide={this.updateShowHide}
                     updateField={this.updateField}
                     updateArray={this.updateArray}
                     filterSnippets={this.filterSnippets}

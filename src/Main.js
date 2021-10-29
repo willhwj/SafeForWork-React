@@ -3,11 +3,12 @@ import './Main.css';
 import Category from './Category';
 import User from './User';
 import SnippetList from './SnippetList';
+import Home from './Home';
 
 export default class Main extends React.Component {
-    state={
+    state = {
         dropdownStatus: false,
-        activePage: "category",
+        activePage: "home",
 
         // for category view
         categorySelected: "all",
@@ -15,15 +16,15 @@ export default class Main extends React.Component {
     }
 
     // function to update state variable with category selected by users for viewing
-    updateView=(event)=>{
-        if (event.target.name === "dropdownStatus"){
-            this.state.dropdownStatus === true? 
-            this.setState({
-                dropdownStatus: false 
-            })
-            : this.setState({
-                dropdownStatus: true
-            })
+    updateView = (event) => {
+        if (event.target.name === "dropdownStatus") {
+            this.state.dropdownStatus === true ?
+                this.setState({
+                    dropdownStatus: false
+                })
+                : this.setState({
+                    dropdownStatus: true
+                })
         } else {
             this.setState({
                 activePage: event.target.getAttribute("data-active-page"),
@@ -35,25 +36,29 @@ export default class Main extends React.Component {
     }
 
     // function to conditionally render a page according to user selection at navbar
-    renderContent =()=>{
-        switch (this.state.activePage){
+    renderContent = () => {
+        switch (this.state.activePage) {
             case "category":
-                return(
-                    <Category   category={this.state.categorySelected}
-                                option={this.state.optionSelected}
-                                updateView={this.updateView}
+                return (
+                    <Category category={this.state.categorySelected}
+                        option={this.state.optionSelected}
+                        updateView={this.updateView}
                     />
                 )
             case "snippet":
-                return(
-                    <SnippetList    category={this.state.categorySelected}
-                                    option={this.state.optionSelected}
-                                    
+                return (
+                    <SnippetList category={this.state.categorySelected}
+                        option={this.state.optionSelected}
+
                     />
                 )
             case "user":
-                return(
-                    <User/>
+                return (
+                    <User />
+                )
+            case "home":
+                return (
+                    <Home />
                 )
             default:
                 console.log("no option for renderContent in SFW.js")
@@ -72,7 +77,7 @@ export default class Main extends React.Component {
                         <div className="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
-                                    <button className="nav-link active navbarBtn" aria-current="page">Home</button>
+                                    <button className="nav-link active navbarBtn" data-active-page="home" onClick={this.updateView} aria-current="page">Home</button>
                                 </li>
                                 <li className="nav-item">
                                     <button className="nav-link navbarBtn">About</button>
@@ -84,15 +89,15 @@ export default class Main extends React.Component {
                                     <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
                                         Categories
                                     </button>
-                                    {this.state.dropdownStatus===true?
-                                    <ul className="dropdown-menu" style={{display: "block"}} aria-labelledby="navbarDropdown">
-                                        <li><button className="dropdown-item navbarBtn submenu" name="all" data-option-selected="all" data-active-page="category" onClick={this.updateView} >All</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="theme" data-option-selected="all" data-active-page="category" onClick={this.updateView} >Theme</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="type" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Type</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="occasion" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Occasion</button></li>
-                                        <li><button className="dropdown-item navbarBtn submenu" name="popularity" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Popularity</button></li>
-                                    </ul>
-                                    : null}
+                                    {this.state.dropdownStatus === true ?
+                                        <ul className="dropdown-menu" style={{ display: "block" }} aria-labelledby="navbarDropdown">
+                                            <li><button className="dropdown-item navbarBtn submenu" name="all" data-option-selected="all" data-active-page="category" onClick={this.updateView} >All</button></li>
+                                            <li><button className="dropdown-item navbarBtn submenu" name="theme" data-option-selected="all" data-active-page="category" onClick={this.updateView} >Theme</button></li>
+                                            <li><button className="dropdown-item navbarBtn submenu" name="type" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Type</button></li>
+                                            <li><button className="dropdown-item navbarBtn submenu" name="occasion" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Occasion</button></li>
+                                            <li><button className="dropdown-item navbarBtn submenu" name="length" data-option-selected="all" data-active-page="category" onClick={this.updateView}>Length</button></li>
+                                        </ul>
+                                        : null}
                                 </li>
                             </ul>
                             {/* <form className="d-flex">
@@ -105,12 +110,15 @@ export default class Main extends React.Component {
                 <header className="py-1 mb-0 border-bottom border-top">
                     <div className="container d-flex flex-wrap justify-content-center">
                         <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
-                            <span className="fs-4">{this.state.activePage==="category" ? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
+                            <span className="fs-4">{this.state.activePage === "category" ? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
                         </a>
                         <div className="b-example-divider"></div>
                     </div>
                 </header>
-                {this.renderContent()}
+                <div class="m-1 p-1" >
+                    {this.renderContent()}
+                </div>
+
             </React.Fragment>
         )
     }
