@@ -10,48 +10,48 @@ export default function SnippetFilter(props) {
             <form>
             <div>Filter By Theme</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="life" id="life" checked={props.snippetTheme === "life"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="theme" data-filter="life" value="life" id="life" checked={props.theme === "life"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="life">
                             Life
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="hardwork" id="hardwork" checked={props.snippetTheme === "hardwork"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="theme" data-filter="hardwork" value="hardwork" id="hardwork" checked={props.theme === "hardwork"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="hardwork">
                             Hardwork
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetTheme" value="kindness" id="kindness" checked={props.snippetTheme === "kindness"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="theme" data-filter="kindess" value="kindness" id="kindness" checked={props.theme === "kindness"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="kindness">
                             Kindness
                         </label>
                     </div>
                     <div>Filter By Type</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="joke" id="joke" checked={props.snippetType === "joke"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="type" data-filter="joke" value="joke" id="joke" checked={props.type === "joke"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="joke">
                             Joke
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="story" id="story" checked={props.snippetType === "story"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="type" data-filter="story" value="story" id="story" checked={props.type === "story"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="story">
                             Story
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="snippetType" value="quote" id="quote" checked={props.snippetType === "quote"} onChange={props.updateField} />
+                        <input className="form-check-input" type="radio" name="type" data-filter="quote" value="quote" id="quote" checked={props.type === "quote"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="quote">
                             Quote
                         </label>
                     </div>
                     <div>Filter By Length</div>
-                    <select className="form-select" name="snippetLength" onChange={props.updateField} value={props.snippetLength} aria-label="Default select example">
-                        <option value={1}>Less than One Minute</option>
-                        <option value={2}>One to Two Minutes</option>
-                        <option value={3}>Two to Three Minutes</option>
-                        <option value={4}>Above Three Minutes</option>
+                    <select className="form-select" name="length" data-filter="1" onChange={props.updateFilter} value={props.length} aria-label="Default select example">
+                        <option value="1" >Less than One Minute</option>
+                        <option value="2">One to Two Minutes</option>
+                        <option value="3">Two to Three Minutes</option>
+                        <option value="4">Above Three Minutes</option>
                     </select>
                     <input className="form-control me-2" type="search" placeholder="Search By Key Words in Title or Content" aria-label="Search"/>
                                 <button class ="btn btn-outline-success" type ="submit">Submit</button>

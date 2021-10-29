@@ -58,7 +58,7 @@ export default class Category extends React.Component {
                             <div class="card-footer text-muted mh-8 fs-6">
                                 Last Updated 2 days ago
                             </div>
-                            <button className="btn btn-secondary mx-1 py-0" data-option-selected={eachCategory.optionName} data-active-page="snippet" name={eachCategory.category} onClick={this.props.updateView} >Go To Snippets</button>
+                            <button className="btn btn-secondary mx-1 py-0" data-option-selected={eachCategory.optionName} data-active-page="snippet" data-category-selected={eachCategory.category} onClick={this.props.updateView} >Go To Snippets</button>
                         </div>
                     </div>
                 )}

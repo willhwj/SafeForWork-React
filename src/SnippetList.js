@@ -35,6 +35,12 @@ export default class SnippetList extends React.Component {
 
         // to indicate create, update or update to snippet or comment
         action: "",
+
+        // for snippet filter
+        theme: "all",
+        type: "all",
+        occasions: [],
+        length: "all",
     };
 
     // read all snippets into state variable
@@ -55,6 +61,15 @@ export default class SnippetList extends React.Component {
         // console.log("event is ", event.target.name, event.target.value);
         this.setState({
             [event.target.name]: event.target.value,
+        })
+    }
+
+
+    // function to update snippet filter state variables
+    updateFilter=(event)=>{
+        console.log(event);
+        this.setState({
+            [event.target.name]: event.target.getAttribute("data-filter"),
         })
     }
 
@@ -427,7 +442,8 @@ export default class SnippetList extends React.Component {
         } else {
             this.state[event.target.name] ?
                 this.setState({
-                    [event.target.name]: false
+                    [event.target.name]: false,
+                    action: ""
                 }) :
                 this.setState({
                     [event.target.name]: true,
@@ -440,7 +456,12 @@ export default class SnippetList extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <SnippetFilter updateView={this.props.updateView} />
+                <SnippetFilter  theme={this.state.theme}
+                                type={this.state.type}
+                                length={this.state.length}
+                                occasions={this.state.occasions}
+                                updateFilter={this.updateFilter}
+                />
                 <div>
                 <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
                     currentSnippetID={this.state.currentSnippetID}

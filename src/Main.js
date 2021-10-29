@@ -7,9 +7,11 @@ import SnippetList from './SnippetList';
 export default class Main extends React.Component {
     state={
         dropdownStatus: false,
+        activePage: "category",
+
+        // for category view
         categorySelected: "all",
         optionSelected: "all",
-        activePage: "category"
     }
 
     // function to update state variable with category selected by users for viewing
@@ -25,7 +27,7 @@ export default class Main extends React.Component {
         } else {
             this.setState({
                 activePage: event.target.getAttribute("data-active-page"),
-                categorySelected: event.target.name,
+                categorySelected: event.target.getAttribute("data-category-selected"),
                 optionSelected: event.target.getAttribute("data-option-selected"),
                 dropdownStatus: false
             })
@@ -46,7 +48,7 @@ export default class Main extends React.Component {
                 return(
                     <SnippetList    category={this.state.categorySelected}
                                     option={this.state.optionSelected}
-                                    updateView={this.updateView}
+                                    
                     />
                 )
             case "user":
@@ -76,7 +78,7 @@ export default class Main extends React.Component {
                                     <button className="nav-link navbarBtn">About</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link navbarBtn" name="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
+                                    <button className="nav-link navbarBtn" name="all" data-category-selected="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
                                 </li>
                                 <li className="nav-item dropdown" name="dropdownStatus" onClick={this.updateView}>
                                     <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
