@@ -78,6 +78,11 @@ export default class SnippetList extends React.Component {
         if (this.state.length !== "all") {
             snippetList = [...snippetList.filter(eachSnippet => eachSnippet.length === this.state.length)]
         }
+        if (this.state.occasions.length!== 0){
+            for (let currentOccasion of this.state.occasions){
+                snippetList = [...snippetList.filter(eachSnippet=> eachSnippet.occasions.includes(currentOccasion))]
+            }
+        }
         console.log(snippetList);
         this.setState({
             filteredSnippets: [...snippetList]
