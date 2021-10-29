@@ -10,51 +10,66 @@ export default function SnippetFilter(props) {
             <form>
             <div>Filter By Theme</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="theme" data-filter="life" value="life" id="life" checked={props.theme === "life"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="theme" value="all" id="all" checked={props.theme === "all"} onChange={props.updateFilter} />
+                        <label className="form-check-label" for="all">
+                            All
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="theme" value="life" id="life" checked={props.theme === "life"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="life">
                             Life
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="theme" data-filter="hardwork" value="hardwork" id="hardwork" checked={props.theme === "hardwork"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="theme" value="hardwork" id="hardwork" checked={props.theme === "hardwork"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="hardwork">
                             Hardwork
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="theme" data-filter="kindess" value="kindness" id="kindness" checked={props.theme === "kindness"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="theme" value="kindness" id="kindness" checked={props.theme === "kindness"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="kindness">
                             Kindness
                         </label>
                     </div>
                     <div>Filter By Type</div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="type" data-filter="joke" value="joke" id="joke" checked={props.type === "joke"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="type" value="all" id="all" checked={props.type === "all"} onChange={props.updateFilter} />
+                        <label className="form-check-label" for="all">
+                            All
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline">
+                        <input className="form-check-input" type="radio" name="type" value="joke" id="joke" checked={props.type === "joke"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="joke">
                             Joke
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="type" data-filter="story" value="story" id="story" checked={props.type === "story"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="type" value="story" id="story" checked={props.type === "story"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="story">
                             Story
                         </label>
                     </div>
                     <div className="form-check form-check-inline">
-                        <input className="form-check-input" type="radio" name="type" data-filter="quote" value="quote" id="quote" checked={props.type === "quote"} onChange={props.updateFilter} />
+                        <input className="form-check-input" type="radio" name="type" value="quote" id="quote" checked={props.type === "quote"} onChange={props.updateFilter} />
                         <label className="form-check-label" for="quote">
                             Quote
                         </label>
                     </div>
                     <div>Filter By Length</div>
-                    <select className="form-select" name="length" data-filter="1" onChange={props.updateFilter} value={props.length} aria-label="Default select example">
+                    <select className="form-select" name="length" onChange={props.updateFilter} value={props.length} aria-label="Default select example">
+                        <option value="all" >All Lengths</option>
                         <option value="1" >Less than One Minute</option>
                         <option value="2">One to Two Minutes</option>
                         <option value="3">Two to Three Minutes</option>
                         <option value="4">Above Three Minutes</option>
                     </select>
                     <input className="form-control me-2" type="search" placeholder="Search By Key Words in Title or Content" aria-label="Search"/>
-                                <button class ="btn btn-outline-success" type ="submit">Submit</button>
+                    <button class ="btn btn-outline-success" type ="submit" onClick={(event)=> {
+                        event.preventDefault(); props.filterSnippets()
+                    } } >Submit</button>
             </form>
             {/* <div class="offcanvas show offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
                 <div class="offcanvas-header">

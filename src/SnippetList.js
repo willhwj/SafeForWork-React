@@ -13,6 +13,7 @@ export default class SnippetList extends React.Component {
         currentSnippetID: "",
         commentStatus: false,
         allSnippets: [],
+        filteredSnippets:[],
         displayModal: false,
 
         // state variables for add & edit snippets
@@ -52,7 +53,8 @@ export default class SnippetList extends React.Component {
         console.log(snippets);
 
         this.setState({
-            allSnippets: snippets
+            allSnippets: snippets,
+            filteredSnippets: snippets
         })
     }
 
@@ -66,10 +68,31 @@ export default class SnippetList extends React.Component {
 
 
     // function to update snippet filter state variables
-    updateFilter=(event)=>{
-        console.log(event);
+    updateFilter = (event) => {
+        console.log(event.target);
         this.setState({
-            [event.target.name]: event.target.getAttribute("data-filter"),
+            [event.target.name]: event.target.value,
+        })
+        // this.setState({
+        //     [event.target.name]: event.target.getAttribute("data-filter"),
+        // })
+    }
+
+    // function to filter which snippets to display, return a list of snippets
+    filterSnippets = () => {
+        let snippetList =[...this.state.allSnippets];
+        if (this.state.theme !== "all") {
+            snippetList = [...snippetList.filter(eachSnippet => eachSnippet.theme === this.state.theme)]
+        }
+        if (this.state.type !== "all") {
+            snippetList = [...snippetList.filter(eachSnippet => eachSnippet.type === this.state.type)]
+        }
+        if (this.state.length !== "all") {
+            snippetList = [...snippetList.filter(eachSnippet => eachSnippet.length === this.state.length)]
+        }
+        console.log(snippetList);
+        this.setState({
+            filteredSnippets: [...snippetList]
         })
     }
 
@@ -388,7 +411,7 @@ export default class SnippetList extends React.Component {
                     snippetOccasions: [],
                     snippetType: "",
                     snippetLength: 0,
-                    snippetName:"",
+                    snippetName: "",
                     snippetNumComments: 0,
                     snippetNumCollectedBy: 0,
                     currentSnippetID: ""
@@ -402,7 +425,7 @@ export default class SnippetList extends React.Component {
                 snippetOccasions: [],
                 snippetType: "",
                 snippetLength: 0,
-                snippetName:"",
+                snippetName: "",
                 snippetNumComments: 0,
                 snippetNumCollectedBy: 0,
                 currentSnippetID: ""
@@ -456,44 +479,45 @@ export default class SnippetList extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <SnippetFilter  theme={this.state.theme}
-                                type={this.state.type}
-                                length={this.state.length}
-                                occasions={this.state.occasions}
-                                updateFilter={this.updateFilter}
+                <SnippetFilter theme={this.state.theme}
+                    type={this.state.type}
+                    length={this.state.length}
+                    occasions={this.state.occasions}
+                    updateFilter={this.updateFilter}
+                    filterSnippets={this.filterSnippets}
                 />
                 <div>
-                <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
-                    currentSnippetID={this.state.currentSnippetID}
-                    commentStatus={this.state.commentStatus}
-                    allSnippets={this.state.allSnippets}
+                    <DisplayEachSnippet snippetStatus={this.state.snippetStatus}
+                        currentSnippetID={this.state.currentSnippetID}
+                        commentStatus={this.state.commentStatus}
+                        filteredSnippets={this.state.filteredSnippets}
 
-                    updateCommentState={this.updateCommentState}
-                    updateSnippetState={this.updateSnippetState}
-                    updateShowHide={this.updateShowHide}
-                />
-                {this.state.displayModal === true ?
-                    <DisplayModalBox displayModal={this.state.displayModal}
-                        snippetName={this.state.snippetName}
-                        snippetCreator={this.state.snippetCreator}
-                        snippetContent={this.state.snippetContent}
-                        snippetTheme={this.state.snippetTheme}
-                        snippetOccasions={this.state.snippetOccasions}
-                        snippetType={this.state.snippetType}
-                        snippetLength={this.state.snippetLength}
-                        comment={this.state.comment}
-                        commentUsername={this.state.commentUsername}
-                        action={this.state.action}
-
-                        updateField={this.updateField}
-                        updateArray={this.updateArray}
                         updateCommentState={this.updateCommentState}
-                        sendToServer={this.sendToServer}
                         updateSnippetState={this.updateSnippetState}
                         updateShowHide={this.updateShowHide}
                     />
-                    : null}
-                    </div>
+                    {this.state.displayModal === true ?
+                        <DisplayModalBox displayModal={this.state.displayModal}
+                            snippetName={this.state.snippetName}
+                            snippetCreator={this.state.snippetCreator}
+                            snippetContent={this.state.snippetContent}
+                            snippetTheme={this.state.snippetTheme}
+                            snippetOccasions={this.state.snippetOccasions}
+                            snippetType={this.state.snippetType}
+                            snippetLength={this.state.snippetLength}
+                            comment={this.state.comment}
+                            commentUsername={this.state.commentUsername}
+                            action={this.state.action}
+
+                            updateField={this.updateField}
+                            updateArray={this.updateArray}
+                            updateCommentState={this.updateCommentState}
+                            sendToServer={this.sendToServer}
+                            updateSnippetState={this.updateSnippetState}
+                            updateShowHide={this.updateShowHide}
+                        />
+                        : null}
+                </div>
             </React.Fragment>
         );
     }
