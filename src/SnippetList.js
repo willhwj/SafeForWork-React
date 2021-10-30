@@ -151,7 +151,7 @@ validateForm = ()=> {
             if (this.state.snippetName.length > 100) {
                 this.state.inputErrors.push("Snippet name should not exceed 100 characters.")
             }
-            if (this.state.snippetName.match(/[$&+,:;=?@#|<>.-^*()%!]/)) {
+            if (this.state.snippetName.match(/[$&+,:;=?@#|<>\.\-\^\*()%!]/)) {
                 this.state.inputErrors.push("Snippet name cannot include special characters: $&+,:;=?@#|<>.-^*()%!")
             }
             if (!this.state.snippetCreator.match(/ ^[a-zA-Z\d][\w\d]*@[a-zA-Z\d]+[.][a-zA-Z\d]+/)) {
