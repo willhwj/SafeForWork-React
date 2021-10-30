@@ -19,6 +19,7 @@ export default function DisplayModalBox(props) {
                                         comment={props.comment}
                                         commentUsername={props.commentUsername}
                                         action={props.action}
+                                        inputErrors={props.inputErrors}
 
                                         updateField={props.updateField}
                                         updateArray={props.updateArray}
@@ -26,6 +27,9 @@ export default function DisplayModalBox(props) {
                                         sendToServer={props.sendToServer}
                                         updateSnippetState={props.updateSnippetState}
                                         updateShowHide={props.updateShowHide}
+                                        validateForm={props.validateForm}
+                                        printErrors={props.printErrors}
+                                        goBack = {props.goBack}
                         />
                     </div>
                 </div>

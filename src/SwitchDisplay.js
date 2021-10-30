@@ -30,20 +30,20 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-body">
                         <DisplaySnippetForm snippetName={props.snippetName}
-                                            snippetCreator={props.snippetCreator}
-                                            snippetContent={props.snippetContent}
-                                            snippetTheme={props.snippetTheme}
-                                            snippetOccasions={props.snippetOccasions}
-                                            snippetType={props.snippetType}
-                                            snippetLength={props.snippetLength}
+                            snippetCreator={props.snippetCreator}
+                            snippetContent={props.snippetContent}
+                            snippetTheme={props.snippetTheme}
+                            snippetOccasions={props.snippetOccasions}
+                            snippetType={props.snippetType}
+                            snippetLength={props.snippetLength}
 
-                                            updateField={props.updateField}
-                                            updateArray={props.updateArray}
+                            updateField={props.updateField}
+                            updateArray={props.updateArray}
                         />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={(event) => { event.preventDefault(); props.validateForm() ? props.sendToServer(props.action) : props.printErrors() }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );
@@ -56,20 +56,20 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-body">
                         <DisplaySnippetForm snippetName={props.snippetName}
-                                            snippetCreator={props.snippetCreator}
-                                            snippetContent={props.snippetContent}
-                                            snippetTheme={props.snippetTheme}
-                                            snippetOccasions={props.snippetOccasions}
-                                            snippetType={props.snippetType}
-                                            snippetLength={props.snippetLength}
+                            snippetCreator={props.snippetCreator}
+                            snippetContent={props.snippetContent}
+                            snippetTheme={props.snippetTheme}
+                            snippetOccasions={props.snippetOccasions}
+                            snippetType={props.snippetType}
+                            snippetLength={props.snippetLength}
 
-                                            updateField={props.updateField}
-                                            updateArray={props.updateArray}
+                            updateField={props.updateField}
+                            updateArray={props.updateArray}
                         />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={(event) => {event.preventDefault(); props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={(event) => { event.preventDefault(); props.validateForm() ? props.sendToServer(props.action) : props.printErrors() }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );
@@ -97,13 +97,13 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-body">
                         <DisplayCommentForm comment={props.comment}
-                                            commentUsername={props.commentUsername}
-                                            updateField={props.updateField}
+                            commentUsername={props.commentUsername}
+                            updateField={props.updateField}
                         />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateCommentState}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={() => { props.validateForm() ? props.sendToServer(props.action) : props.printErrors() }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );
@@ -116,16 +116,33 @@ export default function SwitchDisplay(props) {
                     </div>
                     <div className="modal-body">
                         <DisplayCommentForm comment={props.comment}
-                                            commentUsername={props.commentUsername}
-                                            updateField={props.updateField}
+                            commentUsername={props.commentUsername}
+                            updateField={props.updateField}
                         />
                     </div>
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary" name="displayModal" onClick={props.updateShowHide}>Cancel</button>
-                        <button type="button" className="btn btn-primary" onClick={() => { props.sendToServer(props.action) }}>Confirm</button>
+                        <button type="button" className="btn btn-primary" onClick={() => { props.validateForm() ? props.sendToServer(props.action) : props.printErrors() }}>Confirm</button>
                     </div>
                 </React.Fragment>
             );
+        case "errorMessages":
+            return (
+                <React.Fragment>
+                    <div className="modal-header">
+                        <h5 className="modal-title">Hmmm, We Need Your Help Here.</h5>
+                        <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.goBack}></button>
+                    </div>
+                    <div className="modal-body">
+                        Please review the below errors, make amendments and submit again. Thank you.
+                    <ul class="list-group">
+                        {props.inputErrors.map(eachError =>
+                            <li class="list-group-item">{eachError}</li>
+                        )}
+                    </ul>
+                    </div>
+                </React.Fragment>
+            )
         default:
             console.log("switchDisplay function, no valid input");
     }
