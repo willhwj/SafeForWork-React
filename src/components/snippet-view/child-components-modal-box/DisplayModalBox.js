@@ -1,5 +1,5 @@
 import React from 'react';
-import './snippet.css';
+import '../../../custom-css/snippet.css';
 import SwitchDisplay from './SwitchDisplay';
 
 // utility function to display a modal popup for all CRUD operations related to snippets and comments

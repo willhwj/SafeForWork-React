@@ -1,13 +1,15 @@
 import React from 'react';
-import './Main.css';
-import Category from './Category';
-import User from './User';
-import SnippetList from './SnippetList';
+import '../../custom-css/Main.css';
+import Category from '../category-view/Category';
+import User from '../user-view/User';
+import SnippetList from '../snippet-view/parent-component/SnippetList';
 import Home from './Home';
+import About from './About';
 
 export default class Main extends React.Component {
     state = {
         dropdownStatus: false,
+        hamburgerStatus: false,
         activePage: "home",
 
         // for category view
@@ -15,15 +17,18 @@ export default class Main extends React.Component {
         optionSelected: "all",
     }
 
+    // static show = this.state.hamburgerStatus? "show": "";
+    // static show = "show";
+
     // function to update state variable with category selected by users for viewing
     updateView = (event) => {
-        if (event.target.name === "dropdownStatus") {
-            this.state.dropdownStatus === true ?
+        if (event.target.name === "dropdownStatus" || event.target.name === "hamburgerStatus") {
+            this.state[event.target.name] === true ?
                 this.setState({
-                    dropdownStatus: false
+                    [event.target.name]: false
                 })
                 : this.setState({
-                    dropdownStatus: true
+                    [event.target.name]: true
                 })
         } else {
             this.setState({
@@ -49,7 +54,6 @@ export default class Main extends React.Component {
                 return (
                     <SnippetList category={this.state.categorySelected}
                         option={this.state.optionSelected}
-
                     />
                 )
             case "user":
@@ -59,6 +63,10 @@ export default class Main extends React.Component {
             case "home":
                 return (
                     <Home />
+                )
+            case "about":
+                return (
+                    <About/>
                 )
             default:
                 console.log("no option for renderContent in SFW.js")
@@ -70,17 +78,19 @@ export default class Main extends React.Component {
             <React.Fragment>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <div className="container-fluid">
-                        <span className="navbar-brand">Navbar</span>
-                        <button className="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <button className="navbar-toggler-icon"></button>
+                        <span className="navbar-brand">
+                            <img src="./images/navbar.png" alt="" width="45" height="45" />
+                        </span>
+                        <button className="navbar-toggler" type="button" name="hamburgerStatus" onClick={this.updateView} aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <button className="navbar-toggler-icon" name="hamburgerStatus" onClick={this.updateView}></button>
                         </button>
-                        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+                        <div className={this.state.hamburgerStatus ? "collapse navbar-collapse show" : "collapse navbar-collapse"} id="navbarSupportedContent">
                             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li className="nav-item">
                                     <button className="nav-link active navbarBtn" data-active-page="home" onClick={this.updateView} aria-current="page">Home</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link navbarBtn">About</button>
+                                    <button className="nav-link active navbarBtn" data-active-page="about" onClick={this.updateView} aria-current="page">About</button>
                                 </li>
                                 <li className="nav-item">
                                     <button className="nav-link navbarBtn" name="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
@@ -110,7 +120,7 @@ export default class Main extends React.Component {
                 <header className="py-1 mb-0 border-bottom border-top">
                     <div className="container d-flex flex-wrap justify-content-center">
                         <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
-                            <span className="fs-4">{this.state.activePage === "category" ? `Click on any of the ${this.state.categorySelected}s you are interested in.` : null}</span>
+                            <span className="fs-4">{this.state.activePage === "category" ? `Click on any of the ${this.state.categorySelected==="all"? "categorie" : this.state.categorySelected}s you are interested in.` : null}</span>
                         </a>
                         <div className="b-example-divider"></div>
                     </div>

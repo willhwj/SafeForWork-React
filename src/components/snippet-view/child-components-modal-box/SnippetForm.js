@@ -1,8 +1,8 @@
 import React from 'react';
-import './snippet.css'
+import '../../../custom-css/snippet.css'
 
 // function to display form for adding new snippets
-export default function DisplaySnippetForm(props) {
+export default function SnippetForm(props) {
     return (
         <React.Fragment>
             <form>

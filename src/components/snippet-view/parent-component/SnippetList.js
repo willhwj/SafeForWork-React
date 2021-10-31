@@ -1,9 +1,9 @@
 import React from 'react';
 import axios from 'axios';
-import './snippet.css';
-import DisplayEachSnippet from './DisplayEachSnippet';
-import DisplayModalBox from './DisplayModalBox';
-import SnippetFilter from './SnippetFilter';
+import '../../../custom-css/snippet.css';
+import DisplayEachSnippet from '../child-components-snippet-display/DisplayEachSnippet';
+import DisplayModalBox from '../child-components-modal-box/DisplayModalBox';
+import SnippetFilter from '../child-components-snippet-filter/SnippetFilter';
 
 export default class SnippetList extends React.Component {
 

@@ -1,5 +1,4 @@
 import React from 'react';
-import './snippet.css';
 
 export default function SnippetFilter(props) {
     return (

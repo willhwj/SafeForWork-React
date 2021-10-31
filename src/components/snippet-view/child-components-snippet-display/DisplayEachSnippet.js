@@ -1,6 +1,6 @@
 import React from 'react';
-import './snippet.css'
-import DisplayCommentList from './DisplayCommentList';
+import '../../../custom-css/snippet.css'
+import CommentList from './CommentList';
 
 // function to display one snippet
 export default function DisplayEachSnippet(props) {
@@ -50,7 +50,7 @@ export default function DisplayEachSnippet(props) {
                         </div>
                         {typeof eachSnippet.comments != "undefined" && props.commentStatus && eachSnippet.comments.length > 0 ?
                             <div>
-                                {props.currentSnippetID ===eachSnippet._id ?<DisplayCommentList snippet={eachSnippet}
+                                {props.currentSnippetID ===eachSnippet._id ?<CommentList snippet={eachSnippet}
                                     updateCommentState={props.updateCommentState}
                                 />
                             : null}

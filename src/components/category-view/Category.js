@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import './category.css';
+import '../../custom-css/category.css';
 
 export default class Category extends React.Component {
     // path state variable is used to store the document path of the data file
@@ -40,7 +40,7 @@ export default class Category extends React.Component {
 
     render() {
         return (
-            <div className="row align-items-start row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-0">
+            <div className="row align-items-start row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 row-cols-xxl-6 g-3">
                 {this.state.catList.map(eachCategory =>
                     <div className="col mh-100">
                         <div className="card">
@@ -51,9 +51,11 @@ export default class Category extends React.Component {
                             <div className="card-body pb-1">
                                 <h5 className="card-title text-center">{eachCategory.optionName}</h5>
                                 <p className="card-text">{eachCategory.optionDescription}</p>
-                                <p className="card-text my-0 py-0"><small class="text-muted">There are {eachCategory.numSnippets} snippets under this {this.state.catType}</small></p>
-                                <p className="card-text my-0 py-0"><small class="text-muted">They attracted {eachCategory.numComments} comments. Leave your thought here, too!</small></p>
-                                <p className="card-text my-0 py-0"><small class="text-muted">And have been collected {eachCategory.numCollected} times. Collect your favourites, too!</small></p>
+                                <ul class="list-group list-group-flush mx-0 px-0">
+                                <p className="card-text m-0 p-0 list-group-item"><small class="text-muted">{eachCategory.numSnippets} snippets under this {eachCategory.category}</small></p>
+                                <p className="card-text m-0 p-0 list-group-item"><small class="text-muted">Attracted {eachCategory.numComments} comments. </small></p>
+                                <p className="card-text m-0 p-0 list-group-item"><small class="text-muted">Collected by {eachCategory.numCollected} users.</small></p>
+                                </ul>
                             </div>
                             <div class="card-footer text-muted mh-8 fs-6">
                                 Last Updated 2 days ago

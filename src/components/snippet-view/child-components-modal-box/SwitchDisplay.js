@@ -1,7 +1,7 @@
 import React from 'react';
-import './snippet.css';
-import DisplaySnippetForm from './DisplaySnippetForm';
-import DisplayCommentForm from './DisplayCommentForm';
+import '../../../custom-css/snippet.css';
+import SnippetForm from './SnippetForm';
+import CommentForm from './CommentForm';
 
 // function to conditionally render display within the displayModalBox, depending on the user action of the state.
 export default function SwitchDisplay(props) {
@@ -29,7 +29,7 @@ export default function SwitchDisplay(props) {
                         <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
-                        <DisplaySnippetForm snippetName={props.snippetName}
+                        <SnippetForm snippetName={props.snippetName}
                             snippetCreator={props.snippetCreator}
                             snippetContent={props.snippetContent}
                             snippetTheme={props.snippetTheme}
@@ -55,7 +55,7 @@ export default function SwitchDisplay(props) {
                         <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
-                        <DisplaySnippetForm snippetName={props.snippetName}
+                        <SnippetForm snippetName={props.snippetName}
                             snippetCreator={props.snippetCreator}
                             snippetContent={props.snippetContent}
                             snippetTheme={props.snippetTheme}
@@ -96,7 +96,7 @@ export default function SwitchDisplay(props) {
                         <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateCommentState}></button>
                     </div>
                     <div className="modal-body">
-                        <DisplayCommentForm comment={props.comment}
+                        <CommentForm comment={props.comment}
                             commentUsername={props.commentUsername}
                             updateField={props.updateField}
                         />
@@ -115,7 +115,7 @@ export default function SwitchDisplay(props) {
                         <button type="button" className="btn-close" aria-label="Close" name="displayModal" onClick={props.updateShowHide}></button>
                     </div>
                     <div className="modal-body">
-                        <DisplayCommentForm comment={props.comment}
+                        <CommentForm comment={props.comment}
                             commentUsername={props.commentUsername}
                             updateField={props.updateField}
                         />

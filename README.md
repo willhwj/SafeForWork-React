@@ -114,6 +114,9 @@ The search box is able to produce a marker on the input corresponding to the use
 * https://www.reddit.com/r/memes/comments/aslhl4/definitely_not_safe_for_work/ 
 * https://www.vectorstock.com/royalty-free-vector/happy-smiling-people-having-fun-young-men-vector-25098181 
 * https://www.howtogeek.com/438957/what-does-nsfw-mean-and-how-do-you-use-it/ 
+* https://chrome.google.com/webstore/detail/quotes/napnlheijpokljocbmigochahnlakhbp
+* https://blog.arkadin.com/en/the-business-case-for-laughter-why-humor-is-key-to-success/
+* https://www.coe.int/en/web/committee-on-combatting-hate-speech/-/full-composition-of-the-new-expert-committee-on-combating-hate-speech-announced?fbclid=IwAR15r1fNDhawGtGMHMTngYaHhc8f-ASYmf_4S3yJkX72DvBfrnMhhErxb5M
 ## Acknowledgement
 This project would not be possible without the generous support and timely guidance from the following individuals from Trent Global College:
 ### Paul for his highly comprehensible web development course and teaching, magical touch on problem-solving.

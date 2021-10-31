@@ -1,11 +1,8 @@
 import React from 'react';
 
-export default function Home() {
+export default function About() {
     return (
         <React.Fragment>
-            <h1>Spice Up Your Professional Interactions With Juicy Snippets!</h1>
-            <h2>And They Are All Safe For Work</h2>
-            <img src="./images/safe-for-work.png" class="img-fluid" alt="..." />
             <article>
                 <h3>How Did I Come Up With This Idea?</h3>
                 <p>As working professionals who interact with people a lot, we all know the power of story-telling when making a sales pitch or hitting up a casual chat with new contacts at networking events, of breaking the ice with light-hearted jokes, of delivering thought-provoking quotes into catchy, rhyming punchlines.</p>
@@ -32,7 +29,7 @@ export default function Home() {
                             <p>Well, work is part of life, too. Your colleagues, customers and business partners are people who want to have fun in life, too.</p>
                             <p>Just make sure it does not cross the line</p>
                             <p>too much.</p>
-                            <footer class="blockquote-footer">William<cite title="Source Title">Safe-For-Work Inspiration</cite></footer>
+                            <footer class="blockquote-footer">William  <cite title="Source Title">Safe-For-Work Inspiration</cite></footer>
                         </blockquote>
                     </div>
                 </div>

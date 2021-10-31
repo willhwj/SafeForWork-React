@@ -1,8 +1,7 @@
 import React from 'react';
-import './snippet.css'
 
 // function to display form for edit & add comment
-export default function DisplayCommentForm(props) {
+export default function CommentForm(props) {
     return (
         <React.Fragment>
             <div>

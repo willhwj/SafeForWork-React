@@ -1,5 +1,5 @@
 import React from 'react';
-import SFW from './SFW'
+import SFW from './components/main-view/SFW'
 
 function App() {
   return (

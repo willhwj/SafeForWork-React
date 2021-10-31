@@ -1,8 +1,7 @@
 import React from 'react';
-import './snippet.css';
 
 // function to display list of comments posted to a snippet
-export default function DisplayCommentList(props) {
+export default function CommentList(props) {
     return (
         props.snippet.comments.map(eachComment =>
             <React.Fragment key={props.snippet._id}>
