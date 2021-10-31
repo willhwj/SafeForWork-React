@@ -145,6 +145,7 @@ export default class SnippetList extends React.Component {
 
     // function to validate user input for snippet and comment. return true if there is no error, false if there is error
 validateForm = ()=> {
+    console.log("enter validateForm");
     switch (this.state.action) {
         case "updateSnippet":
         case "createSnippet":
@@ -154,7 +155,7 @@ validateForm = ()=> {
             if (this.state.snippetName.match(/[$&+,:;=?@#|<>\.\-\^\*()%!]/)) {
                 this.state.inputErrors.push("Snippet name cannot include special characters: $&+,:;=?@#|<>.-^*()%!")
             }
-            if (!this.state.snippetCreator.match(/ ^[a-zA-Z\d][\w\d]*@[a-zA-Z\d]+[.][a-zA-Z\d]+/)) {
+            if (!this.state.snippetCreator.match(/^[a-zA-Z\d][\w\d]+@[\w\d]+[.][a-zA-Z\d]+/)) {
                 this.state.inputErrors.push("Please enter a valid email address.")
             }
             if (this.state.snippetContent.length > 5000) {
@@ -175,7 +176,7 @@ validateForm = ()=> {
             if (this.state.comment.length > 5000) {
                 this.state.inputErrors.push("Comment should not exceed 100 characters.")
             }
-            if (!this.state.commentUsername.match(/ ^[a-zA-Z\d][\w\d]*@[a-zA-Z\d]+[.][a-zA-Z\d]+/)) {
+            if (this.state.commentUsername.match(/^[a-zA-Z\d][\w\d]+@[\w\d]+[.][a-zA-Z\d]+/)===false) {
                 this.state.inputErrors.push("Please enter a valid email address.")
             }
             return (this.state.inputErrors.length === 0 ? true : false)
