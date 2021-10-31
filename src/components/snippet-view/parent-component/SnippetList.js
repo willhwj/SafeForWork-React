@@ -55,7 +55,7 @@ export default class SnippetList extends React.Component {
         let snippets = [];
         console.log("componentDidMount for SnippetList triggered");
         console.log(this.props.category, this.props.option);
-        await axios.get(`http://localhost:8888/snippets/${this.props.category}/${this.props.option}`).then(response => snippets = response.data);
+        await axios.get(`https://sfw-express.herokuapp.com/snippets/${this.props.category}/${this.props.option}`).then(response => snippets = response.data);
         console.log(snippets);
 
         this.setState({
@@ -204,7 +204,7 @@ goBack = () =>{
 
 // function to initiate API call to communicate changes to server
 sendToServer = async (action) => {
-    let url = 'http://localhost:8888/snippets';
+    let url = 'https://sfw-express.herokuapp.com/snippets';
     let [response, clonedSnippets, indexOfChange, newSnippet] = ["", "", "", ""];
 
     switch (action) {

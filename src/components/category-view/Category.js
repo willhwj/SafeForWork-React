@@ -24,7 +24,7 @@ export default class Category extends React.Component {
 
     fetchData = async () => {
         let categoryList = [];
-        let url = 'http://localhost:8888/categories';
+        let url = 'https://sfw-express.herokuapp.com/categories';
         console.log(this.props.category, this.props.option);
         await axios.get(url + `/${this.props.category}/${this.props.option}`).then(response => categoryList = response.data);
 
