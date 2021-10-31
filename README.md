@@ -46,7 +46,7 @@ The bootstrap framework was used in for the front-end development of the website
 As the name of the web application suggests, 'Safe-For-Work Snippets', the colour palette and general design of the website takes after the colours of a formal, streamlined and functional internal corporate website. As the focus of the project is to crowdsource real-life wisdom and fun yet safe-for-work snippets of content, the layout of the webapp is straightforward and interactivity is intuitive. Any user action is generally achieved within 3 clicks.
 
 Colors used:
-#FFF8DC  #eaecef  #d9d6df  #eaecef
+#A1A3A5 #FAE8E0 #DDEEBC
 All these are light, warm colors that fit well with short, delightful and light-hearted staycations.
 
 Topography used:

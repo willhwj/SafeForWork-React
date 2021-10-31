@@ -76,7 +76,7 @@ export default class Main extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                <nav className="navbar navbar-expand-lg navbar-light">
                     <div className="container-fluid">
                         <span className="navbar-brand">
                             <img src="./images/navbar.png" alt="" width="45" height="45" />
@@ -93,9 +93,9 @@ export default class Main extends React.Component {
                                     <button className="nav-link active navbarBtn" data-active-page="about" onClick={this.updateView} aria-current="page">About</button>
                                 </li>
                                 <li className="nav-item">
-                                    <button className="nav-link navbarBtn" name="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
+                                    <button className="nav-link active navbarBtn" name="all" data-option-selected="all" data-active-page="snippet" onClick={this.updateView}>Snippets</button>
                                 </li>
-                                <li className="nav-item dropdown" name="dropdownStatus" onClick={this.updateView}>
+                                <li className="nav-item active dropdown" name="dropdownStatus" onClick={this.updateView}>
                                     <button className="nav-link dropdown-toggle navbarBtn" id="navbarDropdown" name="dropdownStatus" aria-expanded="false">
                                         Categories
                                     </button>
@@ -117,11 +117,11 @@ export default class Main extends React.Component {
                         </div>
                     </div>
                 </nav>
-                <header className="py-1 mb-0 border-bottom border-top">
+                <header className="py-1 mb-0">
                     <div className="container d-flex flex-wrap justify-content-center">
-                        <a href="/" className="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
+                        <div className="d-flex align-items-center mb-0 mb-lg-0 me-lg-auto text-dark text-decoration-none fw-bold">
                             <span className="fs-4">{this.state.activePage === "category" ? `Click on any of the ${this.state.categorySelected==="all"? "categorie" : this.state.categorySelected}s you are interested in.` : null}</span>
-                        </a>
+                        </div>
                         <div className="b-example-divider"></div>
                     </div>
                 </header>

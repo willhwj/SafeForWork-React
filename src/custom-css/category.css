@@ -12,3 +12,8 @@
 .card-footer {
     font-size: x-small !important;
 }
+
+.card {
+    box-shadow: 1px 1px 10px #A1A3A5;
+    border: none
+}

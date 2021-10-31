@@ -5,3 +5,11 @@
 .submenu {
     font-size: 0.75rem;
 }
+
+.navbar,button#navbarDropdown,.navbarBtn,.dropdown-menu,.navbar-light .navbar-toggler-icon  {
+    background-color: #FAE8E0 !important;
+}
+
+.navbar-light .navbar-toggler {
+    border: none !important;
+}
