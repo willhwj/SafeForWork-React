@@ -5,6 +5,9 @@
 ## Context
 This project develops a mobile-responsive web-based interactive application called 'Safe-For-Work Snippets', crowd-sourcing snippets of content which are safe for sharing/usage at workplace or in business context. From the web application, users can see and search snippets by multiple categories and sub-categories (called options), and create/update/delete snippets. Users can also post comments on how they think of each snippet and how they have applied it at their workplace and the effect.
 
+The idea was conceptualized by me after several sessions with my career mentor on capitalizing the power of story-telling in our daily interactions with customers, internal stakeholders and other business contacts. Both he and I work in technology sales function, and frequently interact with people. Our ability to make a favourable impression and create a negotiation-conducive atmosphere often play an outsized role in forging strong business relationship, tipping the scale to our favor. We recognize the pain points of the lack of repository for safe-for-work yet refreshing, captivating snippets of content, and lack of context in applying them. Hence I started this project with first of all, him and me as the target audience to pour our collective efforts, and then at later stage expanding this to other colleagues or close business contacts.
+
+As the project is produced in 9 days (3 weekends and 3 additional off-days), primary development effort is focused on the functionalities and key user flows. This is due to both sheer practicality of very short timeframe and also a conscientious effort to prioritize the development of a functional app for immediate usage. 
 
 ## Demo
 A live website of the application can be found here: https://cocky-morse-b2d9a6.netlify.app/.
@@ -38,7 +41,7 @@ User can view all the categories and options under each category. | Clicking on 
 User can find out more about the rationale behind this project and how to make the best use of it. | Clicking on 'About' in the navigation bar brings the user to the About page, which explains how the project was conceptualized, what problems it solves and how to navigate the web app effectively.
 
 ## (ii) Project Scope
-The project skeleton and UI layout (wireframes) can be found in the git repository.
+The project skeleton and UI layout (wireframes) can be found in the git repository > design assets. React component logical flow can also be found the same folder.
 
 ## (iii) Design
 The bootstrap framework was used in for the front-end development of the website as it allows for mobile responsive design and easy grid layout.
@@ -47,7 +50,7 @@ As the name of the web application suggests, 'Safe-For-Work Snippets', the colou
 
 Colors used:
 #A1A3A5 #FAE8E0 #DDEEBC
-All these are light, warm colors that fit well with short, delightful and light-hearted staycations.
+All these are light, warm colors that fit well with clean and professional business context.
 
 Topography used:
 Verdana, Geneva, Tahoma, sans-serif;
@@ -87,18 +90,22 @@ The project uses regular expressions to validate user input, enforcing rules for
 # 4. Testing & Test Cases
 Test Case Description | Result
 ----------------------|-----------
-To test the website is mobile responsive, that map, text and nav bar resize according to the viewing device | pass
-The single-page application changes display according to user interaction on the menu, while staying on the same HMTL page | pass
-The interactive map displays different markers, circles and polygons according to the layers selected by the user | pass
-The markers, circles and polygons on map display popup with well-sized HTML table showing appropriate data from the data files, when being clicked | pass
-The search box is able to populate location candidates based on user input | pass
-The search box is able to produce a marker on the input corresponding to the user input | pass
+To test the website is mobile responsive, that snippets in accordion display, categories in card display and nav bar resize according to the viewing device | pass
+The single-page application changes display according to user interaction on the navigation menu, while staying on the same HMTL page | pass
+User is able to create/update/delete snippet and user input is validated at the frontend and backend. There is immediate prompt to the user when any input does not fulfill the data field requirements. | pass
+User is able to create/update/delete comments and user input is validated at the frontend and backend. There is immediate prompt to the user when any input does not fulfill the data field requirements. | pass
+Any changes made by the user, once validated by both frontend and backend rules, are immediately updated in DB. | pass
+Any changes made by the user, once validated by both frontend and backend rules, are immediately updated and displayed in UI.  | pass
+User is able to search snippets by filtering any of the categories available. | pass
+User is able to search snippets by any words in the snippet title or snippet content. | pass
+Express server is able to expose different API endpoints for search, update, delete and insert. | pass
+Express server is able to validate parameters and body of API requests, and respond with relevant error messages for invalid data, or perform CRUD at DB for valid data. | pass
 
 # 5. Known Bugs
-* the hamburger menu of nav bar in mobile view does not expand to display.
+* There are several un-intuitive designs which are de-prioritized due to the compressed timeline. There are detailed out at the section 3 for future improvements. 
 
 # 6. Deployment
-* The React app is deployed in Netify: https://cocky-morse-b2d9a6.netlify.app/. 
+* The React app is deployed in Netlify: https://cocky-morse-b2d9a6.netlify.app/. 
 * The Express app is deployed in Heroku: https://sfw-express.herokuapp.com
 
 # 7. Credits and Acknowledge
